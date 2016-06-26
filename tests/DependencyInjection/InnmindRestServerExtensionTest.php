@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Rest\ServerBundle\DependencyInjection;
 
-use Innmind\Rest\ServerBundle\DependencyInjection\InnmindRestServerExtension;
+use Innmind\Rest\ServerBundle\{
+    DependencyInjection\InnmindRestServerExtension,
+    InnmindRestServerBundle
+};
 use Innmind\Rest\Server\Format\Format;
 use Innmind\Immutable\MapInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -13,6 +16,7 @@ class InnmindRestServerExtensionTest extends \PHPUnit_Framework_TestCase
     public function testLoad()
     {
         $container = new ContainerBuilder;
+        $container->setParameter('kernel.bundles', []);
         $extension = new InnmindRestServerExtension;
 
         $this->assertSame(
@@ -40,6 +44,8 @@ class InnmindRestServerExtensionTest extends \PHPUnit_Framework_TestCase
                 $container
             )
         );
+        (new InnmindRestServerBundle)->build($container);
+        $container->compile();
         $types = $container->getDefinition('innmind_rest_server.definition.types');
         $this->assertSame(1, count($types->getMethodCalls()));
         $this->assertSame(
