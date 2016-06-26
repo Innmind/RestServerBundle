@@ -6,7 +6,7 @@ namespace Innmind\Rest\ServerBundle\Factory;
 use Innmind\Rest\Server\Definition\LoaderInterface;
 use Innmind\Immutable\{
     Map,
-    Set,
+    SetInterface,
     MapInterface
 };
 
@@ -20,18 +20,12 @@ final class DirectoriesFactory
     }
 
     /**
-     * @param string[] $files
+     * @param SetInterface<string> $files
      *
      * @return MapInterface<string, Directory>
      */
-    public function make(array $files): MapInterface
+    public function make(SetInterface $files): MapInterface
     {
-        $set = new Set('string');
-
-        foreach ($files as $file) {
-            $set = $set->add($file);
-        }
-
-        return $this->loader->load($set);
+        return $this->loader->load($files);
     }
 }

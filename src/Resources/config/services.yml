@@ -10,8 +10,6 @@ services:
 
     innmind_rest_server.definition.directories:
         class: Innmind\Immutable\Map
-        arguments:
-            - []
         factory:
             - '@innmind_rest_server.factory.directories'
             - make
