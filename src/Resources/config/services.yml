@@ -22,3 +22,13 @@ services:
         arguments:
             - '@innmind_rest_server.definition.loader.yaml'
         public: false
+
+    innmind_rest_server.gateways:
+        class: Innmind\Immutable\Map
+        factory:
+            - '@innmind_rest_server.factory.gateways'
+            - make
+
+    innmind_rest_server.factory.gateways:
+        class: Innmind\Rest\ServerBundle\Factory\GatewaysFactory
+        public: false
