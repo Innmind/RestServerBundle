@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle;
 
-use Innmind\Rest\ServerBundle\DependencyInjection\Compiler\RegisterDefinitionFilesPass;
+use Innmind\Rest\ServerBundle\DependencyInjection\Compiler\{
+    RegisterDefinitionFilesPass,
+    RegisterGatewaysPass
+};
 use Symfony\Component\{
     HttpKernel\Bundle\Bundle,
     DependencyInjection\ContainerBuilder
@@ -19,6 +22,7 @@ final class InnmindRestServerBundle extends Bundle
         parent::build($container);
 
         $container
-            ->addCompilerPass(new RegisterDefinitionFilesPass);
+            ->addCompilerPass(new RegisterDefinitionFilesPass)
+            ->addCompilerPass(new RegisterGatewaysPass);
     }
 }
