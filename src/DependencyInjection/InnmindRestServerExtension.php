@@ -22,5 +22,28 @@ final class InnmindRestServerExtension extends Extension
             new FileLocator(__DIR__ . '/../Resources/config')
         );
         $loader->load('services.yml');
+        $config = $this->processConfiguration(
+            new Configuration,
+            $configs
+        );
+
+        $this->registerTypes($config['types'], $container);
+    }
+
+    /**
+     * @return void
+     */
+    private function registerTypes(array $types, ContainerBuilder $container)
+    {
+        $definition = $container->getDefinition(
+            'innmind_rest_server.definition.types'
+        );
+
+        foreach ($types as $type) {
+            $definition->addMethodCall(
+                'register',
+                [$type]
+            );
+        }
     }
 }
