@@ -1,0 +1,6 @@
+services:
+    innmind_rest_server.formats.accept:
+        class: Innmind\Rest\Server\Formats
+
+    innmind_rest_server.formats.content_type:
+        class: Innmind\Rest\Server\Formats

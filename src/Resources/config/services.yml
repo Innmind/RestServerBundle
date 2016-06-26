@@ -1,3 +1,6 @@
+imports:
+    - { resource: 'formats.yml' }
+
 services:
     innmind_rest_server.definition.types:
         class: Innmind\Rest\Server\Definition\Types
