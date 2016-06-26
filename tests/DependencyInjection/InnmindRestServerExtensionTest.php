@@ -1,5 +1,5 @@
 <?php
-declare(stritc_types = 1);
+declare(strict_types = 1);
 
 namespace Tests\Innmind\Rest\ServerBundle\DependencyInjection;
 
