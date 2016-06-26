@@ -23,7 +23,8 @@
     "autoload": {
         "psr-4": {
             "Innmind\\Rest\\ServerBundle\\": "src/",
-            "Tests\\Innmind\\Rest\\ServerBundle\\": "tests/"
+            "Tests\\Innmind\\Rest\\ServerBundle\\": "tests/",
+            "Fixtures\\Innmind\\Rest\\ServerBundle\\": "fixtures/"
         }
     }
 }
