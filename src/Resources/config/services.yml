@@ -1,3 +1,23 @@
 services:
     innmind_rest_server.definition.types:
         class: Innmind\Rest\Server\Definition\Types
+
+    innmind_rest_server.definition.loader.yaml:
+        class: Innmind\Rest\Server\Definition\Loader\YamlLoader
+        arguments:
+            - '@innmind_rest_server.definition.types'
+        public: false
+
+    innmind_rest_server.definition.directories:
+        class: Innmind\Immutable\Map
+        arguments:
+            - []
+        factory:
+            - '@innmind_rest_server.factory.directories'
+            - make
+
+    innmind_rest_server.factory.directories:
+        class: Innmind\Rest\ServerBundle\Factory\DirectoriesFactory
+        arguments:
+            - '@innmind_rest_server.definition.loader.yaml'
+        public: false
