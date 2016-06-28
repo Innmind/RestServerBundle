@@ -1,5 +1,6 @@
 imports:
     - { resource: 'formats.yml' }
+    - { resource: 'listeners.yml' }
 
 services:
     innmind_rest_server.definition.types:

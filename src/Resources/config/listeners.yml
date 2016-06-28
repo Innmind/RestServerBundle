@@ -1,0 +1,5 @@
+services:
+    innmind_rest_server.listener.exception:
+        class: Innmind\Rest\ServerBundle\EventListener\ExceptionListener
+        tags:
+            - { name: kernel.event_subscriber }
