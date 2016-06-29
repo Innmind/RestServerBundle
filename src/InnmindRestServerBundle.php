@@ -5,7 +5,8 @@ namespace Innmind\Rest\ServerBundle;
 
 use Innmind\Rest\ServerBundle\DependencyInjection\Compiler\{
     RegisterDefinitionFilesPass,
-    RegisterGatewaysPass
+    RegisterGatewaysPass,
+    RegisterHttpHeaderFactoriesPass
 };
 use Symfony\Component\{
     HttpKernel\Bundle\Bundle,
@@ -23,6 +24,7 @@ final class InnmindRestServerBundle extends Bundle
 
         $container
             ->addCompilerPass(new RegisterDefinitionFilesPass)
-            ->addCompilerPass(new RegisterGatewaysPass);
+            ->addCompilerPass(new RegisterGatewaysPass)
+            ->addCompilerPass(new RegisterHttpHeaderFactoriesPass);
     }
 }

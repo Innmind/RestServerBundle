@@ -1,0 +1,70 @@
+services:
+    innmind_rest_server.http.factory.header.accept_charset:
+        class: Innmind\Http\Factory\Header\AcceptCharsetFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: accept-charset }
+
+    innmind_rest_server.http.factory.header.accept_encoding:
+        class: Innmind\Http\Factory\Header\AcceptEncodingFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: accept-encoding }
+
+    innmind_rest_server.http.factory.header.accept:
+        class: Innmind\Http\Factory\Header\AcceptFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: accept }
+
+    innmind_rest_server.http.factory.header.accept_language:
+        class: Innmind\Http\Factory\Header\AcceptLanguageFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: accept-language }
+
+    innmind_rest_server.http.factory.header.authorization:
+        class: Innmind\Http\Factory\Header\AuthorizationFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: authorization }
+
+    innmind_rest_server.http.factory.header.cache_control:
+        class: Innmind\Http\Factory\Header\CacheControlFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: cache-control }
+
+    innmind_rest_server.http.factory.header.date:
+        class: Innmind\Http\Factory\Header\DateFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: date }
+
+    innmind_rest_server.http.factory.header.host:
+        class: Innmind\Http\Factory\Header\HostFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: host }
+
+    innmind_rest_server.http.factory.header.if_modified_since:
+        class: Innmind\Http\Factory\Header\IfModifiedSinceFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: if-modified-since }
+
+    innmind_rest_server.http.factory.header.if_unmodified_since:
+        class: Innmind\Http\Factory\Header\IfUnmodifiedSinceFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: if-unmodified-since }
+
+    innmind_rest_server.http.factory.header.range:
+        class: Innmind\Http\Factory\Header\RangeFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: range }
+
+    innmind_rest_server.http.factory.header.referrer:
+        class: Innmind\Http\Factory\Header\ReferrerFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: referer }
+
+    innmind_rest_server.http.factory.header.default:
+        class: Innmind\Http\Factory\Header\DefaultFactory
+        factory:
+            - '@innmind_rest_server.factory.header_factory'
+            - make
+
+    innmind_rest_server.factory.header_factory:
+        class: Innmind\Rest\ServerBundle\Factory\HeaderFactoryFactory
+        public: false
