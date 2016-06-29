@@ -33,3 +33,6 @@ services:
     innmind_rest_server.factory.gateways:
         class: Innmind\Rest\ServerBundle\Factory\GatewaysFactory
         public: false
+
+    innmind_rest_server.translator.request:
+        class: Innmind\Rest\ServerBundle\Translator\RequestTranslator
