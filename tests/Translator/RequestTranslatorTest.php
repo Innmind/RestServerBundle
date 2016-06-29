@@ -6,8 +6,11 @@ namespace Tests\Innmind\Rest\ServerBundle\Translator;
 use Innmind\Rest\ServerBundle\Translator\RequestTranslator;
 use Innmind\Http\{
     Message\ServerRequestInterface,
-    File\OkStatus
+    File\OkStatus,
+    Factory\HeaderFactoryInterface,
+    Factory\Header\DefaultFactory
 };
+use Innmind\Immutable\Map;
 use Symfony\Component\HttpFoundation\Request;
 
 class RequestTranslatorTest extends \PHPUnit_Framework_TestCase
@@ -15,7 +18,11 @@ class RequestTranslatorTest extends \PHPUnit_Framework_TestCase
     public function testTranslate()
     {
         file_put_contents('/tmp/uploaded-file', 'some data');
-        $translator = new RequestTranslator;
+        $translator = new RequestTranslator(
+            new DefaultFactory(
+                new Map('string', HeaderFactoryInterface::class)
+            )
+        );
 
         $request = $translator->translate(
             new Request(

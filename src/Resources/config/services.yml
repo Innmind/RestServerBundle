@@ -37,3 +37,5 @@ services:
 
     innmind_rest_server.translator.request:
         class: Innmind\Rest\ServerBundle\Translator\RequestTranslator
+        arguments:
+            - '@innmind_rest_server.http.factory.header.default'

@@ -36,8 +36,7 @@ use Innmind\Http\{
     Headers,
     HeadersInterface,
     Header\HeaderInterface,
-    Factory\Header\DefaultFactory,
-    Factory\HeaderFactoryInterface
+    Factory\Header\DefaultFactory
 };
 use Innmind\Filesystem\{
     Stream\Stream,
@@ -61,15 +60,13 @@ final class RequestTranslator
     private $transformed;
     private $headerFactory;
 
-    public function __construct()
+    public function __construct(DefaultFactory $headerFactory)
     {
         $this->transformed = new Map(
             Request::class,
             ServerRequestInterface::class
         );
-        $this->headerFactory = new DefaultFactory(
-            new Map('string', HeaderFactoryInterface::class)
-        );
+        $this->headerFactory = $headerFactory;
     }
 
     public function translate(Request $request): ServerRequestInterface
