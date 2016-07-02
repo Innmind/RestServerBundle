@@ -62,9 +62,9 @@ services:
     innmind_rest_server.http.factory.header.default:
         class: Innmind\Http\Factory\Header\DefaultFactory
         factory:
-            - '@innmind_rest_server.factory.header_factory'
+            - '@innmind_rest_server.http.factory.header_factory'
             - make
 
-    innmind_rest_server.factory.header_factory:
+    innmind_rest_server.http.factory.header_factory:
         class: Innmind\Rest\ServerBundle\Factory\HeaderFactoryFactory
         public: false
