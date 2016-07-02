@@ -37,7 +37,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
         $routes = $this->loader->load('.');
 
         $this->assertInstanceOf(RouteCollection::class, $routes);
-        $this->assertSame(16, $routes->count());
+        $this->assertSame(17, $routes->count());
         $this->assertSame(
             [
                 'innmind_rest_server.top_dir.image.list',
@@ -56,6 +56,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
                 'innmind_rest_server.top_dir.sub_dir.res.link',
                 'innmind_rest_server.top_dir.sub_dir.res.unlink',
                 'innmind_rest_server.top_dir.sub_dir.res.options',
+                'innmind_rest_server_capabilities',
             ],
             array_keys($routes->all())
         );
@@ -139,6 +140,13 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
                 '_innmind_resource' => 'top_dir.sub_dir.res',
                 '_innmind_action' => Action::OPTIONS,
             ],
+            $route->getDefaults()
+        );
+        $route = $routes->get('innmind_rest_server_capabilities');
+        $this->assertSame('/*', $route->getPath());
+        $this->assertSame([MethodInterface::OPTIONS], $route->getMethods());
+        $this->assertSame(
+            ['_controller' => 'innmind_rest_server.controller.capabilities:capabilitiesAction'],
             $route->getDefaults()
         );
     }

@@ -9,7 +9,11 @@ use Innmind\Rest\ServerBundle\{
 };
 use Innmind\Rest\Server\Format\Format;
 use Innmind\Immutable\MapInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\{
+    DependencyInjection\ContainerBuilder,
+    DependencyInjection\Definition,
+    Routing\RouterInterface
+};
 
 class InnmindRestServerExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,6 +21,10 @@ class InnmindRestServerExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder;
         $container->setParameter('kernel.bundles', []);
+        $container->setDefinition(
+            'router',
+            new Definition(RouterInterface::class)
+        );
         $extension = new InnmindRestServerExtension;
 
         $this->assertSame(

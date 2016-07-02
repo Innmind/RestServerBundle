@@ -1,0 +1,7 @@
+services:
+    innmind_rest_server.controller.capabilities:
+        class: Innmind\Rest\ServerBundle\Controller\CapabilitiesController
+        arguments:
+            - '@innmind_rest_server.definition.directories'
+            - '@innmind_rest_server.routing.route_factory'
+            - '@router'

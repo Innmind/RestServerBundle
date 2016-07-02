@@ -61,6 +61,19 @@ final class RouteLoader extends Loader
             );
         }
 
+        $routes->add(
+            'innmind_rest_server_capabilities',
+            new Route(
+                '/*',
+                ['_controller' => 'innmind_rest_server.controller.capabilities:capabilitiesAction'],
+                [],
+                [],
+                '',
+                [],
+                [MethodInterface::OPTIONS]
+            )
+        );
+
         $this->imported = true;
 
         return $routes;

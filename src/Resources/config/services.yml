@@ -2,6 +2,7 @@ imports:
     - { resource: 'formats.yml' }
     - { resource: 'listeners.yml' }
     - { resource: 'http.yml' }
+    - { resource: 'controllers.yml' }
 
 services:
     innmind_rest_server.definition.types:
