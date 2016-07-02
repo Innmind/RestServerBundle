@@ -39,3 +39,15 @@ services:
         class: Innmind\Rest\ServerBundle\Translator\RequestTranslator
         arguments:
             - '@innmind_rest_server.http.factory.header.default'
+
+    innmind_rest_server.routing.route_factory:
+        class: Innmind\Rest\ServerBundle\Routing\RouteFactory
+        public: false
+
+    innmind_rest_server.routing.route_loader:
+        class: Innmind\Rest\ServerBundle\Routing\RouteLoader
+        arguments:
+            - '@innmind_rest_server.definition.directories'
+            - '@innmind_rest_server.routing.route_factory'
+        tags:
+            - { name: routing.loader }
