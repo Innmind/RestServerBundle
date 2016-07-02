@@ -17,3 +17,10 @@ services:
             - '@innmind_rest_server.translator.request'
         tags:
             - { name: kernel.event_subscriber }
+
+    innmind_rest_server.listener.request_verifier:
+        class: Innmind\Rest\ServerBundle\EventListener\RequestVerifierListener
+        arguments:
+            - '@innmind_rest_server.http.request.verifier'
+        tags:
+            - { name: kernel.event_subscriber }
