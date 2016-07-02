@@ -10,3 +10,10 @@ services:
             - '@innmind_rest_server.definition.directories'
         tags:
             - { name: kernel.event_subscriber }
+
+    innmind_rest_server.listener.translate_request:
+        class: Innmind\Rest\ServerBundle\EventListener\TranslateRequestListener
+        arguments:
+            - '@innmind_rest_server.translator.request'
+        tags:
+            - { name: kernel.event_subscriber }
