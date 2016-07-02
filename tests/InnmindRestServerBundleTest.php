@@ -7,7 +7,8 @@ use Innmind\Rest\ServerBundle\{
     InnmindRestServerBundle,
     DependencyInjection\Compiler\RegisterDefinitionFilesPass,
     DependencyInjection\Compiler\RegisterGatewaysPass,
-    DependencyInjection\Compiler\RegisterHttpHeaderFactoriesPass
+    DependencyInjection\Compiler\RegisterHttpHeaderFactoriesPass,
+    DependencyInjection\Compiler\RegisterRequestVerifiersPass
 };
 use Symfony\Component\{
     HttpKernel\Bundle\Bundle,
@@ -26,7 +27,7 @@ class InnmindRestServerBundleTest extends \PHPUnit_Framework_TestCase
         $passes = $container
             ->getCompilerPassConfig()
             ->getBeforeOptimizationPasses();
-        $this->assertSame(3, count($passes));
+        $this->assertSame(4, count($passes));
         $this->assertInstanceOf(
             RegisterDefinitionFilesPass::class,
             $passes[0]
@@ -38,6 +39,10 @@ class InnmindRestServerBundleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             RegisterHttpHeaderFactoriesPass::class,
             $passes[2]
+        );
+        $this->assertInstanceOf(
+            RegisterRequestVerifiersPass::class,
+            $passes[3]
         );
     }
 }
