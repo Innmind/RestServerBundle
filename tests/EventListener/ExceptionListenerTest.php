@@ -4,7 +4,13 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Rest\ServerBundle\EventListener;
 
 use Innmind\Rest\ServerBundle\EventListener\ExceptionListener;
+use Innmind\Rest\Server\Exception\{
+    HttpResourceDenormalizationException,
+    ActionNotImplementedException,
+    DenormalizationException
+};
 use Innmind\Http\Exception\Http\BadRequestException;
+use Innmind\Immutable\Map;
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
     HttpKernel\KernelEvents,
@@ -73,5 +79,51 @@ class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
             $listener->transformException($event)
         );
         $this->assertSame($exception, $event->getException());
+    }
+
+    public function testTransformActionNotImplemented()
+    {
+        $exception = new ActionNotImplementedException;
+        $event = new GetResponseForExceptionEvent(
+            $this->getMock(HttpKernelInterface::class),
+            new Request,
+            HttpKernelInterface::MASTER_REQUEST,
+            $exception
+        );
+        $listener = new ExceptionListener;
+
+        $this->assertSame(
+            null,
+            $listener->transformException($event)
+        );
+        $this->assertInstanceOf(
+            HttpException::class,
+            $event->getException()
+        );
+        $this->assertSame(405, $event->getException()->getStatusCode());
+    }
+
+    public function testTransformDenormalizationException()
+    {
+        $exception = new HttpResourceDenormalizationException(
+            new Map('string', DenormalizationException::class)
+        );
+        $event = new GetResponseForExceptionEvent(
+            $this->getMock(HttpKernelInterface::class),
+            new Request,
+            HttpKernelInterface::MASTER_REQUEST,
+            $exception
+        );
+        $listener = new ExceptionListener;
+
+        $this->assertSame(
+            null,
+            $listener->transformException($event)
+        );
+        $this->assertInstanceOf(
+            HttpException::class,
+            $event->getException()
+        );
+        $this->assertSame(400, $event->getException()->getStatusCode());
     }
 }
