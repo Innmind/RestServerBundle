@@ -37,7 +37,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
         $routes = $this->loader->load('.');
 
         $this->assertInstanceOf(RouteCollection::class, $routes);
-        $this->assertSame(14, $routes->count());
+        $this->assertSame(16, $routes->count());
         $this->assertSame(
             [
                 'innmind_rest_server.top_dir.image.list',
@@ -47,6 +47,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
                 'innmind_rest_server.top_dir.image.remove',
                 'innmind_rest_server.top_dir.image.link',
                 'innmind_rest_server.top_dir.image.unlink',
+                'innmind_rest_server.top_dir.image.options',
                 'innmind_rest_server.top_dir.sub_dir.res.list',
                 'innmind_rest_server.top_dir.sub_dir.res.get',
                 'innmind_rest_server.top_dir.sub_dir.res.create',
@@ -54,6 +55,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
                 'innmind_rest_server.top_dir.sub_dir.res.remove',
                 'innmind_rest_server.top_dir.sub_dir.res.link',
                 'innmind_rest_server.top_dir.sub_dir.res.unlink',
+                'innmind_rest_server.top_dir.sub_dir.res.options',
             ],
             array_keys($routes->all())
         );
@@ -129,6 +131,16 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
             $route->getDefaults()
         );
         $this->assertSame('request.headers.has(\'Link\')', $route->getCondition());
+        $route = $routes->get('innmind_rest_server.top_dir.sub_dir.res.options');
+        $this->assertSame('/top_dir/sub_dir/res/', $route->getPath());
+        $this->assertSame([MethodInterface::OPTIONS], $route->getMethods());
+        $this->assertSame(
+            [
+                '_innmind_resource' => 'top_dir.sub_dir.res',
+                '_innmind_action' => Action::OPTIONS,
+            ],
+            $route->getDefaults()
+        );
     }
 
     public function testSupports()

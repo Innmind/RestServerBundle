@@ -67,6 +67,9 @@ final class RouteFactory
                 $path = $path->append('{identity}');
                 $condition = 'request.headers.has(\'Link\')';
                 break;
+            case Action::OPTIONS:
+                $method = MethodInterface::OPTIONS;
+                break;
         }
 
         return new Route(

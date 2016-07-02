@@ -155,4 +155,22 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             $route->getCondition()
         );
     }
+
+    public function testMakeRouteOptions()
+    {
+        $factory = new RouteFactory;
+
+        $route = $factory->makeRoute('image', new Action('options'));
+
+        $this->assertInstanceOf(Route::class, $route);
+        $this->assertSame('/image/', $route->getPath());
+        $this->assertSame([MethodInterface::OPTIONS], $route->getMethods());
+        $this->assertSame(
+            [
+                '_innmind_resource' => 'image',
+                '_innmind_action' => 'options',
+            ],
+            $route->getDefaults()
+        );
+    }
 }
