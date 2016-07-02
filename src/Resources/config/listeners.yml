@@ -3,3 +3,10 @@ services:
         class: Innmind\Rest\ServerBundle\EventListener\ExceptionListener
         tags:
             - { name: kernel.event_subscriber }
+
+    innmind_rest_server.listener.definition_loader:
+        class: Innmind\Rest\ServerBundle\EventListener\DefinitionLoaderListener
+        arguments:
+            - '@innmind_rest_server.definition.directories'
+        tags:
+            - { name: kernel.event_subscriber }
