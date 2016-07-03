@@ -1,0 +1,5 @@
+services:
+    innmind_rest_server.serializer.normalizer.definition:
+        class: Innmind\Rest\Server\Serializer\Normalizer\DefinitionNormalizer
+        tags:
+            - { name: serializer.normalizer }

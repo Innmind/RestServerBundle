@@ -35,6 +35,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'list',
+                '_controller' => 'innmind_rest_server.controller.resource:listAction',
             ],
             $route->getDefaults()
         );
@@ -53,6 +54,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'get',
+                '_controller' => 'innmind_rest_server.controller.resource:getAction',
             ],
             $route->getDefaults()
         );
@@ -71,6 +73,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'create',
+                '_controller' => 'innmind_rest_server.controller.resource:createAction',
             ],
             $route->getDefaults()
         );
@@ -89,6 +92,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'update',
+                '_controller' => 'innmind_rest_server.controller.resource:updateAction',
             ],
             $route->getDefaults()
         );
@@ -107,6 +111,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'remove',
+                '_controller' => 'innmind_rest_server.controller.resource:removeAction',
             ],
             $route->getDefaults()
         );
@@ -125,6 +130,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'link',
+                '_controller' => 'innmind_rest_server.controller.resource:linkAction',
             ],
             $route->getDefaults()
         );
@@ -147,6 +153,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'unlink',
+                '_controller' => 'innmind_rest_server.controller.resource:unlinkAction',
             ],
             $route->getDefaults()
         );
@@ -169,6 +176,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'options',
+                '_controller' => 'innmind_rest_server.controller.resource:optionsAction',
             ],
             $route->getDefaults()
         );

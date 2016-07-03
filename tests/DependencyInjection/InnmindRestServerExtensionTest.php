@@ -12,7 +12,8 @@ use Innmind\Immutable\MapInterface;
 use Symfony\Component\{
     DependencyInjection\ContainerBuilder,
     DependencyInjection\Definition,
-    Routing\RouterInterface
+    Routing\RouterInterface,
+    Serializer\Serializer
 };
 
 class InnmindRestServerExtensionTest extends \PHPUnit_Framework_TestCase
@@ -24,6 +25,10 @@ class InnmindRestServerExtensionTest extends \PHPUnit_Framework_TestCase
         $container->setDefinition(
             'router',
             new Definition(RouterInterface::class)
+        );
+        $container->setDefinition(
+            'serializer',
+            new Definition(Serializer::class)
         );
         $extension = new InnmindRestServerExtension;
 

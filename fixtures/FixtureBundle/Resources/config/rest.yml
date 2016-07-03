@@ -1,0 +1,11 @@
+top_dir:
+    resources:
+        image:
+            identity: uuid
+            gateway: command
+            properties:
+                uuid:
+                    type: string
+                url:
+                    type: string
+                    access: [READ, CREATE, UPDATE]

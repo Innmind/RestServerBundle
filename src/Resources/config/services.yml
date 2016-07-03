@@ -3,6 +3,7 @@ imports:
     - { resource: 'listeners.yml' }
     - { resource: 'http.yml' }
     - { resource: 'controllers.yml' }
+    - { resource: 'serializer.yml' }
 
 services:
     innmind_rest_server.definition.types:

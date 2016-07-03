@@ -5,3 +5,9 @@ services:
             - '@innmind_rest_server.definition.directories'
             - '@innmind_rest_server.routing.route_factory'
             - '@router'
+
+    innmind_rest_server.controller.resource:
+        class: Innmind\Rest\ServerBundle\Controller\ResourceController
+        arguments:
+            - '@innmind_rest_server.format'
+            - '@serializer'
