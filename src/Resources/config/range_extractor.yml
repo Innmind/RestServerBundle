@@ -1,0 +1,28 @@
+parameters:
+    innmind_rest_server.range_extractor: innmind_rest_server.range_extractor.delegation
+
+services:
+    innmind_rest_server.range_extractor.delegation:
+        class: Innmind\Rest\ServerBundle\RangeExtractor\DelegationExtractor
+        arguments:
+            - []
+        public: false
+        factory:
+            - '@innmind_rest_server.factory.range_extractor'
+            - make
+
+    innmind_rest_server.factory.range_extractor:
+        class: Innmind\Rest\ServerBundle\Factory\RangeExtractorFactory
+        public: false
+
+    innmind_rest_server.range_extractor.header:
+        class: Innmind\Rest\ServerBundle\RangeExtractor\HeaderExtractor
+        public: false
+        tags:
+            - { name: innmind_rest_server.range_extractor }
+
+    innmind_rest_server.range_extractor.query:
+        class: Innmind\Rest\ServerBundle\RangeExtractor\QueryExtractor
+        public: false
+        tags:
+            - { name: innmind_rest_server.range_extractor }
