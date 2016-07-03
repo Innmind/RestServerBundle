@@ -9,7 +9,10 @@ use Innmind\Rest\Server\Exception\{
     ActionNotImplementedException,
     DenormalizationException
 };
-use Innmind\Http\Exception\Http\BadRequestException;
+use Innmind\Http\Exception\{
+    Http\BadRequestException,
+    ExceptionInterface as BaseHttpExceptionInterface
+};
 use Innmind\Immutable\Map;
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
@@ -108,6 +111,30 @@ class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
         $exception = new HttpResourceDenormalizationException(
             new Map('string', DenormalizationException::class)
         );
+        $event = new GetResponseForExceptionEvent(
+            $this->getMock(HttpKernelInterface::class),
+            new Request,
+            HttpKernelInterface::MASTER_REQUEST,
+            $exception
+        );
+        $listener = new ExceptionListener;
+
+        $this->assertSame(
+            null,
+            $listener->transformException($event)
+        );
+        $this->assertInstanceOf(
+            HttpException::class,
+            $event->getException()
+        );
+        $this->assertSame(400, $event->getException()->getStatusCode());
+    }
+
+    public function testTransformAnyBaseHttpException()
+    {
+        $exception = new class extends \Exception implements BaseHttpExceptionInterface
+        {
+        };
         $event = new GetResponseForExceptionEvent(
             $this->getMock(HttpKernelInterface::class),
             new Request,

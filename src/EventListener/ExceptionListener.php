@@ -8,10 +8,11 @@ use Innmind\Rest\Server\Exception\{
     ActionNotImplementedException,
     HttpResourceDenormalizationException
 };
-use Innmind\Http\Exception\Http\{
-    ExceptionInterface,
-    MethodNotAllowedException,
-    BadRequestException
+use Innmind\Http\Exception\{
+    ExceptionInterface as BaseHttpExceptionInterface,
+    Http\ExceptionInterface,
+    Http\MethodNotAllowedException,
+    Http\BadRequestException
 };
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
@@ -46,6 +47,13 @@ final class ExceptionListener implements EventSubscriberInterface
 
         if ($exception instanceof ServerExceptionInterface) {
             $exception = $this->map($exception);
+        }
+
+        if (
+            $exception instanceof BaseHttpExceptionInterface &&
+            !$exception instanceof ExceptionInterface
+        ) {
+            $exception = new BadRequestException;
         }
 
         if (!$exception instanceof ExceptionInterface) {
