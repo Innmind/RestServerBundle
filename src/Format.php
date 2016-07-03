@@ -5,7 +5,7 @@ namespace Innmind\Rest\ServerBundle;
 
 use Innmind\Rest\Server\{
     Formats,
-    Format\Format,
+    Format\Format as FormatFormat,
     Format\MediaType
 };
 use Innmind\Http\Message\ServerRequestInterface;
@@ -26,7 +26,7 @@ final class Format
         $this->negotiator = new Negotiator;
     }
 
-    public function acceptable(ServerRequestInterface $request): Format
+    public function acceptable(ServerRequestInterface $request): FormatFormat
     {
         $best = $this->negotiator->getBest(
             $request
@@ -51,7 +51,7 @@ final class Format
         );
     }
 
-    public function contentType(ServerRequestInterface $request): Format
+    public function contentType(ServerRequestInterface $request): FormatFormat
     {
         return $this->contentType->fromMediaType(
             (string) $request
@@ -62,7 +62,7 @@ final class Format
         );
     }
 
-    private function best(string $mediaType): Format
+    private function best(string $mediaType): FormatFormat
     {
         if ($mediaType === '*/*') {
             return $this
