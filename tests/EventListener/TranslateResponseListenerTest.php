@@ -28,7 +28,7 @@ use Symfony\Component\{
     HttpFoundation\Request
 };
 
-class TranslateResponseListener extends \PHPUnit_Framework_TestCase
+class TranslateResponseListenerTest extends \PHPUnit_Framework_TestCase
 {
     public function testInterface()
     {
