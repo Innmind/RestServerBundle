@@ -4,3 +4,9 @@ services:
 
     innmind_rest_server.formats.content_type:
         class: Innmind\Rest\Server\Formats
+
+    innmind_rest_server.format:
+        class: Innmind\Rest\ServerBundle\Format
+        arguments:
+            - '@innmind_rest_server.formats.accept'
+            - '@innmind_rest_server.formats.content_type'
