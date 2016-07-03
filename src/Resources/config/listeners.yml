@@ -18,6 +18,13 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    innmind_rest_server.listener.translate_response:
+        class: Innmind\Rest\ServerBundle\EventListener\TranslateResponseListener
+        arguments:
+            - '@innmind_rest_server.translator.response'
+        tags:
+            - { name: kernel.event_subscriber }
+
     innmind_rest_server.listener.request_verifier:
         class: Innmind\Rest\ServerBundle\EventListener\RequestVerifierListener
         arguments:
