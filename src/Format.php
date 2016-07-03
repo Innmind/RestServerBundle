@@ -69,7 +69,7 @@ final class Format
                 ->accept
                 ->all()
                 ->values()
-                ->sort(function(Format $a, Format $b) {
+                ->sort(function(FormatFormat $a, FormatFormat $b) {
                     return $a->priority() > $b->priority();
                 })
                 ->first();
