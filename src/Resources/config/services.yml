@@ -41,6 +41,9 @@ services:
         arguments:
             - '@innmind_rest_server.http.factory.header.default'
 
+    innmind_rest_server.translator.response:
+        class: Innmind\Rest\ServerBundle\Translator\ResponseTranslator
+
     innmind_rest_server.routing.route_factory:
         class: Innmind\Rest\ServerBundle\Routing\RouteFactory
         public: false
