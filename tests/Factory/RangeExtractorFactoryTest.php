@@ -3,12 +3,12 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Rest\ServerBundle\Factory;
 
-use Innmind\Rest\ServerBundle\{
-    Factory\RangeExtractorFactory,
+use Innmind\Rest\ServerBundle\Factory\RangeExtractorFactory;
+use Innmind\Rest\Server\{
     RangeExtractor\DelegationExtractor,
-    RangeExtractor\ExtractorInterface
+    RangeExtractor\ExtractorInterface,
+    Request\Range
 };
-use Innmind\Rest\Server\Request\Range;
 use Innmind\Http\Message\ServerRequestInterface;
 
 class RangeExtractorFactoryTest extends \PHPUnit_Framework_TestCase

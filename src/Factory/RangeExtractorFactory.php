@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Factory;
 
-use Innmind\Rest\ServerBundle\RangeExtractor\{
+use Innmind\Rest\Server\RangeExtractor\{
     DelegationExtractor,
     ExtractorInterface
 };
