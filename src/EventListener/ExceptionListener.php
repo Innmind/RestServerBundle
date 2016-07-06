@@ -6,7 +6,8 @@ namespace Innmind\Rest\ServerBundle\EventListener;
 use Innmind\Rest\Server\Exception\{
     ExceptionInterface as ServerExceptionInterface,
     ActionNotImplementedException,
-    HttpResourceDenormalizationException
+    HttpResourceDenormalizationException,
+    FilterNotApplicableException
 };
 use Innmind\Http\Exception\{
     ExceptionInterface as BaseHttpExceptionInterface,
@@ -75,6 +76,7 @@ final class ExceptionListener implements EventSubscriberInterface
             case $exception instanceof ActionNotImplementedException:
                 return new MethodNotAllowedException;
             case $exception instanceof HttpResourceDenormalizationException:
+            case $exception instanceof FilterNotApplicableException:
                 return new BadRequestException;
         }
 

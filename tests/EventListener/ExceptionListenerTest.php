@@ -7,7 +7,8 @@ use Innmind\Rest\ServerBundle\EventListener\ExceptionListener;
 use Innmind\Rest\Server\Exception\{
     HttpResourceDenormalizationException,
     ActionNotImplementedException,
-    DenormalizationException
+    DenormalizationException,
+    FilterNotApplicableException
 };
 use Innmind\Http\Exception\{
     Http\BadRequestException,
@@ -111,6 +112,28 @@ class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
         $exception = new HttpResourceDenormalizationException(
             new Map('string', DenormalizationException::class)
         );
+        $event = new GetResponseForExceptionEvent(
+            $this->getMock(HttpKernelInterface::class),
+            new Request,
+            HttpKernelInterface::MASTER_REQUEST,
+            $exception
+        );
+        $listener = new ExceptionListener;
+
+        $this->assertSame(
+            null,
+            $listener->transformException($event)
+        );
+        $this->assertInstanceOf(
+            HttpException::class,
+            $event->getException()
+        );
+        $this->assertSame(400, $event->getException()->getStatusCode());
+    }
+
+    public function testTransformFilterNotApplicableException()
+    {
+        $exception = new FilterNotApplicableException;
         $event = new GetResponseForExceptionEvent(
             $this->getMock(HttpKernelInterface::class),
             new Request,
