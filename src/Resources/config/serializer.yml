@@ -3,3 +3,8 @@ services:
         class: Innmind\Rest\Server\Serializer\Normalizer\DefinitionNormalizer
         tags:
             - { name: serializer.normalizer }
+
+    innmind_rest_server.serializer.normalizer.identities:
+        class: Innmind\Rest\Server\Serializer\Normalizer\IdentitiesNormalizer
+        tags:
+            - { name: serializer.normalizer }
