@@ -9,7 +9,7 @@ services:
             - make
 
     innmind_rest_server.factory.range_extractor:
-        class: Innmind\Rest\Server\Factory\RangeExtractorFactory
+        class: Innmind\Rest\ServerBundle\Factory\RangeExtractorFactory
         public: false
 
     innmind_rest_server.range_extractor.header:
