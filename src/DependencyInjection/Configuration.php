@@ -58,6 +58,9 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('specification_builder')
                     ->defaultValue('innmind_rest_server.specification_builder.default')
                 ->end()
+                ->scalarNode('range_extractor')
+                    ->defaultValue('innmind_rest_server.range_extractor.delegation')
+                ->end()
             ->end();
 
         return $treeBuilder;

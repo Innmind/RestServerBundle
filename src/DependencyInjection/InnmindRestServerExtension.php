@@ -39,7 +39,7 @@ final class InnmindRestServerExtension extends Extension
             ->registerTypes($config['types'], $container)
             ->registerAcceptFormats($config['accept'], $container)
             ->registerContentTypeFormats($config['content_type'], $container)
-            ->configureRangeExtractor($container)
+            ->configureRangeExtractor($config['range_extractor'], $container)
             ->configureSpecificationBuilder(
                 $config['specification_builder'],
                 $container
@@ -113,11 +113,13 @@ final class InnmindRestServerExtension extends Extension
         return $this;
     }
 
-    private function configureRangeExtractor(ContainerBuilder $container): self
-    {
+    private function configureRangeExtractor(
+        string $service,
+        ContainerBuilder $container
+    ): self {
         $container->setAlias(
             'innmind_rest_server.range_extractor',
-            $container->getParameter('innmind_rest_server.range_extractor')
+            $service
         );
 
         return $this;

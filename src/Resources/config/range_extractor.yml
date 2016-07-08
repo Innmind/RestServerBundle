@@ -1,6 +1,3 @@
-parameters:
-    innmind_rest_server.range_extractor: innmind_rest_server.range_extractor.delegation
-
 services:
     innmind_rest_server.range_extractor.delegation:
         class: Innmind\Rest\Server\RangeExtractor\DelegationExtractor
