@@ -28,53 +28,23 @@ final class Format
 
     public function acceptable(ServerRequestInterface $request): FormatFormat
     {
-        $best = $this->negotiator->getBest(
-            $request
+        return $this->accept->matching(
+            (string) $request
                 ->headers()
                 ->get('Accept')
                 ->values()
-                ->join(', '),
-            $this
-                ->accept
-                ->mediaTypes()
-                ->reduce(
-                    [],
-                    function(array $carry, MediaType $type) {
-                        $carry[] = (string) $type;
-                        return $carry;
-                    }
-                )
-        );
-
-        return $this->best(
-            $best->getBasePart().'/'.$best->getSubPart()
+                ->join(', ')
         );
     }
 
     public function contentType(ServerRequestInterface $request): FormatFormat
     {
-        return $this->contentType->fromMediaType(
+        return $this->contentType->matching(
             (string) $request
                 ->headers()
                 ->get('Content-Type')
                 ->values()
                 ->current()
         );
-    }
-
-    private function best(string $mediaType): FormatFormat
-    {
-        if ($mediaType === '*/*') {
-            return $this
-                ->accept
-                ->all()
-                ->values()
-                ->sort(function(FormatFormat $a, FormatFormat $b) {
-                    return $a->priority() > $b->priority();
-                })
-                ->first();
-        }
-
-        return $this->accept->fromMediaType($mediaType);
     }
 }
