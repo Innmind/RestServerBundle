@@ -43,6 +43,10 @@ final class InnmindRestServerExtension extends Extension
             ->configureSpecificationBuilder(
                 $config['specification_builder'],
                 $container
+            )
+            ->configureHeaderBuilders(
+                $config['response']['header_builders'],
+                $container
             );
     }
 
@@ -132,6 +136,18 @@ final class InnmindRestServerExtension extends Extension
         $container->setAlias(
             'innmind_rest_server.specification_builder',
             $service
+        );
+
+        return $this;
+    }
+
+    private function configureHeaderBuilders(
+        array $builders,
+        ContainerBuilder $container
+    ): self {
+        $container->setAlias(
+            'innmind_rest_server.response.header_builder.list',
+            $builders['list']
         );
 
         return $this;
