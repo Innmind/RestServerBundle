@@ -1,0 +1,33 @@
+services:
+    innmind_rest_server.response.header_builder.list_delegation:
+        class: Innmind\Rest\Server\Response\HeaderBuilder\ListDelegationBuilder
+        public: false
+        arguments:
+            - []
+        factory:
+            - '@innmind_rest_server.response.header_builder.list_delegation.factory'
+            - make
+
+    innmind_rest_server.response.header_builder.list_delegation.factory:
+        class: Innmind\Rest\ServerBundle\Factory\ListDelegationBuilderFactory
+        public: false
+
+    innmind_rest_server.response.header_builder.list_content_type:
+        class: Innmind\Rest\Server\Response\HeaderBuilder\ListContentTypeBuilder
+        public: false
+        arguments:
+            - '@innmind_rest_server.formats.accept'
+        tags:
+            - { name: innmind_rest_server.response.header_builder.list }
+
+    innmind_rest_server.response.header_builder.list_links:
+        class: Innmind\Rest\Server\Response\HeaderBuilder\ListLinksBuilder
+        public: false
+        tags:
+            - { name: innmind_rest_server.response.header_builder.list }
+
+    innmind_rest_server.response.header_builder.list_range:
+        class: Innmind\Rest\Server\Response\HeaderBuilder\ListRangeBuilder
+        public: false
+        tags:
+            - { name: innmind_rest_server.response.header_builder.list }

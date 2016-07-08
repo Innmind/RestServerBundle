@@ -5,6 +5,7 @@ imports:
     - { resource: 'controllers.yml' }
     - { resource: 'serializer.yml' }
     - { resource: 'range_extractor.yml' }
+    - { resource: 'header_builder.yml' }
 
 services:
     innmind_rest_server.definition.types:
