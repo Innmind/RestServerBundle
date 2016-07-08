@@ -57,3 +57,7 @@ services:
             - '@innmind_rest_server.routing.route_factory'
         tags:
             - { name: routing.loader }
+
+    innmind_rest_server.specification_builder.default:
+        class: Innmind\Rest\Server\SpecificationBuilder\Builder
+        public: false

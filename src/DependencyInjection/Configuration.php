@@ -55,6 +55,9 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->scalarNode('specification_builder')
+                    ->defaultValue('innmind_rest_server.specification_builder.default')
+                ->end()
             ->end();
 
         return $treeBuilder;
