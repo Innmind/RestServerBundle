@@ -60,7 +60,7 @@ class DefinitionLoaderListenerTest extends \PHPUnit_Framework_TestCase
     {
         $listener = new DefinitionLoaderListener($this->directories);
         $event = new GetResponseEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             $request = new Request,
             HttpKernelInterface::MASTER_REQUEST
         );
@@ -80,7 +80,7 @@ class DefinitionLoaderListenerTest extends \PHPUnit_Framework_TestCase
     {
         $listener = new DefinitionLoaderListener($this->directories);
         $event = new GetResponseEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             $request = new Request,
             HttpKernelInterface::MASTER_REQUEST
         );
@@ -98,7 +98,7 @@ class DefinitionLoaderListenerTest extends \PHPUnit_Framework_TestCase
     {
         $listener = new DefinitionLoaderListener($this->directories);
         $event = new GetResponseEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             $request = new Request,
             HttpKernelInterface::MASTER_REQUEST
         );

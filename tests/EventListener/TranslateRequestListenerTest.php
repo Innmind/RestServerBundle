@@ -54,7 +54,7 @@ class TranslateRequestListenerTest extends \PHPUnit_Framework_TestCase
             )
         );
         $event = new GetResponseEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             $request = new Request(
                 [],
                 [],

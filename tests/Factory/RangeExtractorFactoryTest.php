@@ -18,7 +18,7 @@ class RangeExtractorFactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new RangeExtractorFactory;
 
         $extractor = $factory->make([
-            $extractor1 = $this->getMock(ExtractorInterface::class)
+            $extractor1 = $this->createMock(ExtractorInterface::class)
         ]);
         $extractor1
             ->method('extract')
@@ -26,7 +26,7 @@ class RangeExtractorFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(DelegationExtractor::class, $extractor);
         $extractor->extract(
-            $this->getMock(ServerRequestInterface::class)
+            $this->createMock(ServerRequestInterface::class)
         );
     }
 }

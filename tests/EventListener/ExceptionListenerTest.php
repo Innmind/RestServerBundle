@@ -48,7 +48,7 @@ class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
     {
         $exception = new BadRequestException;
         $event = new GetResponseForExceptionEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             new Request,
             HttpKernelInterface::MASTER_REQUEST,
             $exception
@@ -71,7 +71,7 @@ class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
     {
         $exception = new \Exception;
         $event = new GetResponseForExceptionEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             new Request,
             HttpKernelInterface::MASTER_REQUEST,
             $exception
@@ -89,7 +89,7 @@ class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
     {
         $exception = new ActionNotImplementedException;
         $event = new GetResponseForExceptionEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             new Request,
             HttpKernelInterface::MASTER_REQUEST,
             $exception
@@ -113,7 +113,7 @@ class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
             new Map('string', DenormalizationException::class)
         );
         $event = new GetResponseForExceptionEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             new Request,
             HttpKernelInterface::MASTER_REQUEST,
             $exception
@@ -135,7 +135,7 @@ class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
     {
         $exception = new FilterNotApplicableException;
         $event = new GetResponseForExceptionEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             new Request,
             HttpKernelInterface::MASTER_REQUEST,
             $exception
@@ -159,7 +159,7 @@ class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
         {
         };
         $event = new GetResponseForExceptionEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             new Request,
             HttpKernelInterface::MASTER_REQUEST,
             $exception

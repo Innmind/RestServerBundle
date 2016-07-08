@@ -45,7 +45,7 @@ class CapabilitiesControllerTest extends \PHPUnit_Framework_TestCase
         new CapabilitiesController(
             new Map('int', 'int'),
             new RouteFactory,
-            $this->getMock(UrlGeneratorInterface::class)
+            $this->createMock(UrlGeneratorInterface::class)
         );
     }
 
@@ -58,7 +58,7 @@ class CapabilitiesControllerTest extends \PHPUnit_Framework_TestCase
                 )
             ),
             new RouteFactory,
-            $generator = $this->getMock(UrlGeneratorInterface::class)
+            $generator = $this->createMock(UrlGeneratorInterface::class)
         );
         $generator
             ->method('generate')

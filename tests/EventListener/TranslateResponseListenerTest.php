@@ -49,7 +49,7 @@ class TranslateResponseListenerTest extends \PHPUnit_Framework_TestCase
     {
         $listener = new TranslateResponseListener(new ResponseTranslator);
         $event = new GetResponseForControllerResultEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             new Request,
             HttpKernelInterface::MASTER_REQUEST,
             new Response(
@@ -81,7 +81,7 @@ class TranslateResponseListenerTest extends \PHPUnit_Framework_TestCase
     {
         $listener = new TranslateResponseListener(new ResponseTranslator);
         $event = new GetResponseForControllerResultEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             new Request,
             HttpKernelInterface::MASTER_REQUEST,
             null

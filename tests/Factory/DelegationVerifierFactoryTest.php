@@ -25,7 +25,7 @@ class DelegationVerifierFactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new DelegationVerifierFactory;
 
         $verifier = $factory->make([
-            50 => $mock = $this->getMock(VerifierInterface::class),
+            50 => $mock = $this->createMock(VerifierInterface::class),
         ]);
         $called = false;
         $mock
@@ -36,7 +36,7 @@ class DelegationVerifierFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(DelegationVerifier::class, $verifier);
         $verifier->verify(
-            $this->getMock(ServerRequestInterface::class),
+            $this->createMock(ServerRequestInterface::class),
             new HttpResource(
                 'foo',
                 new Identity('foo'),

@@ -14,7 +14,7 @@ class GatewaysFactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new GatewaysFactory;
 
         $gateways = $factory->make([
-            'command' => $gateway = $this->getMock(GatewayInterface::class),
+            'command' => $gateway = $this->createMock(GatewayInterface::class),
         ]);
 
         $this->assertInstanceOf(MapInterface::class, $gateways);

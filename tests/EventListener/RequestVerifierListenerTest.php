@@ -29,7 +29,7 @@ class RequestVerifierListenerTest extends \PHPUnit_Framework_TestCase
     public function testInterface()
     {
         $listener = new RequestVerifierListener(
-            $this->getMock(VerifierInterface::class)
+            $this->createMock(VerifierInterface::class)
         );
 
         $this->assertInstanceOf(EventSubscriberInterface::class, $listener);
@@ -50,19 +50,19 @@ class RequestVerifierListenerTest extends \PHPUnit_Framework_TestCase
     public function testVerify()
     {
         $listener = new RequestVerifierListener(
-            $verifier = $this->getMock(VerifierInterface::class)
+            $verifier = $this->createMock(VerifierInterface::class)
         );
         $verifier
             ->method('verify')
             ->will($this->throwException(new \Exception('verified')));
         $event = new GetResponseEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             $request = new Request,
             HttpKernelInterface::MASTER_REQUEST
         );
         $request->attributes->set(
             '_innmind_request',
-            $this->getMock(ServerRequestInterface::class)
+            $this->createMock(ServerRequestInterface::class)
         );
         $request->attributes->set(
             '_innmind_resource_definition',
@@ -83,13 +83,13 @@ class RequestVerifierListenerTest extends \PHPUnit_Framework_TestCase
     public function testDoesntVerify()
     {
         $listener = new RequestVerifierListener(
-            $verifier = $this->getMock(VerifierInterface::class)
+            $verifier = $this->createMock(VerifierInterface::class)
         );
         $verifier
             ->method('verify')
             ->will($this->throwException(new \Exception('verified')));
         $event = new GetResponseEvent(
-            $this->getMock(HttpKernelInterface::class),
+            $this->createMock(HttpKernelInterface::class),
             $request = new Request,
             HttpKernelInterface::MASTER_REQUEST
         );
