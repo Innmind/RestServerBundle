@@ -67,7 +67,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
                 '_innmind_action' => Action::LIST,
-                '_controller' => 'innmind_rest_server.controller.resource:listAction',
+                '_controller' => 'innmind_rest_server.controller.resource.list:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -78,7 +78,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
                 '_innmind_action' => Action::GET,
-                '_controller' => 'innmind_rest_server.controller.resource:getAction',
+                '_controller' => 'innmind_rest_server.controller.resource.get:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -89,7 +89,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
                 '_innmind_action' => Action::CREATE,
-                '_controller' => 'innmind_rest_server.controller.resource:createAction',
+                '_controller' => 'innmind_rest_server.controller.resource.create:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -100,7 +100,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
                 '_innmind_action' => Action::UPDATE,
-                '_controller' => 'innmind_rest_server.controller.resource:updateAction',
+                '_controller' => 'innmind_rest_server.controller.resource.update:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -111,7 +111,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
                 '_innmind_action' => Action::REMOVE,
-                '_controller' => 'innmind_rest_server.controller.resource:removeAction',
+                '_controller' => 'innmind_rest_server.controller.resource.remove:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -122,7 +122,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
                 '_innmind_action' => Action::LINK,
-                '_controller' => 'innmind_rest_server.controller.resource:linkAction',
+                '_controller' => 'innmind_rest_server.controller.resource.link:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -134,7 +134,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
                 '_innmind_action' => Action::UNLINK,
-                '_controller' => 'innmind_rest_server.controller.resource:unlinkAction',
+                '_controller' => 'innmind_rest_server.controller.resource.unlink:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -146,7 +146,7 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
                 '_innmind_action' => Action::OPTIONS,
-                '_controller' => 'innmind_rest_server.controller.resource:optionsAction',
+                '_controller' => 'innmind_rest_server.controller.resource.options:defaultAction',
             ],
             $route->getDefaults()
         );

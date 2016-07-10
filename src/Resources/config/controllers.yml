@@ -6,8 +6,14 @@ services:
             - '@innmind_rest_server.routing.route_factory'
             - '@router'
 
-    innmind_rest_server.controller.resource:
-        class: Innmind\Rest\ServerBundle\Controller\ResourceController
+    innmind_rest_server.controller.resource.options:
+        class: Innmind\Rest\ServerBundle\Controller\Resource\OptionsController
+        arguments:
+            - '@innmind_rest_server.format'
+            - '@serializer'
+
+    innmind_rest_server.controller.resource.list:
+        class: Innmind\Rest\ServerBundle\Controller\Resource\ListController
         arguments:
             - '@innmind_rest_server.format'
             - '@serializer'
@@ -15,4 +21,11 @@ services:
             - '@innmind_rest_server.specification_builder'
             - '@innmind_rest_server.gateways'
             - '@innmind_rest_server.response.header_builder.list'
+
+    innmind_rest_server.controller.resource.get:
+        class: Innmind\Rest\ServerBundle\Controller\Resource\GetController
+        arguments:
+            - '@innmind_rest_server.format'
+            - '@serializer'
+            - '@innmind_rest_server.gateways'
             - '@innmind_rest_server.response.header_builder.get'

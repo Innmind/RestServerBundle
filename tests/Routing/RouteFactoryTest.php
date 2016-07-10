@@ -35,7 +35,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'list',
-                '_controller' => 'innmind_rest_server.controller.resource:listAction',
+                '_controller' => 'innmind_rest_server.controller.resource.list:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -54,7 +54,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'get',
-                '_controller' => 'innmind_rest_server.controller.resource:getAction',
+                '_controller' => 'innmind_rest_server.controller.resource.get:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -73,7 +73,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'create',
-                '_controller' => 'innmind_rest_server.controller.resource:createAction',
+                '_controller' => 'innmind_rest_server.controller.resource.create:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -92,7 +92,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'update',
-                '_controller' => 'innmind_rest_server.controller.resource:updateAction',
+                '_controller' => 'innmind_rest_server.controller.resource.update:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -111,7 +111,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'remove',
-                '_controller' => 'innmind_rest_server.controller.resource:removeAction',
+                '_controller' => 'innmind_rest_server.controller.resource.remove:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -130,7 +130,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'link',
-                '_controller' => 'innmind_rest_server.controller.resource:linkAction',
+                '_controller' => 'innmind_rest_server.controller.resource.link:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -153,7 +153,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'unlink',
-                '_controller' => 'innmind_rest_server.controller.resource:unlinkAction',
+                '_controller' => 'innmind_rest_server.controller.resource.unlink:defaultAction',
             ],
             $route->getDefaults()
         );
@@ -176,7 +176,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 '_innmind_resource' => 'image',
                 '_innmind_action' => 'options',
-                '_controller' => 'innmind_rest_server.controller.resource:optionsAction',
+                '_controller' => 'innmind_rest_server.controller.resource.options:defaultAction',
             ],
             $route->getDefaults()
         );

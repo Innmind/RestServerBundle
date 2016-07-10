@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Rest\ServerBundle\Controller;
+namespace Innmind\Rest\ServerBundle\Controller\Resource;
 
 use Innmind\Rest\ServerBundle\{
     Format,
@@ -11,12 +11,10 @@ use Innmind\Rest\Server\{
     RangeExtractor\ExtractorInterface,
     SpecificationBuilder\BuilderInterface,
     Response\HeaderBuilder\ListBuilderInterface,
-    Response\HeaderBuilder\GetBuilderInterface,
     GatewayInterface,
     Request\Range,
     Exception\RangeNotFoundException,
-    Exception\NoFilterFoundException,
-    Identity
+    Exception\NoFilterFoundException
 };
 use Innmind\Http\{
     Message\ResponseInterface,
@@ -24,31 +22,23 @@ use Innmind\Http\{
     Message\StatusCode,
     Message\ReasonPhrase,
     Headers,
-    Header\HeaderInterface,
-    Header\ContentType,
-    Header\ContentTypeValue,
-    Header\ParameterInterface,
     Exception\Http\RangeNotSatisfiableException
 };
 use Innmind\Filesystem\Stream\StringStream;
-use Innmind\Immutable\{
-    Map,
-    MapInterface
-};
+use Innmind\Immutable\MapInterface;
 use Symfony\Component\{
     HttpFoundation\Request,
     Serializer\SerializerInterface
 };
 
-final class ResourceController
+final class ListController
 {
     private $format;
     private $serializer;
     private $rangeExtractor;
     private $specificationBuilder;
     private $gateways;
-    private $listHeaderBuilder;
-    private $getHeaderBuilder;
+    private $headerBuilder;
 
     public function __construct(
         Format $format,
@@ -56,8 +46,7 @@ final class ResourceController
         ExtractorInterface $rangeExtractor,
         BuilderInterface $specificationBuilder,
         MapInterface $gateways,
-        ListBuilderInterface $listHeaderBuilder,
-        GetBuilderInterface $getHeaderBuilder
+        ListBuilderInterface $headerBuilder
     ) {
         if (
             (string) $gateways->keyType() !== 'string' ||
@@ -71,11 +60,10 @@ final class ResourceController
         $this->rangeExtractor = $rangeExtractor;
         $this->specificationBuilder = $specificationBuilder;
         $this->gateways = $gateways;
-        $this->listHeaderBuilder = $listHeaderBuilder;
-        $this->getHeaderBuilder = $getHeaderBuilder;
+        $this->headerBuilder = $headerBuilder;
     }
 
-    public function listAction(Request $request): ResponseInterface
+    public function defaultAction(Request $request): ResponseInterface
     {
         $definition = $request->attributes->get('_innmind_resource_definition');
         $request = $request->attributes->get('_innmind_request');
@@ -119,7 +107,7 @@ final class ResourceController
             new ReasonPhrase(ReasonPhrase::defaults()->get($code->value())),
             $request->protocolVersion(),
             new Headers(
-                $this->listHeaderBuilder->build(
+                $this->headerBuilder->build(
                     $identities,
                     $request,
                     $definition,
@@ -137,79 +125,6 @@ final class ResourceController
                         'specification' => $specification,
                         'range' => $range,
                     ]
-                )
-            )
-        );
-    }
-
-    public function getAction(Request $request, $identity): ResponseInterface
-    {
-        $definition = $request->attributes->get('_innmind_resource_definition');
-        $request = $request->attributes->get('_innmind_request');
-
-        $accessor = $this
-            ->gateways
-            ->get((string) $definition->gateway())
-            ->resourceAccessor();
-        $resource = $accessor(
-            $definition,
-            $identity = new Identity($identity)
-        );
-
-        return new Response(
-            $code = new StatusCode(StatusCode::codes()->get('OK')),
-            new ReasonPhrase(ReasonPhrase::defaults()->get($code->value())),
-            $request->protocolVersion(),
-            new Headers(
-                $this->getHeaderBuilder->build(
-                    $resource,
-                    $request,
-                    $definition,
-                    $identity
-                )
-            ),
-            new StringStream(
-                $this->serializer->serialize(
-                    $resource,
-                    $this->format->acceptable($request)->name(),
-                    [
-                        'request' => $request,
-                        'definition' => $definition,
-                        'identity' => $identity,
-                    ]
-                )
-            )
-        );
-    }
-
-    public function optionsAction(Request $request): ResponseInterface
-    {
-        $definition = $request->attributes->get('_innmind_resource_definition');
-        $request = $request->attributes->get('_innmind_request');
-        $format = $this->format->acceptable($request);
-        $mediaType = $format->preferredMediaType();
-
-        return new Response(
-            $code = new StatusCode(StatusCode::codes()->get('OK')),
-            new ReasonPhrase(ReasonPhrase::defaults()->get($code->value())),
-            $request->protocolVersion(),
-            new Headers(
-                (new Map('string', HeaderInterface::class))
-                    ->put(
-                        'Content-Type',
-                        new ContentType(
-                            new ContentTypeValue(
-                                $mediaType->topLevel(),
-                                $mediaType->subType(),
-                                new Map('string', ParameterInterface::class)
-                            )
-                        )
-                    )
-            ),
-            new StringStream(
-                $this->serializer->serialize(
-                    $definition,
-                    $format->name()
                 )
             )
         );

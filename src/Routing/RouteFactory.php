@@ -78,7 +78,7 @@ final class RouteFactory
                 '_innmind_resource' => $name,
                 '_innmind_action' => (string) $action,
                 '_controller' => sprintf(
-                    'innmind_rest_server.controller.resource:%sAction',
+                    'innmind_rest_server.controller.resource.%s:defaultAction',
                     $action
                 ),
             ],
