@@ -13,3 +13,13 @@ services:
         class: Innmind\Rest\Server\Serializer\Normalizer\HttpResourceNormalizer
         tags:
             - { name: serializer.normalizer }
+
+    innmind_rest_server.serializer.encoder.json:
+        class: Innmind\Rest\Server\Serializer\Encoder\JsonEncoder
+        tags:
+            - { name: serializer.encoder }
+
+    innmind_rest_server.serializer.encoder.form:
+        class: Innmind\Rest\Server\Serializer\Encoder\FormEncoder
+        tags:
+            - { name: serializer.encoder }
