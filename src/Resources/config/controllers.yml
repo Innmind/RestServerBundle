@@ -11,3 +11,7 @@ services:
         arguments:
             - '@innmind_rest_server.format'
             - '@serializer'
+            - '@innmind_rest_server.range_extractor'
+            - '@innmind_rest_server.specification_builder'
+            - '@innmind_rest_server.gateways'
+            - '@innmind_rest_server.response.header_builder.list'
