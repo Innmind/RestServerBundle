@@ -58,3 +58,33 @@ services:
             - '@innmind_rest_server.formats.accept'
         tags:
             - { name: innmind_rest_server.response.header_builder.get }
+
+    innmind_rest_server.response.header_builder.create_delegation:
+        class: Innmind\Rest\Server\Response\HeaderBuilder\CreateDelegationBuilder
+        public: false
+        arguments:
+            - []
+        factory:
+            - '@innmind_rest_server.response.header_builder.create_delegation.factory'
+            - make
+
+    innmind_rest_server.response.header_builder.create_delegation.factory:
+        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
+        public: false
+        arguments:
+            - Innmind\Rest\Server\Response\HeaderBuilder\CreateDelegationBuilder
+            - Innmind\Rest\Server\Response\HeaderBuilder\CreateBuilderInterface
+
+    innmind_rest_server.response.header_builder.create_content_type:
+        class: Innmind\Rest\Server\Response\HeaderBuilder\CreateContentTypeBuilder
+        public: false
+        arguments:
+            - '@innmind_rest_server.formats.accept'
+        tags:
+            - { name: innmind_rest_server.response.header_builder.create }
+
+    innmind_rest_server.response.header_builder.create_location:
+        class: Innmind\Rest\Server\Response\HeaderBuilder\CreateLocationBuilder
+        public: false
+        tags:
+            - { name: innmind_rest_server.response.header_builder.create }
