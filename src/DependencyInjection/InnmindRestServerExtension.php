@@ -108,10 +108,12 @@ final class InnmindRestServerExtension extends Extension
         array $builders,
         ContainerBuilder $container
     ): self {
-        $container->setAlias(
-            'innmind_rest_server.response.header_builder.list',
-            $builders['list']
-        );
+        foreach ($builders as $action => $value) {
+            $container->setAlias(
+                'innmind_rest_server.response.header_builder.'.$action,
+                $value
+            );
+        }
 
         return $this;
     }
