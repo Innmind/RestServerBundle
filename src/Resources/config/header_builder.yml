@@ -9,8 +9,11 @@ services:
             - make
 
     innmind_rest_server.response.header_builder.list_delegation.factory:
-        class: Innmind\Rest\ServerBundle\Factory\ListDelegationBuilderFactory
+        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
         public: false
+        arguments:
+            - Innmind\Rest\Server\Response\HeaderBuilder\ListDelegationBuilder
+            - Innmind\Rest\Server\Response\HeaderBuilder\ListBuilderInterface
 
     innmind_rest_server.response.header_builder.list_content_type:
         class: Innmind\Rest\Server\Response\HeaderBuilder\ListContentTypeBuilder

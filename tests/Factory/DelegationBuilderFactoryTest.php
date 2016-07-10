@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Rest\ServerBundle\Factory;
 
-use Innmind\Rest\ServerBundle\Factory\ListDelegationBuilderFactory;
+use Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory;
 use Innmind\Rest\Server\{
     Response\HeaderBuilder\ListDelegationBuilder,
     Response\HeaderBuilder\ListBuilderInterface,
@@ -23,11 +23,14 @@ use Innmind\Immutable\{
     Collection
 };
 
-class ListDelegationBuilderFactoryTest extends \PHPUnit_Framework_TestCase
+class DelegationBuilderFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testMake()
     {
-        $factory = new ListDelegationBuilderFactory;
+        $factory = new DelegationBuilderFactory(
+            ListDelegationBuilder::class,
+            ListBuilderInterface::class
+        );
 
         $builder = $factory->make([
             $mock = $this->createMock(ListBuilderInterface::class)
