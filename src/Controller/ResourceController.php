@@ -11,10 +11,12 @@ use Innmind\Rest\Server\{
     RangeExtractor\ExtractorInterface,
     SpecificationBuilder\BuilderInterface,
     Response\HeaderBuilder\ListBuilderInterface,
+    Response\HeaderBuilder\GetBuilderInterface,
     GatewayInterface,
     Request\Range,
     Exception\RangeNotFoundException,
-    Exception\NoFilterFoundException
+    Exception\NoFilterFoundException,
+    Identity
 };
 use Innmind\Http\{
     Message\ResponseInterface,
@@ -46,6 +48,7 @@ final class ResourceController
     private $specificationBuilder;
     private $gateways;
     private $listHeaderBuilder;
+    private $getHeaderBuilder;
 
     public function __construct(
         Format $format,
@@ -53,7 +56,8 @@ final class ResourceController
         ExtractorInterface $rangeExtractor,
         BuilderInterface $specificationBuilder,
         MapInterface $gateways,
-        ListBuilderInterface $listHeaderBuilder
+        ListBuilderInterface $listHeaderBuilder,
+        GetBuilderInterface $getHeaderBuilder
     ) {
         if (
             (string) $gateways->keyType() !== 'string' ||
@@ -68,6 +72,7 @@ final class ResourceController
         $this->specificationBuilder = $specificationBuilder;
         $this->gateways = $gateways;
         $this->listHeaderBuilder = $listHeaderBuilder;
+        $this->getHeaderBuilder = $getHeaderBuilder;
     }
 
     public function listAction(Request $request): ResponseInterface
@@ -131,6 +136,46 @@ final class ResourceController
                         'definition' => $definition,
                         'specification' => $specification,
                         'range' => $range,
+                    ]
+                )
+            )
+        );
+    }
+
+    public function getAction(Request $request, $identity): ResponseInterface
+    {
+        $definition = $request->attributes->get('_innmind_resource_definition');
+        $request = $request->attributes->get('_innmind_request');
+
+        $accessor = $this
+            ->gateways
+            ->get((string) $definition->gateway())
+            ->resourceAccessor();
+        $resource = $accessor(
+            $definition,
+            $identity = new Identity($identity)
+        );
+
+        return new Response(
+            $code = new StatusCode(StatusCode::codes()->get('OK')),
+            new ReasonPhrase(ReasonPhrase::defaults()->get($code->value())),
+            $request->protocolVersion(),
+            new Headers(
+                $this->getHeaderBuilder->build(
+                    $resource,
+                    $request,
+                    $definition,
+                    $identity
+                )
+            ),
+            new StringStream(
+                $this->serializer->serialize(
+                    $resource,
+                    $this->format->acceptable($request)->name(),
+                    [
+                        'request' => $request,
+                        'definition' => $definition,
+                        'identity' => $identity,
                     ]
                 )
             )

@@ -15,3 +15,4 @@ services:
             - '@innmind_rest_server.specification_builder'
             - '@innmind_rest_server.gateways'
             - '@innmind_rest_server.response.header_builder.list'
+            - '@innmind_rest_server.response.header_builder.get'

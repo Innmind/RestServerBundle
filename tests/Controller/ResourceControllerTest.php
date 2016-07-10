@@ -18,7 +18,9 @@ use Innmind\Rest\Server\{
     ResourceUnlinkerInterface,
     Gateway,
     IdentityInterface,
-    Identity
+    Identity,
+    HttpResource,
+    Property
 };
 use Innmind\Http\{
     Message\ServerRequest,
@@ -202,6 +204,21 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
 
                 return $identities->add(new Identity(42));
             }));
+        $this
+            ->container
+            ->get('gateway.command.get')
+            ->method('__invoke')
+            ->willReturn(new HttpResource(
+                $this
+                    ->container
+                    ->get('innmind_rest_server.definition.directories')
+                    ->get('top_dir')
+                    ->definitions()
+                    ->get('image'),
+                (new Map('string', Property::class))
+                    ->put('uuid', new Property('uuid', 'foo'))
+                    ->put('url', new Property('url', 'example.com'))
+            ));
     }
 
     public function testOptionsAction()
@@ -500,6 +517,69 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
                     )
                 ]
             )
+        );
+    }
+
+    public function testGetAction()
+    {
+        $response = $this->controller->getAction(
+            new Request(
+                [],
+                [],
+                [
+                    '_innmind_resource_definition' => $this
+                        ->container
+                        ->get('innmind_rest_server.definition.directories')
+                        ->get('top_dir')
+                        ->definitions()
+                        ->get('image'),
+                    '_innmind_request' => new ServerRequest(
+                        Url::fromString('/'),
+                        new Method('GET'),
+                        $protocol = new ProtocolVersion(1, 1),
+                        new Headers(
+                            (new Map('string', HeaderInterface::class))
+                                ->put(
+                                    'Accept',
+                                    new Accept(
+                                        (new Set(HeaderValueInterface::class))
+                                            ->add(
+                                                new AcceptValue(
+                                                    'application',
+                                                    'json',
+                                                    new Map(
+                                                        'string',
+                                                        ParameterInterface::class
+                                                    )
+                                                )
+                                            )
+                                    )
+                                )
+                        ),
+                        new StringStream(''),
+                        new Environment(new Map('string', 'scalar')),
+                        new Cookies(new Map('string', 'scalar')),
+                        new Query(new Map('string', QueryParameterInterface::class)),
+                        new Form(new Map('scalar', FormParameterInterface::class)),
+                        new Files(new Map('string', FileInterface::class))
+                    )
+                ]
+            ),
+            'foo'
+        );
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertSame(200, $response->statusCode()->value());
+        $this->assertSame('OK', (string) $response->reasonPhrase());
+        $this->assertSame($protocol, $response->protocolVersion());
+        $this->assertCount(1, $response->headers());
+        $this->assertSame(
+            'Content-Type : application/json',
+            (string) $response->headers()->get('content-type')
+        );
+        $this->assertSame(
+            '{"resource":{"uuid":"foo","url":"example.com"}}',
+            (string) $response->body()
         );
     }
 }
