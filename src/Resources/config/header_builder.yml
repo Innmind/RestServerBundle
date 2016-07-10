@@ -34,3 +34,27 @@ services:
         public: false
         tags:
             - { name: innmind_rest_server.response.header_builder.list }
+
+    innmind_rest_server.response.header_builder.get_delegation:
+        class: Innmind\Rest\Server\Response\HeaderBuilder\GetDelegationBuilder
+        public: false
+        arguments:
+            - []
+        factory:
+            - '@innmind_rest_server.response.header_builder.get_delegation.factory'
+            - make
+
+    innmind_rest_server.response.header_builder.get_delegation.factory:
+        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
+        public: false
+        arguments:
+            - Innmind\Rest\Server\Response\HeaderBuilder\GetDelegationBuilder
+            - Innmind\Rest\Server\Response\HeaderBuilder\GetBuilderInterface
+
+    innmind_rest_server.response.header_builder.get_content_type:
+        class: Innmind\Rest\Server\Response\HeaderBuilder\GetContentTypeBuilder
+        public: false
+        arguments:
+            - '@innmind_rest_server.formats.accept'
+        tags:
+            - { name: innmind_rest_server.response.header_builder.get }
