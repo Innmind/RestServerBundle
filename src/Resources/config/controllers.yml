@@ -29,3 +29,11 @@ services:
             - '@serializer'
             - '@innmind_rest_server.gateways'
             - '@innmind_rest_server.response.header_builder.get'
+
+    innmind_rest_server.controller.resource.create:
+        class: Innmind\Rest\ServerBundle\Controller\Resource\CreateController
+        arguments:
+            - '@innmind_rest_server.gateways'
+            - '@serializer'
+            - '@innmind_rest_server.format'
+            - '@innmind_rest_server.response.header_builder.create'
