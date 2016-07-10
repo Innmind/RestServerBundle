@@ -9,10 +9,7 @@ use Innmind\Rest\{
     Server\Definition\Types,
     Server\Definition\Directory
 };
-use Innmind\Immutable\{
-    MapInterface,
-    Set
-};
+use Innmind\Immutable\MapInterface;
 
 class DirectoriesFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,11 +19,9 @@ class DirectoriesFactoryTest extends \PHPUnit_Framework_TestCase
             new YamlLoader(new Types)
         );
 
-        $directories = $factory->make(
-            (new Set('string'))->add(
-                'vendor/innmind/rest-server/fixtures/mapping.yml'
-            )
-        );
+        $directories = $factory->make([
+            'vendor/innmind/rest-server/fixtures/mapping.yml'
+        ]);
 
         $this->assertInstanceOf(MapInterface::class, $directories);
         $this->assertSame('string', (string) $directories->keyType());

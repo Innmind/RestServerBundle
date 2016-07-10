@@ -35,7 +35,7 @@ final class RegisterDefinitionFilesPass implements CompilerPassInterface
 
         $container
             ->getDefinition('innmind_rest_server.definition.directories')
-            ->addArgument($files);
+            ->addArgument($files->toPrimitive());
     }
 
     /**

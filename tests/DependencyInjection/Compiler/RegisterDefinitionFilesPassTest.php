@@ -7,7 +7,6 @@ use Innmind\Rest\ServerBundle\DependencyInjection\{
     InnmindRestServerExtension,
     Compiler\RegisterDefinitionFilesPass
 };
-use Innmind\Immutable\SetInterface;
 use Symfony\Component\DependencyInjection\{
     ContainerBuilder,
     Compiler\CompilerPassInterface
@@ -43,17 +42,12 @@ class RegisterDefinitionFilesPassTest extends \PHPUnit_Framework_TestCase
             'innmind_rest_server.definition.directories'
         );
         $files = $directories->getArgument(0);
-        $this->assertInstanceOf(SetInterface::class, $files);
-        $this->assertSame('string', (string) $files->type());
-        $this->assertSame(2, $files->count());
         $this->assertSame(
-            getcwd().'/fixtures/FooBundle/Resources/config/rest.yml',
-            $files->current()
-        );
-        $files->next();
-        $this->assertSame(
-            getcwd().'/fixtures/BarBundle/Resources/config/rest/resource.yml',
-            $files->current()
+            [
+                getcwd().'/fixtures/FooBundle/Resources/config/rest.yml',
+                getcwd().'/fixtures/BarBundle/Resources/config/rest/resource.yml',
+            ],
+            $files
         );
     }
 }
