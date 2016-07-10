@@ -37,6 +37,10 @@ abstract class ControllerTestCase extends \PHPUnit_Framework_TestCase
 
     protected function buildContainer()
     {
+        if ($this->container instanceof ContainerBuilder) {
+            return;
+        }
+
         $this->container = new ContainerBuilder;
         $this->container->setParameter('kernel.bundles', [
             'FixtureFixtureBundle' => FixtureFixtureBundle::class,
