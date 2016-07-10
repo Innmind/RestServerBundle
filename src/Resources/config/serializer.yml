@@ -9,6 +9,11 @@ services:
         tags:
             - { name: serializer.normalizer }
 
+    innmind_rest_server.serializer.normalizer.identity:
+        class: Innmind\Rest\Server\Serializer\Normalizer\IdentityNormalizer
+        tags:
+            - { name: serializer.normalizer }
+
     innmind_rest_server.serializer.normalizer.resource:
         class: Innmind\Rest\Server\Serializer\Normalizer\HttpResourceNormalizer
         tags:
