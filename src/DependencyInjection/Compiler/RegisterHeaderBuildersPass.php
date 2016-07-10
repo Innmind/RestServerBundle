@@ -9,15 +9,22 @@ use Symfony\Component\DependencyInjection\{
     Compiler\CompilerPassInterface
 };
 
-final class RegisterListHeaderBuildersPass implements CompilerPassInterface
+final class RegisterHeaderBuildersPass implements CompilerPassInterface
 {
+    private $action;
+
+    public function __construct(string $action)
+    {
+        $this->action = $action;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
         $ids = $container->findTaggedServiceIds(
-            'innmind_rest_server.response.header_builder.list'
+            'innmind_rest_server.response.header_builder.'.$this->action
         );
         $builders = [];
 
@@ -26,9 +33,10 @@ final class RegisterListHeaderBuildersPass implements CompilerPassInterface
         }
 
         $container
-            ->getDefinition(
-                'innmind_rest_server.response.header_builder.list_delegation'
-            )
+            ->getDefinition(sprintf(
+                'innmind_rest_server.response.header_builder.%s_delegation',
+                $this->action
+            ))
             ->replaceArgument(0, $builders);
     }
 }

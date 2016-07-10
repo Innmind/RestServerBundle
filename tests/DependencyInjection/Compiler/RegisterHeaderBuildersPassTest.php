@@ -5,7 +5,7 @@ namespace Tests\Innmind\Rest\ServerBundle\DependencyInjection\Compiler;
 
 use Innmind\Rest\ServerBundle\DependencyInjection\{
     InnmindRestServerExtension,
-    Compiler\RegisterListHeaderBuildersPass
+    Compiler\RegisterHeaderBuildersPass
 };
 use Symfony\Component\DependencyInjection\{
     ContainerBuilder,
@@ -13,13 +13,13 @@ use Symfony\Component\DependencyInjection\{
     Compiler\CompilerPassInterface
 };
 
-class RegisterListHeaderBuildersPassTest extends \PHPUnit_Framework_TestCase
+class RegisterHeaderBuildersPassTest extends \PHPUnit_Framework_TestCase
 {
     public function testInterface()
     {
         $this->assertInstanceOf(
             CompilerPassInterface::class,
-            new RegisterListHeaderBuildersPass
+            new RegisterHeaderBuildersPass('list')
         );
     }
 
@@ -30,7 +30,7 @@ class RegisterListHeaderBuildersPassTest extends \PHPUnit_Framework_TestCase
             [],
             $container
         );
-        $pass = new RegisterListHeaderBuildersPass;
+        $pass = new RegisterHeaderBuildersPass('list');
 
         $this->assertSame(null, $pass->process($container));
         $argument = $container

@@ -10,7 +10,7 @@ use Innmind\Rest\ServerBundle\{
     DependencyInjection\Compiler\RegisterHttpHeaderFactoriesPass,
     DependencyInjection\Compiler\RegisterRequestVerifiersPass,
     DependencyInjection\Compiler\RegisterRangeExtractorsPass,
-    DependencyInjection\Compiler\RegisterListHeaderBuildersPass
+    DependencyInjection\Compiler\RegisterHeaderBuildersPass
 };
 use Symfony\Component\{
     HttpKernel\Bundle\Bundle,
@@ -51,7 +51,7 @@ class InnmindRestServerBundleTest extends \PHPUnit_Framework_TestCase
             $passes[4]
         );
         $this->assertInstanceOf(
-            RegisterListHeaderBuildersPass::class,
+            RegisterHeaderBuildersPass::class,
             $passes[5]
         );
     }

@@ -9,7 +9,7 @@ use Innmind\Rest\ServerBundle\DependencyInjection\Compiler\{
     RegisterHttpHeaderFactoriesPass,
     RegisterRequestVerifiersPass,
     RegisterRangeExtractorsPass,
-    RegisterListHeaderBuildersPass
+    RegisterHeaderBuildersPass
 };
 use Symfony\Component\{
     HttpKernel\Bundle\Bundle,
@@ -31,6 +31,6 @@ final class InnmindRestServerBundle extends Bundle
             ->addCompilerPass(new RegisterHttpHeaderFactoriesPass)
             ->addCompilerPass(new RegisterRequestVerifiersPass)
             ->addCompilerPass(new RegisterRangeExtractorsPass)
-            ->addCompilerPass(new RegisterListHeaderBuildersPass);
+            ->addCompilerPass(new RegisterHeaderBuildersPass('list'));
     }
 }
