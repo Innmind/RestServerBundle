@@ -1,9 +1,23 @@
 services:
     innmind_rest_server.formats.accept:
         class: Innmind\Rest\Server\Formats
+        arguments:
+            - []
+        factory:
+            - '@innmind_rest_server.formats_factory'
+            - make
 
     innmind_rest_server.formats.content_type:
         class: Innmind\Rest\Server\Formats
+        arguments:
+            - []
+        factory:
+            - '@innmind_rest_server.formats_factory'
+            - make
+
+    innmind_rest_server.formats_factory:
+        class: Innmind\Rest\ServerBundle\Factory\FormatsFactory
+        public: false
 
     innmind_rest_server.format:
         class: Innmind\Rest\ServerBundle\Format
