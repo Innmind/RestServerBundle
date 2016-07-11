@@ -60,7 +60,7 @@ class UpdateControllerTest extends ControllerTestCase
                         ->get('image'),
                     '_innmind_request' => new ServerRequest(
                         Url::fromString('/foo'),
-                        new Method('GET'),
+                        new Method('PUT'),
                         $protocol = new ProtocolVersion(1, 1),
                         new Headers(
                             (new Map('string', HeaderInterface::class))

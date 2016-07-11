@@ -66,7 +66,7 @@ class CreateControllerTest extends ControllerTestCase
                         ->get('image'),
                     '_innmind_request' => new ServerRequest(
                         Url::fromString('/'),
-                        new Method('GET'),
+                        new Method('POST'),
                         $protocol = new ProtocolVersion(1, 1),
                         new Headers(
                             (new Map('string', HeaderInterface::class))
