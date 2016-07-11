@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Rest\ServerBundle\Controller\Resource;
 
+use Innmind\Rest\ServerBundle\Controller\Resource\RemoveController;
+use Innmind\Rest\Server\Response\HeaderBuilder\RemoveBuilderInterface;
 use Innmind\Http\{
     Message\ServerRequest,
     Message\ResponseInterface,
@@ -26,19 +28,22 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RemoveControllerTest extends ControllerTestCase
 {
-    private $controller;
-
-    public function setUp()
-    {
-        $this->buildContainer();
-        $this->controller = $this->container->get(
-            'innmind_rest_server.controller.resource.remove'
-        );
-    }
-
     public function testDefaultAction()
     {
-        $response = $this->controller->defaultAction(
+        $this->buildContainer();
+        $controller = $this->container->get(
+            'innmind_rest_server.controller.resource.remove'
+        );
+        $called = false;
+        $this
+            ->container
+            ->get('gateway.command.remove')
+            ->method('__invoke')
+            ->will($this->returnCallback(function($definition, $identity) use (&$called) {
+                $called = true;
+                $this->assertSame('foo', (string) $identity);
+            }));
+        $response = $controller->defaultAction(
             new Request(
                 [],
                 [],
@@ -66,10 +71,22 @@ class RemoveControllerTest extends ControllerTestCase
             'foo'
         );
 
+        $this->assertTrue($called);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertSame(204, $response->statusCode()->value());
         $this->assertSame('No Content', (string) $response->reasonPhrase());
         $this->assertCount(0, $response->headers());
         $this->assertSame('', (string) $response->body());
+    }
+
+    /**
+     * @expectedException Innmind\Rest\ServerBundle\Exception\InvalidArgumentException
+     */
+    public function testThrowWhenInvalidGatewayMap()
+    {
+        new RemoveController(
+            new Map('int', 'int'),
+            $this->createMock(RemoveBuilderInterface::class)
+        );
     }
 }
