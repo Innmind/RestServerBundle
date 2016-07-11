@@ -11,6 +11,7 @@ use Innmind\Rest\ServerBundle\DependencyInjection\Compiler\{
     RegisterRangeExtractorsPass,
     RegisterHeaderBuildersPass
 };
+use Innmind\Rest\Server\Action;
 use Symfony\Component\{
     HttpKernel\Bundle\Bundle,
     DependencyInjection\ContainerBuilder
@@ -31,9 +32,9 @@ final class InnmindRestServerBundle extends Bundle
             ->addCompilerPass(new RegisterHttpHeaderFactoriesPass)
             ->addCompilerPass(new RegisterRequestVerifiersPass)
             ->addCompilerPass(new RegisterRangeExtractorsPass)
-            ->addCompilerPass(new RegisterHeaderBuildersPass('list'))
-            ->addCompilerPass(new RegisterHeaderBuildersPass('get'))
-            ->addCompilerPass(new RegisterHeaderBuildersPass('create'))
-            ->addCompilerPass(new RegisterHeaderBuildersPass('update'));
+            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::LIST))
+            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::GET))
+            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::CREATE))
+            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::UPDATE));
     }
 }

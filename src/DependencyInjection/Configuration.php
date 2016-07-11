@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\DependencyInjection;
 
+use Innmind\Rest\Server\Action;
 use Symfony\Component\Config\Definition\{
     Builder\TreeBuilder,
     Builder\NodeBuilder,
@@ -67,16 +68,16 @@ final class Configuration implements ConfigurationInterface
                         ->arrayNode('header_builders')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('list')
+                                ->scalarNode(Action::LIST)
                                     ->defaultValue('innmind_rest_server.response.header_builder.list_delegation')
                                 ->end()
-                                ->scalarNode('get')
+                                ->scalarNode(Action::GET)
                                     ->defaultValue('innmind_rest_server.response.header_builder.get_delegation')
                                 ->end()
-                                ->scalarNode('create')
+                                ->scalarNode(Action::CREATE)
                                     ->defaultValue('innmind_rest_server.response.header_builder.create_delegation')
                                 ->end()
-                                ->scalarNode('update')
+                                ->scalarNode(Action::UPDATE)
                                     ->defaultValue('innmind_rest_server.response.header_builder.update_delegation')
                                 ->end()
                             ->end()
