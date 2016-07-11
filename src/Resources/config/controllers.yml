@@ -37,3 +37,11 @@ services:
             - '@serializer'
             - '@innmind_rest_server.format'
             - '@innmind_rest_server.response.header_builder.create'
+
+    innmind_rest_server.controller.resource.update:
+        class: Innmind\Rest\ServerBundle\Controller\Resource\UpdateController
+        arguments:
+            - '@innmind_rest_server.gateways'
+            - '@serializer'
+            - '@innmind_rest_server.format'
+            - '@innmind_rest_server.response.header_builder.update'
