@@ -3,9 +3,11 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Rest\ServerBundle\Controller\Resource;
 
+use Innmind\Rest\ServerBundle\Controller\Resource\GetController;
 use Innmind\Rest\Server\{
     HttpResource,
-    Property
+    Property,
+    Response\HeaderBuilder\GetBuilderInterface
 };
 use Innmind\Http\{
     Message\ServerRequest,
@@ -33,16 +35,21 @@ use Innmind\Immutable\{
     Map,
     Set
 };
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\{
+    HttpFoundation\Request,
+    Serializer\SerializerInterface
+};
 
 class GetControllerTest extends ControllerTestCase
 {
-    private $controller;
-
     public function setUp()
     {
         $this->buildContainer();
-        $this->controller = $this->container->get(
+    }
+
+    public function testDefaultAction()
+    {
+        $controller = $this->container->get(
             'innmind_rest_server.controller.resource.get'
         );
 
@@ -61,11 +68,7 @@ class GetControllerTest extends ControllerTestCase
                     ->put('uuid', new Property('uuid', 'foo'))
                     ->put('url', new Property('url', 'example.com'))
             ));
-    }
-
-    public function testDefaultAction()
-    {
-        $response = $this->controller->defaultAction(
+        $response = $controller->defaultAction(
             new Request(
                 [],
                 [],
@@ -123,6 +126,19 @@ class GetControllerTest extends ControllerTestCase
         $this->assertSame(
             '{"resource":{"uuid":"foo","url":"example.com"}}',
             (string) $response->body()
+        );
+    }
+
+    /**
+     * @expectedException Innmind\Rest\ServerBundle\Exception\InvalidArgumentException
+     */
+    public function testThrowWhenInvalidGatewayMap()
+    {
+        new GetController(
+            $this->container->get('innmind_rest_server.format'),
+            $this->createMock(SerializerInterface::class),
+            new Map('int', 'int'),
+            $this->createMock(GetBuilderInterface::class)
         );
     }
 }
