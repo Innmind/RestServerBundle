@@ -3,11 +3,15 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Controller\Resource;
 
-use Innmind\Rest\ServerBundle\Format;
+use Innmind\Rest\ServerBundle\{
+    Format,
+    Exception\InvalidArgumentException
+};
 use Innmind\Rest\Server\{
     Response\HeaderBuilder\CreateBuilderInterface,
     HttpResource,
-    Definition\Access
+    Definition\Access,
+    GatewayInterface
 };
 use Innmind\Http\{
     Message\ResponseInterface,
@@ -39,6 +43,13 @@ final class CreateController
         Format $format,
         CreateBuilderInterface $headerBuilder
     ) {
+        if (
+            (string) $gateways->keyType() !== 'string' ||
+            (string) $gateways->valueType() !== GatewayInterface::class
+        ) {
+            throw new InvalidArgumentException;
+        }
+
         $this->gateways = $gateways;
         $this->serializer = $serializer;
         $this->format = $format;
