@@ -3,7 +3,11 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Rest\ServerBundle\Controller\Resource;
 
-use Innmind\Rest\Server\Identity;
+use Innmind\Rest\ServerBundle\Controller\Resource\CreateController;
+use Innmind\Rest\Server\{
+    Identity,
+    Response\HeaderBuilder\CreateBuilderInterface
+};
 use Innmind\Http\{
     Message\ServerRequest,
     Message\ResponseInterface,
@@ -32,28 +36,34 @@ use Innmind\Immutable\{
     Map,
     Set
 };
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\{
+    HttpFoundation\Request,
+    Serializer\SerializerInterface
+};
 
 class CreateControllerTest extends ControllerTestCase
 {
-    private $controller;
-
     public function setUp()
     {
         $this->buildContainer();
-        $this->controller = $this->container->get(
+    }
+
+    public function testDefaultAction()
+    {
+        $controller = $this->container->get(
             'innmind_rest_server.controller.resource.create'
         );
         $this
             ->container
             ->get('gateway.command.create')
             ->method('__invoke')
-            ->willReturn(new Identity(42));
-    }
+            ->will($this->returnCallback(function($definition, $resource) {
+                $this->assertSame($definition, $resource->definition());
+                $this->assertSame('example.com', $resource->property('url')->value());
 
-    public function testDefaultAction()
-    {
-        $response = $this->controller->defaultAction(
+                return new Identity(42);
+            }));
+        $response = $controller->defaultAction(
             new Request(
                 [],
                 [],
@@ -127,6 +137,19 @@ class CreateControllerTest extends ControllerTestCase
         $this->assertSame(
             '{"identity":42}',
             (string) $response->body()
+        );
+    }
+
+    /**
+     * @expectedException Innmind\Rest\ServerBundle\Exception\InvalidArgumentException
+     */
+    public function testThrowWhenInvalidGatewayMap()
+    {
+        new CreateController(
+            new Map('int', 'int'),
+            $this->createMock(SerializerInterface::class),
+            $this->container->get('innmind_rest_server.format'),
+            $this->createMock(CreateBuilderInterface::class)
         );
     }
 }
