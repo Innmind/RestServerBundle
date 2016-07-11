@@ -88,3 +88,19 @@ services:
         public: false
         tags:
             - { name: innmind_rest_server.response.header_builder.create }
+
+    innmind_rest_server.response.header_builder.update_delegation:
+        class: Innmind\Rest\Server\Response\HeaderBuilder\UpdateDelegationBuilder
+        public: false
+        arguments:
+            - []
+        factory:
+            - '@innmind_rest_server.response.header_builder.update_delegation.factory'
+            - make
+
+    innmind_rest_server.response.header_builder.update_delegation.factory:
+        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
+        public: false
+        arguments:
+            - Innmind\Rest\Server\Response\HeaderBuilder\UpdateDelegationBuilder
+            - Innmind\Rest\Server\Response\HeaderBuilder\UpdateBuilderInterface

@@ -33,6 +33,7 @@ final class InnmindRestServerBundle extends Bundle
             ->addCompilerPass(new RegisterRangeExtractorsPass)
             ->addCompilerPass(new RegisterHeaderBuildersPass('list'))
             ->addCompilerPass(new RegisterHeaderBuildersPass('get'))
-            ->addCompilerPass(new RegisterHeaderBuildersPass('create'));
+            ->addCompilerPass(new RegisterHeaderBuildersPass('create'))
+            ->addCompilerPass(new RegisterHeaderBuildersPass('update'));
     }
 }
