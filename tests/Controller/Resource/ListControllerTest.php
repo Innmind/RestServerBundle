@@ -3,9 +3,13 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Rest\ServerBundle\Controller\Resource;
 
+use Innmind\Rest\ServerBundle\Controller\Resource\ListController;
 use Innmind\Rest\Server\{
     IdentityInterface,
-    Identity
+    Identity,
+    RangeExtractor\ExtractorInterface,
+    SpecificationBuilder\BuilderInterface,
+    Response\HeaderBuilder\ListBuilderInterface
 };
 use Innmind\Http\{
     Message\ServerRequest,
@@ -36,7 +40,10 @@ use Innmind\Immutable\{
     Map,
     Set
 };
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\{
+    HttpFoundation\Request,
+    Serializer\SerializerInterface
+};
 
 class ListControllerTest extends ControllerTestCase
 {
@@ -280,6 +287,21 @@ class ListControllerTest extends ControllerTestCase
                     )
                 ]
             )
+        );
+    }
+
+    /**
+     * @expectedException Innmind\Rest\ServerBundle\Exception\InvalidArgumentException
+     */
+    public function testThrowWhenInvalidGatewayMap()
+    {
+        new ListController(
+            $this->container->get('innmind_rest_server.format'),
+            $this->createMock(SerializerInterface::class),
+            $this->createMock(ExtractorInterface::class),
+            $this->createMock(BuilderInterface::class),
+            new Map('int', 'int'),
+            $this->createMock(ListBuilderInterface::class)
         );
     }
 }
