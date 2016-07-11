@@ -62,11 +62,11 @@ final class UpdateController
         $definition = $request->attributes->get('_innmind_resource_definition');
         $request = $request->attributes->get('_innmind_request');
 
-        $accessor = $this
+        $updater = $this
             ->gateways
             ->get((string) $definition->gateway())
             ->resourceUpdater();
-        $accessor(
+        $updater(
             $definition,
             $identity = new Identity($identity),
             $resource = $this->serializer->deserialize(
