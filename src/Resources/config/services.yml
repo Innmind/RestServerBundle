@@ -62,3 +62,8 @@ services:
     innmind_rest_server.specification_builder.default:
         class: Innmind\Rest\Server\SpecificationBuilder\Builder
         public: false
+
+    innmind_rest_server.definition.locator:
+        class: Innmind\Rest\Server\Definition\Locator
+        arguments:
+            - '@innmind_rest_server.definition.directories'
