@@ -7,7 +7,7 @@ services:
     innmind_rest_server.listener.definition_loader:
         class: Innmind\Rest\ServerBundle\EventListener\DefinitionLoaderListener
         arguments:
-            - '@innmind_rest_server.definition.directories'
+            - '@innmind_rest_server.definition.locator'
         tags:
             - { name: kernel.event_subscriber }
 

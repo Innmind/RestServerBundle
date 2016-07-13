@@ -6,12 +6,10 @@ namespace Tests\Innmind\Rest\ServerBundle\EventListener;
 use Innmind\Rest\ServerBundle\EventListener\DefinitionLoaderListener;
 use Innmind\Rest\Server\Definition\{
     Loader\YamlLoader,
-    Types
+    Types,
+    Locator
 };
-use Innmind\Immutable\{
-    Map,
-    Set
-};
+use Innmind\Immutable\Set;
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
     HttpKernel\KernelEvents,
@@ -23,6 +21,7 @@ use Symfony\Component\{
 class DefinitionLoaderListenerTest extends \PHPUnit_Framework_TestCase
 {
     private $directories;
+    private $locator;
 
     public function setUp()
     {
@@ -31,21 +30,14 @@ class DefinitionLoaderListenerTest extends \PHPUnit_Framework_TestCase
                 'vendor/innmind/rest-server/fixtures/mapping.yml'
             )
         );
+        $this->locator = new Locator($this->directories);
     }
 
     public function testInterface()
     {
-        $listener = new DefinitionLoaderListener($this->directories);
+        $listener = new DefinitionLoaderListener($this->locator);
 
         $this->assertInstanceOf(EventSubscriberInterface::class, $listener);
-    }
-
-    /**
-     * @expectedException Innmind\Rest\ServerBundle\Exception\InvalidArgumentException
-     */
-    public function testThrowWhenInvalidMapOfDirectories()
-    {
-        new DefinitionLoaderListener(new Map('int', 'int'));
     }
 
     public function testGetSubscribedEvents()
@@ -58,7 +50,7 @@ class DefinitionLoaderListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadDefinition()
     {
-        $listener = new DefinitionLoaderListener($this->directories);
+        $listener = new DefinitionLoaderListener($this->locator);
         $event = new GetResponseEvent(
             $this->createMock(HttpKernelInterface::class),
             $request = new Request,
@@ -78,7 +70,7 @@ class DefinitionLoaderListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testDoesntLoadDefinition()
     {
-        $listener = new DefinitionLoaderListener($this->directories);
+        $listener = new DefinitionLoaderListener($this->locator);
         $event = new GetResponseEvent(
             $this->createMock(HttpKernelInterface::class),
             $request = new Request,
@@ -92,11 +84,11 @@ class DefinitionLoaderListenerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Innmind\Rest\ServerBundle\Exception\DefinitionNotFoundException
+     * @expectedException Innmind\Rest\Server\Exception\DefinitionNotFoundException
      */
     public function testThrowWhenResourceNotFound()
     {
-        $listener = new DefinitionLoaderListener($this->directories);
+        $listener = new DefinitionLoaderListener($this->locator);
         $event = new GetResponseEvent(
             $this->createMock(HttpKernelInterface::class),
             $request = new Request,
