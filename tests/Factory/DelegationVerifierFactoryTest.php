@@ -44,7 +44,8 @@ class DelegationVerifierFactoryTest extends \PHPUnit_Framework_TestCase
                 new Collection([]),
                 new Collection([]),
                 new Gateway('foo'),
-                false
+                false,
+                new Map('string', 'string')
             )
         );
         $this->assertTrue($called);
