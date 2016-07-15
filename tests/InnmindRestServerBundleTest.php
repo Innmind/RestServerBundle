@@ -29,7 +29,7 @@ class InnmindRestServerBundleTest extends \PHPUnit_Framework_TestCase
         $passes = $container
             ->getCompilerPassConfig()
             ->getBeforeOptimizationPasses();
-        $this->assertSame(10, count($passes));
+        $this->assertSame(11, count($passes));
         $this->assertInstanceOf(
             RegisterDefinitionFilesPass::class,
             $passes[0]
@@ -69,6 +69,10 @@ class InnmindRestServerBundleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             RegisterHeaderBuildersPass::class,
             $passes[9]
+        );
+        $this->assertInstanceOf(
+            RegisterHeaderBuildersPass::class,
+            $passes[10]
         );
     }
 }

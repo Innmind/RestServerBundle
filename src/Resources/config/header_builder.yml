@@ -120,3 +120,19 @@ services:
         arguments:
             - Innmind\Rest\Server\Response\HeaderBuilder\RemoveDelegationBuilder
             - Innmind\Rest\Server\Response\HeaderBuilder\RemoveBuilderInterface
+
+    innmind_rest_server.response.header_builder.link_delegation:
+        class: Innmind\Rest\Server\Response\HeaderBuilder\LinkDelegationBuilder
+        public: false
+        arguments:
+            - []
+        factory:
+            - '@innmind_rest_server.response.header_builder.link_delegation.factory'
+            - make
+
+    innmind_rest_server.response.header_builder.link_delegation.factory:
+        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
+        public: false
+        arguments:
+            - Innmind\Rest\Server\Response\HeaderBuilder\LinkDelegationBuilder
+            - Innmind\Rest\Server\Response\HeaderBuilder\LinkBuilderInterface
