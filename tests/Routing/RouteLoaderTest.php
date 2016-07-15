@@ -23,9 +23,9 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->loader = new RouteLoader(
-            (new YamlLoader(new Types))->load(
+            $directories = (new YamlLoader(new Types))->load(
                 (new Set('string'))->add(
-                    'vendor/innmind/rest-server/fixtures/mapping.yml'
+                    'fixtures/FixtureBundle/Resources/config/rest.yml'
                 )
             ),
             new RouteFactory
@@ -37,16 +37,10 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
         $routes = $this->loader->load('.');
 
         $this->assertInstanceOf(RouteCollection::class, $routes);
-        $this->assertSame(17, $routes->count());
+        $this->assertSame(11, $routes->count());
         $this->assertSame(
             [
-                'innmind_rest_server.top_dir.image.list',
-                'innmind_rest_server.top_dir.image.get',
                 'innmind_rest_server.top_dir.image.create',
-                'innmind_rest_server.top_dir.image.update',
-                'innmind_rest_server.top_dir.image.remove',
-                'innmind_rest_server.top_dir.image.link',
-                'innmind_rest_server.top_dir.image.unlink',
                 'innmind_rest_server.top_dir.image.options',
                 'innmind_rest_server.top_dir.sub_dir.res.list',
                 'innmind_rest_server.top_dir.sub_dir.res.get',
