@@ -30,9 +30,9 @@ class RegisterRequestVerifiersPassTest extends \PHPUnit_Framework_TestCase
         $argument = $container
             ->getDefinition('innmind_rest_server.http.request.verifier')
             ->getArgument(0);
-        $this->assertSame(3, count($argument));
+        $this->assertSame(4, count($argument));
         $this->assertSame(
-            [100, 75, 50],
+            [100, 75, 50, 25],
             array_keys($argument)
         );
         $this->assertInstanceOf(
@@ -47,6 +47,10 @@ class RegisterRequestVerifiersPassTest extends \PHPUnit_Framework_TestCase
             Reference::class,
             $argument[50]
         );
+        $this->assertInstanceOf(
+            Reference::class,
+            $argument[25]
+        );
         $this->assertSame(
             'innmind_rest_server.http.request.verifier.accept',
             (string) $argument[100]
@@ -58,6 +62,10 @@ class RegisterRequestVerifiersPassTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(
             'innmind_rest_server.http.request.verifier.range',
             (string) $argument[50]
+        );
+        $this->assertSame(
+            'innmind_rest_server.http.request.verifier.link',
+            (string) $argument[25]
         );
     }
 

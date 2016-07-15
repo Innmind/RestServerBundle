@@ -101,3 +101,11 @@ services:
         public: false
         tags:
             - { name: innmind_rest_server.http.request.verifier, priority: 50 }
+
+    innmind_rest_server.http.request.verifier.link:
+        class: Innmind\Rest\ServerBundle\RequestVerifier\LinkVerifier
+        arguments:
+            - '@router'
+        public: false
+        tags:
+            - { name: innmind_rest_server.http.request.verifier, priority: 25 }
