@@ -57,13 +57,11 @@ services:
         arguments:
             - '@innmind_rest_server.gateways'
             - '@innmind_rest_server.response.header_builder.link'
-            - '@router'
-            - '@innmind_rest_server.definition.locator'
+            - '@innmind_rest_server.translator.link'
 
     innmind_rest_server.controller.resource.unlink:
         class: Innmind\Rest\ServerBundle\Controller\Resource\UnlinkController
         arguments:
             - '@innmind_rest_server.gateways'
             - '@innmind_rest_server.response.header_builder.unlink'
-            - '@router'
-            - '@innmind_rest_server.definition.locator'
+            - '@innmind_rest_server.translator.link'

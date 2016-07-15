@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Rest\ServerBundle\Controller\Resource;
 
-use Innmind\Rest\ServerBundle\Controller\Resource\LinkController;
+use Innmind\Rest\ServerBundle\{
+    Controller\Resource\LinkController,
+    Translator\LinkTranslator
+};
 use Innmind\Rest\Server\{
     Response\HeaderBuilder\LinkBuilderInterface,
     Definition\Locator,
@@ -126,8 +129,10 @@ class LinkControllerTest extends ControllerTestCase
         new LinkController(
             new Map('string', 'string'),
             $this->createMock(LinkBuilderInterface::class),
-            $this->createMock(RouterInterface::class),
-            new Locator(new Map('string', Directory::class))
+            new LinkTranslator(
+                new Locator(new Map('string', Directory::class)),
+                $this->createMock(RouterInterface::class)
+            )
         );
     }
 }

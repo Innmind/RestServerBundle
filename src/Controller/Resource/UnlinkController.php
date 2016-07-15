@@ -3,10 +3,12 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Controller\Resource;
 
-use Innmind\Rest\ServerBundle\Exception\InvalidArgumentException;
+use Innmind\Rest\ServerBundle\{
+    Exception\InvalidArgumentException,
+    Translator\LinkTranslator
+};
 use Innmind\Rest\Server\{
     Response\HeaderBuilder\UnlinkBuilderInterface,
-    Definition\Locator,
     GatewayInterface,
     Reference,
     Identity,
@@ -28,23 +30,18 @@ use Innmind\Immutable\{
     MapInterface,
     Map
 };
-use Symfony\Component\{
-    Routing\RouterInterface,
-    HttpFoundation\Request
-};
+use Symfony\Component\HttpFoundation\Request;
 
 final class UnlinkController
 {
     private $gateways;
     private $headerBuilder;
-    private $router;
-    private $locator;
+    private $translator;
 
     public function __construct(
         MapInterface $gateways,
         UnlinkBuilderInterface $headerBuilder,
-        RouterInterface $router,
-        Locator $locator
+        LinkTranslator $translator
     ) {
         if (
             (string) $gateways->keyType() !== 'string' ||
@@ -55,15 +52,14 @@ final class UnlinkController
 
         $this->gateways = $gateways;
         $this->headerBuilder = $headerBuilder;
-        $this->router = $router;
-        $this->locator = $locator;
+        $this->translator = $translator;
     }
 
     public function defaultAction(Request $request, $identity): ResponseInterface
     {
         $from = $request->attributes->get('_innmind_resource_definition');
         $request = $request->attributes->get('_innmind_request');
-        $tos = $this->extractReferences($request->headers()->get('Link'));
+        $tos = $this->translator->translate($request->headers()->get('Link'));
 
         $linker = $this
             ->gateways
@@ -87,43 +83,5 @@ final class UnlinkController
             ),
             new StringStream('')
         );
-    }
-
-    /**
-     * @return MapInterface<Reference, MapInterface<string, ParameterInterface>>
-     */
-    private function extractReferences(Link $header): MapInterface
-    {
-        return $header
-            ->values()
-            ->reduce(
-                new Map(Reference::class, MapInterface::class),
-                function(Map $carry, LinkValue $value): Map
-                {
-                    $infos = $this->router->match((string) $value->url());
-
-                    return $carry->put(
-                        new Reference(
-                            $this->locator->locate($infos['_innmind_resource']),
-                            new Identity($infos['identity'])
-                        ),
-                        $value
-                            ->parameters()
-                            ->reduce(
-                                new Map('string', ParameterInterface::class),
-                                function(Map $carry, string $name, LinkParameterInterface $param): Map {
-                                    return $carry->put(
-                                        $name,
-                                        new Parameter($name, $param->value())
-                                    );
-                                }
-                            )
-                            ->put(
-                                'rel',
-                                new Parameter('rel', $value->relationship())
-                            )
-                    );
-                }
-            );
     }
 }

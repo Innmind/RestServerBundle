@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Rest\ServerBundle\Controller\Resource;
 
-use Innmind\Rest\ServerBundle\Controller\Resource\UnlinkController;
+use Innmind\Rest\ServerBundle\{
+    Controller\Resource\UnlinkController,
+    Translator\LinkTranslator
+};
 use Innmind\Rest\Server\{
     Response\HeaderBuilder\UnlinkBuilderInterface,
     Definition\Locator,
@@ -126,8 +129,10 @@ class UnlinkControllerTest extends ControllerTestCase
         new UnlinkController(
             new Map('string', 'string'),
             $this->createMock(UnlinkBuilderInterface::class),
-            $this->createMock(RouterInterface::class),
-            new Locator(new Map('string', Directory::class))
+            new LinkTranslator(
+                new Locator(new Map('string', Directory::class)),
+                $this->createMock(RouterInterface::class)
+            )
         );
     }
 }
