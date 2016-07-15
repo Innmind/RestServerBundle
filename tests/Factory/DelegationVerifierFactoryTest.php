@@ -9,8 +9,8 @@ use Innmind\Rest\Server\{
     Definition\Identity,
     Definition\Gateway,
     Definition\Property,
-    RequestVerifier\DelegationVerifier,
-    RequestVerifier\VerifierInterface
+    Request\Verifier\DelegationVerifier,
+    Request\Verifier\VerifierInterface
 };
 use Innmind\Http\Message\ServerRequestInterface;
 use Innmind\Immutable\{

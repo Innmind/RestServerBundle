@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Factory;
 
-use Innmind\Rest\Server\RequestVerifier\{
+use Innmind\Rest\Server\Request\Verifier\{
     DelegationVerifier,
     VerifierInterface
 };

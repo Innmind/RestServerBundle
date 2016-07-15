@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Innmind\Rest\ServerBundle\RequestVerifier;
+namespace Tests\Innmind\Rest\ServerBundle\Request\Verifier;
 
-use Innmind\Rest\ServerBundle\RequestVerifier\LinkVerifier;
+use Innmind\Rest\ServerBundle\Request\Verifier\LinkVerifier;
 use Innmind\Rest\Server\{
-    RequestVerifier\VerifierInterface,
+    Request\Verifier\VerifierInterface,
     Definition\HttpResource,
     Definition\Identity,
     Definition\Property,

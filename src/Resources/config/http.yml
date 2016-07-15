@@ -70,7 +70,7 @@ services:
         public: false
 
     innmind_rest_server.http.request.verifier:
-        class: Innmind\Rest\Server\RequestVerifier\DelegationVerifier
+        class: Innmind\Rest\Server\Request\Verifier\DelegationVerifier
         public: false
         factory:
             - '@innmind_rest_server.http.request.verifier_factory'
@@ -81,7 +81,7 @@ services:
         public: false
 
     innmind_rest_server.http.request.verifier.accept:
-        class: Innmind\Rest\Server\RequestVerifier\AcceptVerifier
+        class: Innmind\Rest\Server\Request\Verifier\AcceptVerifier
         arguments:
             - '@innmind_rest_server.formats.accept'
         public: false
@@ -89,7 +89,7 @@ services:
             - { name: innmind_rest_server.http.request.verifier, priority: 100 }
 
     innmind_rest_server.http.request.verifier.content_type:
-        class: Innmind\Rest\Server\RequestVerifier\ContentTypeVerifier
+        class: Innmind\Rest\Server\Request\Verifier\ContentTypeVerifier
         arguments:
             - '@innmind_rest_server.formats.content_type'
         public: false
@@ -97,13 +97,13 @@ services:
             - { name: innmind_rest_server.http.request.verifier, priority: 75 }
 
     innmind_rest_server.http.request.verifier.range:
-        class: Innmind\Rest\Server\RequestVerifier\RangeVerifier
+        class: Innmind\Rest\Server\Request\Verifier\RangeVerifier
         public: false
         tags:
             - { name: innmind_rest_server.http.request.verifier, priority: 50 }
 
     innmind_rest_server.http.request.verifier.link:
-        class: Innmind\Rest\ServerBundle\RequestVerifier\LinkVerifier
+        class: Innmind\Rest\ServerBundle\Request\Verifier\LinkVerifier
         arguments:
             - '@router'
         public: false

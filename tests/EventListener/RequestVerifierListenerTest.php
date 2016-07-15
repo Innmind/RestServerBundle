@@ -5,7 +5,7 @@ namespace Tests\Innmind\Rest\ServerBundle\EventListener;
 
 use Innmind\Rest\ServerBundle\EventListener\RequestVerifierListener;
 use Innmind\Rest\Server\{
-    RequestVerifier\VerifierInterface,
+    Request\Verifier\VerifierInterface,
     Definition\HttpResource,
     Definition\Identity,
     Definition\Property,

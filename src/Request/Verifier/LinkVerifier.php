@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace Innmind\Rest\ServerBundle\RequestVerifier;
+namespace Innmind\Rest\ServerBundle\Request\Verifier;
 
 use Innmind\Rest\Server\{
-    RequestVerifier\VerifierInterface,
+    Request\Verifier\VerifierInterface,
     Definition\HttpResource
 };
 use Innmind\Http\{

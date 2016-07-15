@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\EventListener;
 
-use Innmind\Rest\Server\RequestVerifier\VerifierInterface;
+use Innmind\Rest\Server\Request\Verifier\VerifierInterface;
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
     HttpKernel\KernelEvents,
