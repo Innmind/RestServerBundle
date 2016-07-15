@@ -21,7 +21,7 @@ use Symfony\Component\{
     DependencyInjection\ContainerBuilder,
     DependencyInjection\Definition,
     DependencyInjection\Reference,
-    Routing\RouterInterface,
+    Routing\Router,
     Serializer\Serializer,
     Serializer\Encoder\JsonEncoder
 };
@@ -53,7 +53,13 @@ abstract class ControllerTestCase extends \PHPUnit_Framework_TestCase
         $this->container->setParameter('kernel.container_class', ContainerBuilder::class);
         $this->container->setDefinition(
             'router',
-            new Definition(RouterInterface::class)
+            new Definition(
+                Router::class,
+                [
+                    new Reference('innmind_rest_server.routing.route_loader'),
+                    '.'
+                ]
+            )
         );
         $this->container->setDefinition(
             'serializer',

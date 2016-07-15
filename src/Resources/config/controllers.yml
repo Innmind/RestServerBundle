@@ -51,3 +51,11 @@ services:
         arguments:
             - '@innmind_rest_server.gateways'
             - '@innmind_rest_server.response.header_builder.remove'
+
+    innmind_rest_server.controller.resource.link:
+        class: Innmind\Rest\ServerBundle\Controller\Resource\LinkController
+        arguments:
+            - '@innmind_rest_server.gateways'
+            - '@innmind_rest_server.response.header_builder.link'
+            - '@router'
+            - '@innmind_rest_server.definition.locator'

@@ -9,3 +9,14 @@ top_dir:
                 url:
                     type: string
                     access: [READ, CREATE, UPDATE]
+            linkable_to:
+                top_dir.sub_dir.res: rel
+    children:
+        sub_dir:
+            resources:
+                res:
+                    identity: uuid
+                    gateway: command
+                    properties:
+                        uuid:
+                            type: string
