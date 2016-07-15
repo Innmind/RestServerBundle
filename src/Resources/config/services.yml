@@ -47,6 +47,12 @@ services:
     innmind_rest_server.translator.response:
         class: Innmind\Rest\ServerBundle\Translator\ResponseTranslator
 
+    innmind_rest_server.translator.link:
+        class: Innmind\Rest\ServerBundle\Translator\LinkTranslator
+        arguments:
+            - '@innmind_rest_server.definition.locator'
+            - '@router'
+
     innmind_rest_server.routing.route_factory:
         class: Innmind\Rest\ServerBundle\Routing\RouteFactory
         public: false
