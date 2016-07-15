@@ -53,12 +53,12 @@ class UnlinkControllerTest extends ControllerTestCase
     public function testDefault()
     {
         $controller = $this->container->get(
-            'innmind_rest_server.controller.resource.link'
+            'innmind_rest_server.controller.resource.unlink'
         );
         $called = false;
         $this
             ->container
-            ->get('gateway.command.link')
+            ->get('gateway.command.unlink')
             ->method('__invoke')
             ->will($this->returnCallback(function($from, $tos) use (&$called) {
                 $called = true;

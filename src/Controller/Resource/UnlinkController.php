@@ -61,11 +61,11 @@ final class UnlinkController
         $request = $request->attributes->get('_innmind_request');
         $tos = $this->translator->translate($request->headers()->get('Link'));
 
-        $linker = $this
+        $unlinker = $this
             ->gateways
             ->get((string) $from->gateway())
-            ->resourceLinker();
-        $linker(
+            ->resourceUnlinker();
+        $unlinker(
             $from = new Reference($from, new Identity($identity)),
             $tos
         );
