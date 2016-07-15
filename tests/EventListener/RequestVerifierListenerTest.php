@@ -12,10 +12,7 @@ use Innmind\Rest\Server\{
     Definition\Gateway
 };
 use Innmind\Http\Message\ServerRequestInterface;
-use Innmind\Immutable\{
-    Map,
-    Collection
-};
+use Innmind\Immutable\Map;
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
     HttpKernel\KernelEvents,
@@ -70,8 +67,8 @@ class RequestVerifierListenerTest extends \PHPUnit_Framework_TestCase
                 'foo',
                 new Identity('foo'),
                 new Map('string', Property::class),
-                new Collection([]),
-                new Collection([]),
+                new Map('scalar', 'variable'),
+                new Map('scalar', 'variable'),
                 new Gateway('foo'),
                 false,
                 new Map('string', 'string')

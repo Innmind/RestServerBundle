@@ -112,7 +112,7 @@ final class RouteLoader extends Loader
                 new RouteCollection,
                 function(RouteCollection $carry, string $action) use ($name, $definition) {
                     if (
-                        $definition->options()->hasKey('actions') &&
+                        $definition->options()->contains('actions') &&
                         !in_array($action, $definition->options()->get('actions'))
                     ) {
                         return $carry;

@@ -34,8 +34,7 @@ use Innmind\Url\{
 use Innmind\Filesystem\StreamInterface;
 use Innmind\Immutable\{
     Map,
-    Set,
-    Collection
+    Set
 };
 use Symfony\Component\Routing\RouterInterface;
 
@@ -57,8 +56,8 @@ class LinkVerifierTest extends \PHPUnit_Framework_TestCase
             'name',
             new Identity('foo'),
             new Map('string', Property::class),
-            new Collection([]),
-            new Collection([]),
+            new Map('scalar', 'variable'),
+            new Map('scalar', 'variable'),
             new Gateway('foo'),
             false,
             (new Map('string', 'string'))
@@ -109,8 +108,8 @@ class LinkVerifierTest extends \PHPUnit_Framework_TestCase
             'name',
             new Identity('foo'),
             new Map('string', Property::class),
-            new Collection([]),
-            new Collection([]),
+            new Map('scalar', 'variable'),
+            new Map('scalar', 'variable'),
             new Gateway('foo'),
             false,
             new Map('string', 'string')
@@ -163,8 +162,8 @@ class LinkVerifierTest extends \PHPUnit_Framework_TestCase
             'name',
             new Identity('foo'),
             new Map('string', Property::class),
-            new Collection([]),
-            new Collection([]),
+            new Map('scalar', 'variable'),
+            new Map('scalar', 'variable'),
             new Gateway('foo'),
             false,
             (new Map('string', 'string'))
@@ -215,8 +214,8 @@ class LinkVerifierTest extends \PHPUnit_Framework_TestCase
             'name',
             new Identity('foo'),
             new Map('string', Property::class),
-            new Collection([]),
-            new Collection([]),
+            new Map('scalar', 'variable'),
+            new Map('scalar', 'variable'),
             new Gateway('foo'),
             false,
             (new Map('string', 'string'))

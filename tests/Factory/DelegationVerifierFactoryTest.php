@@ -13,10 +13,7 @@ use Innmind\Rest\Server\{
     Request\Verifier\VerifierInterface
 };
 use Innmind\Http\Message\ServerRequestInterface;
-use Innmind\Immutable\{
-    Map,
-    Collection
-};
+use Innmind\Immutable\Map;
 
 class DelegationVerifierFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -41,8 +38,8 @@ class DelegationVerifierFactoryTest extends \PHPUnit_Framework_TestCase
                 'foo',
                 new Identity('foo'),
                 new Map('string', Property::class),
-                new Collection([]),
-                new Collection([]),
+                new Map('scalar', 'variable'),
+                new Map('scalar', 'variable'),
                 new Gateway('foo'),
                 false,
                 new Map('string', 'string')

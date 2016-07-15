@@ -19,8 +19,7 @@ use Innmind\Http\{
 };
 use Innmind\Immutable\{
     Map,
-    Set,
-    Collection
+    Set
 };
 
 class DelegationBuilderFactoryTest extends \PHPUnit_Framework_TestCase
@@ -53,8 +52,8 @@ class DelegationBuilderFactoryTest extends \PHPUnit_Framework_TestCase
                         'foobar',
                         new Identity('foo'),
                         new Map('string', Property::class),
-                        new Collection([]),
-                        new Collection([]),
+                        new Map('scalar', 'variable'),
+                        new Map('scalar', 'variable'),
                         new Gateway('bar'),
                         true,
                         new Map('string', 'string')
