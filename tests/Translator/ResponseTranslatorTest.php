@@ -54,7 +54,7 @@ class ResponseTranslatorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(
             [
                 'content-type' => ['application/json'],
-                'cache-control' => ['no-cache'],
+                'cache-control' => ['no-cache, private'],
             ],
             $sfResponse->headers->all()
         );

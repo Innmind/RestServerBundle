@@ -33,7 +33,10 @@ use Innmind\Immutable\{
     Map,
     Set
 };
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\{
+    Routing\Generator\UrlGeneratorInterface,
+    HttpFoundation\Request
+};
 
 class CapabilitiesControllerTest extends \PHPUnit_Framework_TestCase
 {
@@ -78,8 +81,10 @@ class CapabilitiesControllerTest extends \PHPUnit_Framework_TestCase
             new Form(new Map('scalar', FormParameterInterface::class)),
             new Files(new Map('string', FileInterface::class))
         );
+        $sfRequest = new Request;
+        $sfRequest->attributes->set('_innmind_request', $request);
 
-        $response = $controller->capabilitiesAction($request);
+        $response = $controller->capabilitiesAction($sfRequest);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertSame(200, $response->statusCode()->value());
