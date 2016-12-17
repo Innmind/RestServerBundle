@@ -12,7 +12,6 @@ use Innmind\Rest\Server\{
     Action
 };
 use Innmind\Http\{
-    Message\ServerRequestInterface,
     Message\ResponseInterface,
     Message\Response,
     Message\StatusCode,
@@ -31,7 +30,10 @@ use Innmind\Immutable\{
     Set,
     MapInterface
 };
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\{
+    Routing\Generator\UrlGeneratorInterface,
+    HttpFoundation\Request
+};
 
 final class CapabilitiesController
 {
@@ -56,8 +58,10 @@ final class CapabilitiesController
         $this->generator = $generator;
     }
 
-    public function capabilitiesAction(ServerRequestInterface $request): ResponseInterface
+    public function capabilitiesAction(Request $request): ResponseInterface
     {
+        $request = $request->attributes->get('_innmind_request');
+
         $links = $this
             ->directories
             ->reduce(
