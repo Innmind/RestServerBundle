@@ -45,6 +45,8 @@ abstract class ControllerTestCase extends \PHPUnit_Framework_TestCase
         $this->container->setParameter('kernel.bundles', [
             'FixtureFixtureBundle' => FixtureFixtureBundle::class,
         ]);
+        $this->container->setParameter('kernel.name', 'idk');
+        $this->container->setParameter('kernel.environment', 'test');
         $this->container->setParameter('kernel.debug', true);
         $this->container->setParameter('kernel.cache_dir', sys_get_temp_dir());
         $this->container->setParameter('kernel.charset', 'utf-8');
@@ -156,7 +158,10 @@ abstract class ControllerTestCase extends \PHPUnit_Framework_TestCase
             ]],
             $this->container
         );
-        (new FrameworkExtension)->load([], $this->container);
+        (new FrameworkExtension)->load(
+            [['annotations' => ['enabled' => false]]],
+            $this->container
+        );
         (new FrameworkBundle)->build($this->container);
         (new InnmindRestServerBundle)->build($this->container);
         $this->container->compile();
