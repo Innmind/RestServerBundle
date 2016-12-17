@@ -77,11 +77,10 @@ final class CapabilitiesController
                                     $carry[$name] = $this->generator->generate(
                                         $this
                                             ->routeFactory
-                                            ->makeRoute(
+                                            ->makeName(
                                                 $name,
                                                 new Action(Action::OPTIONS)
                                             )
-                                            ->getPath()
                                     );
 
                                     return $carry;

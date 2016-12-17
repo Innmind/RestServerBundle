@@ -66,6 +66,9 @@ class CapabilitiesControllerTest extends \PHPUnit_Framework_TestCase
         $generator
             ->method('generate')
             ->will($this->returnCallback(function(string $route) {
+                $route = str_replace('innmind_rest_server', '', $route);
+                $route = str_replace('options', '', $route);
+
                 return str_replace('.', '/', $route);
             }));
 
