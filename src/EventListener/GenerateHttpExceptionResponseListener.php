@@ -28,7 +28,7 @@ final class GenerateHttpExceptionResponseListener implements EventSubscriberInte
         ];
     }
 
-    public function generateResponse(GetResponseForExceptionEvent $event): void
+    public function generateResponse(GetResponseForExceptionEvent $event)
     {
         if (!$event->getException() instanceof HttpExceptionInterface) {
             return;
