@@ -52,6 +52,7 @@ class FormatTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder;
         $container->setParameter('kernel.bundles', []);
+        $container->setParameter('kernel.debug', true);
         $container->setDefinition(
             'router',
             new Definition(RouterInterface::class)

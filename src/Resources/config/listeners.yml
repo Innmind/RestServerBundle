@@ -4,6 +4,13 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    innmind_rest_server.listener.generate_http_exception_response:
+        class: Innmind\Rest\ServerBundle\EventListener\GenerateHttpExceptionResponseListener
+        arguments:
+            - '%kernel.debug%'
+        tags:
+            - { name: kernel.event_subscriber }
+
     innmind_rest_server.listener.definition_loader:
         class: Innmind\Rest\ServerBundle\EventListener\DefinitionLoaderListener
         arguments:
