@@ -30,7 +30,7 @@ class RegisterHttpHeaderFactoriesPassTest extends \PHPUnit_Framework_TestCase
         $argument = $container
             ->getDefinition('innmind_rest_server.http.factory.header.default')
             ->getArgument(0);
-        $this->assertSame(12, count($argument));
+        $this->assertSame(25, count($argument));
 
         foreach ($argument as $key => $value) {
             $this->assertTrue(is_string($key));
