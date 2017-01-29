@@ -10,7 +10,7 @@ top_dir:
                     type: string
                     access: [READ, CREATE, UPDATE]
             linkable_to:
-                top_dir.sub_dir.res: rel
+                rel: top_dir.sub_dir.res
             options:
                 actions: [create, options]
     children:

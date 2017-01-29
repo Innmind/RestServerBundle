@@ -19,6 +19,21 @@ services:
         tags:
             - { name: innmind_rest_server.http_header_factory, alias: accept-language }
 
+    innmind_rest_server.http.factory.header.accept_ranges:
+        class: Innmind\Http\Factory\Header\AcceptRangesFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: accept-ranges }
+
+    innmind_rest_server.http.factory.header.age:
+        class: Innmind\Http\Factory\Header\AgeFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: age }
+
+    innmind_rest_server.http.factory.header.allow:
+        class: Innmind\Http\Factory\Header\AllowFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: allow }
+
     innmind_rest_server.http.factory.header.authorization:
         class: Innmind\Http\Factory\Header\AuthorizationFactory
         tags:
@@ -29,10 +44,45 @@ services:
         tags:
             - { name: innmind_rest_server.http_header_factory, alias: cache-control }
 
+    innmind_rest_server.http.factory.header.content_encoding:
+        class: Innmind\Http\Factory\Header\ContentEncodingFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: content-encoding }
+
+    innmind_rest_server.http.factory.header.content_language:
+        class: Innmind\Http\Factory\Header\ContentLanguageFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: content-language }
+
+    innmind_rest_server.http.factory.header.content_length:
+        class: Innmind\Http\Factory\Header\ContentLengthFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: content-length }
+
+    innmind_rest_server.http.factory.header.content_location:
+        class: Innmind\Http\Factory\Header\ContentLocationFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: content-location }
+
+    innmind_rest_server.http.factory.header.content_range:
+        class: Innmind\Http\Factory\Header\ContentRangeFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: content-range }
+
+    innmind_rest_server.http.factory.header.content_type:
+        class: Innmind\Http\Factory\Header\ContentTypeFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: content-type }
+
     innmind_rest_server.http.factory.header.date:
         class: Innmind\Http\Factory\Header\DateFactory
         tags:
             - { name: innmind_rest_server.http_header_factory, alias: date }
+
+    innmind_rest_server.http.factory.header.expires:
+        class: Innmind\Http\Factory\Header\ExpiresFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: expires }
 
     innmind_rest_server.http.factory.header.host:
         class: Innmind\Http\Factory\Header\HostFactory
@@ -48,6 +98,21 @@ services:
         class: Innmind\Http\Factory\Header\IfUnmodifiedSinceFactory
         tags:
             - { name: innmind_rest_server.http_header_factory, alias: if-unmodified-since }
+
+    innmind_rest_server.http.factory.header.last_modified:
+        class: Innmind\Http\Factory\Header\LastModifiedFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: last-modified }
+
+    innmind_rest_server.http.factory.header.link:
+        class: Innmind\Http\Factory\Header\LinkFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: link }
+
+    innmind_rest_server.http.factory.header.location:
+        class: Innmind\Http\Factory\Header\LocationFactory
+        tags:
+            - { name: innmind_rest_server.http_header_factory, alias: location }
 
     innmind_rest_server.http.factory.header.range:
         class: Innmind\Http\Factory\Header\RangeFactory

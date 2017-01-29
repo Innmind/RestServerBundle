@@ -118,6 +118,9 @@ class OptionsControllerTest extends ControllerTestCase
                 ],
                 'metas' => [],
                 'rangeable' => true,
+                'linkable_to' => [
+                    'rel' => 'top_dir.sub_dir.res',
+                ],
             ]),
             (string) $response->body()
         );
