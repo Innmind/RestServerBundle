@@ -23,7 +23,8 @@ use Innmind\Http\{
     Headers,
     Header\Link,
     Header\LinkValue,
-    Header\ParameterInterface as LinkParameterInterface
+    Header\ParameterInterface as LinkParameterInterface,
+    Exception\Http\BadRequestException
 };
 use Innmind\Filesystem\Stream\StringStream;
 use Innmind\Immutable\{
@@ -59,6 +60,11 @@ final class LinkController
     {
         $from = $request->attributes->get('_innmind_resource_definition');
         $request = $request->attributes->get('_innmind_request');
+
+        if (!$request->headers()->has('Link')) {
+            throw new BadRequestException;
+        }
+
         $tos = $this->translator->translate($request->headers()->get('Link'));
 
         $linker = $this

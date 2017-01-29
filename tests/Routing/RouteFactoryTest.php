@@ -134,10 +134,6 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             $route->getDefaults()
         );
-        $this->assertSame(
-            'request.headers.has(\'Link\')',
-            $route->getCondition()
-        );
     }
 
     public function testMakeRouteUnlink()
@@ -156,10 +152,6 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
                 '_controller' => 'innmind_rest_server.controller.resource.unlink:defaultAction',
             ],
             $route->getDefaults()
-        );
-        $this->assertSame(
-            'request.headers.has(\'Link\')',
-            $route->getCondition()
         );
     }
 

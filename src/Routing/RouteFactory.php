@@ -38,7 +38,6 @@ final class RouteFactory
     {
         $name = $path;
         $path = (new Str($path))->replace('.', '/')->append('/');
-        $condition = '';
 
         switch ((string) $action) {
             case Action::GET:
@@ -60,12 +59,10 @@ final class RouteFactory
             case Action::LINK:
                 $method = MethodInterface::LINK;
                 $path = $path->append('{identity}');
-                $condition = 'request.headers.has(\'Link\')';
                 break;
             case Action::UNLINK:
                 $method = MethodInterface::UNLINK;
                 $path = $path->append('{identity}');
-                $condition = 'request.headers.has(\'Link\')';
                 break;
             case Action::OPTIONS:
                 $method = MethodInterface::OPTIONS;
@@ -86,8 +83,7 @@ final class RouteFactory
             [],
             '',
             [],
-            $method,
-            $condition
+            $method
         );
     }
 }
