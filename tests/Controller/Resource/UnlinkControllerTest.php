@@ -122,6 +122,54 @@ class UnlinkControllerTest extends ControllerTestCase
     }
 
     /**
+     * @expectedException Innmind\Http\Exception\Http\BadRequestException
+     */
+    public function testThrowWhenNoLinkHeader()
+    {
+        $controller = $this->container->get(
+            'innmind_rest_server.controller.resource.unlink'
+        );
+        $called = false;
+        $this
+            ->container
+            ->get('gateway.command.unlink')
+            ->method('__invoke')
+            ->will($this->returnCallback(function($from, $tos) use (&$called) {
+                $called = true;
+                $this->assertSame('foo', (string) $from->identity());
+                $this->assertCount(1, $tos);
+                $this->assertSame('bar', (string) $tos->keys()->first()->identity());
+            }));
+        $response = $controller->defaultAction(
+            new Request(
+                [],
+                [],
+                [
+                    '_innmind_resource_definition' => $this
+                        ->container
+                        ->get('innmind_rest_server.definition.directories')
+                        ->get('top_dir')
+                        ->definitions()
+                        ->get('image'),
+                    '_innmind_request' => new ServerRequest(
+                        Url::fromString('/'),
+                        new Method('UNLINK'),
+                        $protocol = new ProtocolVersion(1, 1),
+                        new Headers(new Map('string', HeaderInterface::class)),
+                        new StringStream(''),
+                        new Environment(new Map('string', 'scalar')),
+                        new Cookies(new Map('string', 'scalar')),
+                        new Query(new Map('string', QueryParameterInterface::class)),
+                        new Form(new Map('scalar', FormParameterInterface::class)),
+                        new Files(new Map('string', FileInterface::class))
+                    )
+                ]
+            ),
+            'foo'
+        );
+    }
+
+    /**
      * @expectedException Innmind\Rest\ServerBundle\Exception\InvalidArgumentException
      */
     public function testThrowWhenInvalidGatewayMap()

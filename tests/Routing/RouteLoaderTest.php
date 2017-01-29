@@ -120,7 +120,6 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
             ],
             $route->getDefaults()
         );
-        $this->assertSame('request.headers.has(\'Link\')', $route->getCondition());
         $route = $routes->get('innmind_rest_server.top_dir.sub_dir.res.unlink');
         $this->assertSame('/top_dir/sub_dir/res/{identity}', $route->getPath());
         $this->assertSame([MethodInterface::UNLINK], $route->getMethods());
@@ -132,7 +131,6 @@ class RouteLoaderTest extends \PHPUnit_Framework_TestCase
             ],
             $route->getDefaults()
         );
-        $this->assertSame('request.headers.has(\'Link\')', $route->getCondition());
         $route = $routes->get('innmind_rest_server.top_dir.sub_dir.res.options');
         $this->assertSame('/top_dir/sub_dir/res/', $route->getPath());
         $this->assertSame([MethodInterface::OPTIONS], $route->getMethods());
