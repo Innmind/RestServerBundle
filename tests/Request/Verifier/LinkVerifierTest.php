@@ -61,7 +61,7 @@ class LinkVerifierTest extends \PHPUnit_Framework_TestCase
             new Gateway('foo'),
             false,
             (new Map('string', 'string'))
-                ->put('foo', 'bar')
+                ->put('bar', 'foo')
         );
         $request = new ServerRequest(
             $this->createMock(UrlInterface::class),

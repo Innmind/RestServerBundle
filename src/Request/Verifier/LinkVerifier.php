@@ -57,8 +57,8 @@ final class LinkVerifier implements VerifierInterface
                 $path = $infos['_innmind_resource'];
 
                 if (
-                    !$definition->allowedLinks()->contains($path) ||
-                    $definition->allowedLinks()->get($path) !== $link->relationship()
+                    !$definition->allowedLinks()->contains($link->relationship()) ||
+                    $definition->allowedLinks()->get($link->relationship()) !== $path
                 ) {
                     throw new BadRequestException;
                 }
