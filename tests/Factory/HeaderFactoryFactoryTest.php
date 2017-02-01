@@ -6,7 +6,7 @@ namespace Tests\Innmind\Rest\ServerBundle\Factory;
 use Innmind\Rest\ServerBundle\Factory\HeaderFactoryFactory;
 use Innmind\Http\{
     Factory\Header\RangeFactory,
-    Factory\Header\DefaultFactory,
+    Factory\Header\TryFactory,
     Header\Range
 };
 use Innmind\Immutable\StringPrimitive as Str;
@@ -21,7 +21,7 @@ class HeaderFactoryFactoryTest extends \PHPUnit_Framework_TestCase
             'range' => new RangeFactory,
         ]);
 
-        $this->assertInstanceOf(DefaultFactory::class, $factory);
+        $this->assertInstanceOf(TryFactory::class, $factory);
         $this->assertInstanceOf(
             Range::class,
             $factory->make(

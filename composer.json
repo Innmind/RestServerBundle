@@ -20,7 +20,8 @@
         "symfony/http-kernel": "~3.0",
         "symfony/dependency-injection": "~3.0",
         "symfony/routing": "~3.0",
-        "symfony/framework-bundle": "~3.0"
+        "symfony/framework-bundle": "~3.0",
+        "innmind/http": "~1.5"
     },
     "autoload": {
         "psr-4": {
