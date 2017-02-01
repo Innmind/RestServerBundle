@@ -7,8 +7,7 @@ use Innmind\Rest\ServerBundle\Translator\RequestTranslator;
 use Innmind\Http\{
     Message\ServerRequestInterface,
     File\OkStatus,
-    Factory\HeaderFactoryInterface,
-    Factory\Header\DefaultFactory
+    Factory\Header\HeaderFactory
 };
 use Innmind\Immutable\Map;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,9 +18,7 @@ class RequestTranslatorTest extends \PHPUnit_Framework_TestCase
     {
         file_put_contents('/tmp/uploaded-file', 'some data');
         $translator = new RequestTranslator(
-            new DefaultFactory(
-                new Map('string', HeaderFactoryInterface::class)
-            )
+            new HeaderFactory
         );
 
         $request = $translator->translate(
