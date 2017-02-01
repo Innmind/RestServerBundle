@@ -125,7 +125,7 @@ services:
             - { name: innmind_rest_server.http_header_factory, alias: referer }
 
     innmind_rest_server.http.factory.header.default:
-        class: Innmind\Http\Factory\Header\DefaultFactory
+        class: Innmind\Http\Factory\Header\TryFactory
         factory:
             - '@innmind_rest_server.http.factory.header_factory'
             - make
