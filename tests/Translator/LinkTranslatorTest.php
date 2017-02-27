@@ -68,11 +68,11 @@ class LinkTranslatorTest extends TestCase
         $this->assertCount(1, $references);
         $this->assertSame(
             $directories->get('top_dir')->child('sub_dir')->definition('res'),
-            $references->keys()->first()->definition()
+            $references->keys()->current()->definition()
         );
         $this->assertSame(
             'bar',
-            (string) $references->keys()->first()->identity()
+            (string) $references->keys()->current()->identity()
         );
         $parameters = $references->values()->first();
         $this->assertSame('string', (string) $parameters->keyType());

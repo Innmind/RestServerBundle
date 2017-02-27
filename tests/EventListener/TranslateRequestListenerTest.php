@@ -8,7 +8,7 @@ use Innmind\Rest\ServerBundle\{
     Translator\RequestTranslator
 };
 use Innmind\Http\{
-    Factory\Header\DefaultFactory,
+    Factory\Header\Factories,
     Factory\HeaderFactoryInterface,
     Message\ServerRequestInterface
 };
@@ -28,9 +28,7 @@ class TranslateRequestListenerTest extends TestCase
     {
         $listener = new TranslateRequestListener(
             new RequestTranslator(
-                new DefaultFactory(
-                    new Map('string', HeaderFactoryInterface::class)
-                )
+                Factories::default()
             )
         );
 
@@ -49,9 +47,7 @@ class TranslateRequestListenerTest extends TestCase
     {
         $listener = new TranslateRequestListener(
             new RequestTranslator(
-                new DefaultFactory(
-                    new Map('string', HeaderFactoryInterface::class)
-                )
+                Factories::default()
             )
         );
         $event = new GetResponseEvent(

@@ -13,10 +13,7 @@ use Innmind\Rest\Server\{
     Action
 };
 use Innmind\Http\Message\MethodInterface;
-use Innmind\Immutable\{
-    MapInterface,
-    StringPrimitive as Str
-};
+use Innmind\Immutable\MapInterface;
 use Symfony\Component\{
     Config\Loader\Loader,
     Routing\RouteCollection,

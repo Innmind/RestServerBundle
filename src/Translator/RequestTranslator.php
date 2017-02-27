@@ -45,7 +45,7 @@ use Innmind\Filesystem\{
 use Innmind\Url\Url;
 use Innmind\Immutable\{
     Map,
-    StringPrimitive as Str
+    Str
 };
 use Symfony\Component\HttpFoundation\{
     Request,
@@ -86,7 +86,7 @@ final class RequestTranslator
 
     private function doTranslation(Request $request): ServerRequestInterface
     {
-        $protocol = (new Str($request->server->get('SERVER_PROTOCOL')))->getMatches(
+        $protocol = (new Str($request->server->get('SERVER_PROTOCOL')))->capture(
             '~HTTP/(?<major>\d)\.(?<minor>\d)~'
         );
 

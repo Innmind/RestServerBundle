@@ -9,7 +9,7 @@ use Innmind\Http\{
     Factory\Header\TryFactory,
     Header\Range
 };
-use Innmind\Immutable\StringPrimitive as Str;
+use Innmind\Immutable\Str;
 use PHPUnit\Framework\TestCase;
 
 class HeaderFactoryFactoryTest extends TestCase

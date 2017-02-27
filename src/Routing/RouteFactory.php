@@ -5,7 +5,7 @@ namespace Innmind\Rest\ServerBundle\Routing;
 
 use Innmind\Rest\Server\Action;
 use Innmind\Http\Message\MethodInterface;
-use Innmind\Immutable\StringPrimitive as Str;
+use Innmind\Immutable\Str;
 use Symfony\Component\Routing\Route;
 
 final class RouteFactory
