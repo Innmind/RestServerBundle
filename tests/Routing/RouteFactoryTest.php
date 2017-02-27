@@ -7,8 +7,9 @@ use Innmind\Rest\ServerBundle\Routing\RouteFactory;
 use Innmind\Rest\Server\Action;
 use Innmind\Http\Message\MethodInterface;
 use Symfony\Component\Routing\Route;
+use PHPUnit\Framework\TestCase;
 
-class RouteFactoryTest extends \PHPUnit_Framework_TestCase
+class RouteFactoryTest extends TestCase
 {
     public function testMakeName()
     {

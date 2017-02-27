@@ -10,8 +10,9 @@ use Innmind\Http\{
     Header\Range
 };
 use Innmind\Immutable\StringPrimitive as Str;
+use PHPUnit\Framework\TestCase;
 
-class HeaderFactoryFactoryTest extends \PHPUnit_Framework_TestCase
+class HeaderFactoryFactoryTest extends TestCase
 {
     public function testMake()
     {

@@ -8,8 +8,9 @@ use Innmind\Rest\Server\{
     Formats,
     Format\MediaType
 };
+use PHPUnit\Framework\TestCase;
 
-class FormatsFactoryTest extends \PHPUnit_Framework_TestCase
+class FormatsFactoryTest extends TestCase
 {
     public function testMake()
     {

@@ -25,8 +25,9 @@ use Innmind\Immutable\{
     MapInterface
 };
 use Symfony\Component\Routing\RouterInterface;
+use PHPUnit\Framework\TestCase;
 
-class LinkTranslatorTest extends \PHPUnit_Framework_TestCase
+class LinkTranslatorTest extends TestCase
 {
     public function testTranslate()
     {

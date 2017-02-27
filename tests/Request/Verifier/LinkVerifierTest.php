@@ -37,8 +37,9 @@ use Innmind\Immutable\{
     Set
 };
 use Symfony\Component\Routing\RouterInterface;
+use PHPUnit\Framework\TestCase;
 
-class LinkVerifierTest extends \PHPUnit_Framework_TestCase
+class LinkVerifierTest extends TestCase
 {
     public function testInterface()
     {

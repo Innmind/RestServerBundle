@@ -15,8 +15,9 @@ use Innmind\Rest\Server\{
 use Innmind\Http\Message\MethodInterface;
 use Innmind\Immutable\Set;
 use Symfony\Component\Routing\RouteCollection;
+use PHPUnit\Framework\TestCase;
 
-class RouteLoaderTest extends \PHPUnit_Framework_TestCase
+class RouteLoaderTest extends TestCase
 {
     private $loader;
 

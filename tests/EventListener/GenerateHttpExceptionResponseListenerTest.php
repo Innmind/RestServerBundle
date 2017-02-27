@@ -12,8 +12,9 @@ use Symfony\Component\{
     HttpKernel\Exception\HttpExceptionInterface,
     HttpFoundation\Request
 };
+use PHPUnit\Framework\TestCase;
 
-class GenerateHttpExceptionResponseListenerTest extends \PHPUnit_Framework_TestCase
+class GenerateHttpExceptionResponseListenerTest extends TestCase
 {
     public function testInterface()
     {

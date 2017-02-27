@@ -17,8 +17,9 @@ use Symfony\Component\{
     HttpKernel\HttpKernelInterface,
     HttpFoundation\Request
 };
+use PHPUnit\Framework\TestCase;
 
-class DefinitionLoaderListenerTest extends \PHPUnit_Framework_TestCase
+class DefinitionLoaderListenerTest extends TestCase
 {
     private $directories;
     private $locator;

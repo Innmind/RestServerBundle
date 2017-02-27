@@ -11,8 +11,9 @@ use Innmind\Http\{
 };
 use Innmind\Immutable\Map;
 use Symfony\Component\HttpFoundation\Request;
+use PHPUnit\Framework\TestCase;
 
-class RequestTranslatorTest extends \PHPUnit_Framework_TestCase
+class RequestTranslatorTest extends TestCase
 {
     public function testTranslate()
     {

@@ -21,8 +21,9 @@ use Innmind\Immutable\{
     Map,
     Set
 };
+use PHPUnit\Framework\TestCase;
 
-class DelegationBuilderFactoryTest extends \PHPUnit_Framework_TestCase
+class DelegationBuilderFactoryTest extends TestCase
 {
     public function testMake()
     {

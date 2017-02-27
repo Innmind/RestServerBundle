@@ -20,8 +20,9 @@ use Symfony\Component\{
     HttpKernel\HttpKernelInterface,
     HttpFoundation\Request
 };
+use PHPUnit\Framework\TestCase;
 
-class TranslateRequestListenerTest extends \PHPUnit_Framework_TestCase
+class TranslateRequestListenerTest extends TestCase
 {
     public function testInterface()
     {

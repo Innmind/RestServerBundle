@@ -16,8 +16,9 @@ use Symfony\Component\{
     HttpKernel\Bundle\Bundle,
     DependencyInjection\ContainerBuilder
 };
+use PHPUnit\Framework\TestCase;
 
-class InnmindRestServerBundleTest extends \PHPUnit_Framework_TestCase
+class InnmindRestServerBundleTest extends TestCase
 {
     public function testBuild()
     {
