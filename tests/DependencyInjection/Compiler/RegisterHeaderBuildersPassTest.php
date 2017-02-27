@@ -12,8 +12,9 @@ use Symfony\Component\DependencyInjection\{
     Reference,
     Compiler\CompilerPassInterface
 };
+use PHPUnit\Framework\TestCase;
 
-class RegisterHeaderBuildersPassTest extends \PHPUnit_Framework_TestCase
+class RegisterHeaderBuildersPassTest extends TestCase
 {
     public function testInterface()
     {

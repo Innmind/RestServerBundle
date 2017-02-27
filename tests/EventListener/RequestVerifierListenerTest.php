@@ -20,8 +20,9 @@ use Symfony\Component\{
     HttpKernel\HttpKernelInterface,
     HttpFoundation\Request
 };
+use PHPUnit\Framework\TestCase;
 
-class RequestVerifierListenerTest extends \PHPUnit_Framework_TestCase
+class RequestVerifierListenerTest extends TestCase
 {
     public function testInterface()
     {

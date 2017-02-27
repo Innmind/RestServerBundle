@@ -43,8 +43,9 @@ use Symfony\Component\{
     Routing\RouterInterface,
     Serializer\Serializer
 };
+use PHPUnit\Framework\TestCase;
 
-class FormatTest extends \PHPUnit_Framework_TestCase
+class FormatTest extends TestCase
 {
     private $format;
 

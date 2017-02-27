@@ -10,8 +10,9 @@ use Innmind\Rest\{
     Server\Definition\Directory
 };
 use Innmind\Immutable\MapInterface;
+use PHPUnit\Framework\TestCase;
 
-class DirectoriesFactoryTest extends \PHPUnit_Framework_TestCase
+class DirectoriesFactoryTest extends TestCase
 {
     public function testMake()
     {

@@ -15,8 +15,9 @@ use Symfony\Component\{
     Routing\RouterInterface,
     Serializer\Serializer
 };
+use PHPUnit\Framework\TestCase;
 
-class InnmindRestServerExtensionTest extends \PHPUnit_Framework_TestCase
+class InnmindRestServerExtensionTest extends TestCase
 {
     public function testLoad()
     {

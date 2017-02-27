@@ -13,8 +13,9 @@ use Symfony\Component\DependencyInjection\{
     Reference,
     Definition
 };
+use PHPUnit\Framework\TestCase;
 
-class RegisterRequestVerifiersPassTest extends \PHPUnit_Framework_TestCase
+class RegisterRequestVerifiersPassTest extends TestCase
 {
     public function testProcess()
     {

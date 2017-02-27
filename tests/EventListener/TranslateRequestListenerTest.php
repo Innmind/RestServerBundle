@@ -8,7 +8,7 @@ use Innmind\Rest\ServerBundle\{
     Translator\RequestTranslator
 };
 use Innmind\Http\{
-    Factory\Header\DefaultFactory,
+    Factory\Header\Factories,
     Factory\HeaderFactoryInterface,
     Message\ServerRequestInterface
 };
@@ -20,16 +20,15 @@ use Symfony\Component\{
     HttpKernel\HttpKernelInterface,
     HttpFoundation\Request
 };
+use PHPUnit\Framework\TestCase;
 
-class TranslateRequestListenerTest extends \PHPUnit_Framework_TestCase
+class TranslateRequestListenerTest extends TestCase
 {
     public function testInterface()
     {
         $listener = new TranslateRequestListener(
             new RequestTranslator(
-                new DefaultFactory(
-                    new Map('string', HeaderFactoryInterface::class)
-                )
+                Factories::default()
             )
         );
 
@@ -48,9 +47,7 @@ class TranslateRequestListenerTest extends \PHPUnit_Framework_TestCase
     {
         $listener = new TranslateRequestListener(
             new RequestTranslator(
-                new DefaultFactory(
-                    new Map('string', HeaderFactoryInterface::class)
-                )
+                Factories::default()
             )
         );
         $event = new GetResponseEvent(

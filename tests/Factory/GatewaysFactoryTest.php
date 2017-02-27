@@ -6,8 +6,9 @@ namespace Tests\Innmind\Rest\ServerBundle\Factory;
 use Innmind\Rest\ServerBundle\Factory\GatewaysFactory;
 use Innmind\Rest\Server\GatewayInterface;
 use Innmind\Immutable\MapInterface;
+use PHPUnit\Framework\TestCase;
 
-class GatewaysFactoryTest extends \PHPUnit_Framework_TestCase
+class GatewaysFactoryTest extends TestCase
 {
     public function testMake()
     {

@@ -37,8 +37,9 @@ use Symfony\Component\{
     Routing\Generator\UrlGeneratorInterface,
     HttpFoundation\Request
 };
+use PHPUnit\Framework\TestCase;
 
-class CapabilitiesControllerTest extends \PHPUnit_Framework_TestCase
+class CapabilitiesControllerTest extends TestCase
 {
     /**
      * @expectedException Innmind\Rest\ServerBundle\Exception\InvalidArgumentException

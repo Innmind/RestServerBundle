@@ -27,8 +27,9 @@ use Symfony\Component\{
     HttpKernel\HttpKernelInterface,
     HttpFoundation\Request
 };
+use PHPUnit\Framework\TestCase;
 
-class TranslateResponseListenerTest extends \PHPUnit_Framework_TestCase
+class TranslateResponseListenerTest extends TestCase
 {
     public function testInterface()
     {

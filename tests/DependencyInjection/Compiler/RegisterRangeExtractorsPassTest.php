@@ -12,8 +12,9 @@ use Symfony\Component\DependencyInjection\{
     Reference,
     Compiler\CompilerPassInterface
 };
+use PHPUnit\Framework\TestCase;
 
-class RegisterRangeExtractorsPassTest extends \PHPUnit_Framework_TestCase
+class RegisterRangeExtractorsPassTest extends TestCase
 {
     public function testProcess()
     {

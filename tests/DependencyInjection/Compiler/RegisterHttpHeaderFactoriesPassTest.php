@@ -13,8 +13,9 @@ use Symfony\Component\DependencyInjection\{
     Reference,
     Definition
 };
+use PHPUnit\Framework\TestCase;
 
-class RegisterHttpHeaderFactoriesPassTest extends \PHPUnit_Framework_TestCase
+class RegisterHttpHeaderFactoriesPassTest extends TestCase
 {
     public function testProcess()
     {

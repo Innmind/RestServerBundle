@@ -10,8 +10,9 @@ use Innmind\Rest\Server\{
     Request\Range
 };
 use Innmind\Http\Message\ServerRequestInterface;
+use PHPUnit\Framework\TestCase;
 
-class RangeExtractorFactoryTest extends \PHPUnit_Framework_TestCase
+class RangeExtractorFactoryTest extends TestCase
 {
     public function testMake()
     {

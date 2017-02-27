@@ -23,8 +23,9 @@ use Symfony\Component\{
     HttpKernel\Exception\HttpException,
     HttpFoundation\Request
 };
+use PHPUnit\Framework\TestCase;
 
-class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
+class ExceptionListenerTest extends TestCase
 {
     public function testInterface()
     {

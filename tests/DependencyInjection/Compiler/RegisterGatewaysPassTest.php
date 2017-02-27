@@ -13,8 +13,9 @@ use Symfony\Component\DependencyInjection\{
     Reference,
     Definition
 };
+use PHPUnit\Framework\TestCase;
 
-class RegisterGatewaysPassTest extends \PHPUnit_Framework_TestCase
+class RegisterGatewaysPassTest extends TestCase
 {
     public function testProcess()
     {

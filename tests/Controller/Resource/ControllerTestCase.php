@@ -30,8 +30,9 @@ use Symfony\Bundle\FrameworkBundle\{
     DependencyInjection\FrameworkExtension
 };
 use Fixtures\Innmind\Rest\ServerBundle\FixtureBundle\FixtureFixtureBundle;
+use PHPUnit\Framework\TestCase;
 
-abstract class ControllerTestCase extends \PHPUnit_Framework_TestCase
+abstract class ControllerTestCase extends TestCase
 {
     protected $container;
 

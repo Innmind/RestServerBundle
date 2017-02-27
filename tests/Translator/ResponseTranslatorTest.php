@@ -18,8 +18,9 @@ use Innmind\Http\{
 use Innmind\Filesystem\Stream\StringStream;
 use Innmind\Immutable\Map;
 use Symfony\Component\HttpFoundation\Response as SfResponse;
+use PHPUnit\Framework\TestCase;
 
-class ResponseTranslatorTest extends \PHPUnit_Framework_TestCase
+class ResponseTranslatorTest extends TestCase
 {
     public function testTranslate()
     {

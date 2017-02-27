@@ -16,8 +16,9 @@ use Fixtures\Innmind\Rest\ServerBundle\{
     BarBundle\FixtureBarBundle,
     EmptyBundle\FixtureEmptyBundle
 };
+use PHPUnit\Framework\TestCase;
 
-class RegisterDefinitionFilesPassTest extends \PHPUnit_Framework_TestCase
+class RegisterDefinitionFilesPassTest extends TestCase
 {
     public function testProcess()
     {

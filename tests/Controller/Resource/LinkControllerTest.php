@@ -55,17 +55,20 @@ class LinkControllerTest extends ControllerTestCase
         $controller = $this->container->get(
             'innmind_rest_server.controller.resource.link'
         );
-        $called = false;
         $this
             ->container
             ->get('gateway.command.link')
+            ->expects($this->once())
             ->method('__invoke')
-            ->will($this->returnCallback(function($from, $tos) use (&$called) {
-                $called = true;
-                $this->assertSame('foo', (string) $from->identity());
-                $this->assertCount(1, $tos);
-                $this->assertSame('bar', (string) $tos->keys()->first()->identity());
-            }));
+            ->with(
+                $this->callback(function($from) {
+                    return (string) $from->identity() === 'foo';
+                }),
+                $this->callback(function($tos) {
+                    return $tos->size() === 1 &&
+                        (string) $tos->keys()->current()->identity() === 'bar';
+                })
+            );
         $response = $controller->defaultAction(
             new Request(
                 [],
@@ -118,7 +121,6 @@ class LinkControllerTest extends ControllerTestCase
         $this->assertSame($protocol, $response->protocolVersion());
         $this->assertCount(0, $response->headers());
         $this->assertSame('', (string) $response->body());
-        $this->assertTrue($called);
     }
 
     /**
