@@ -25,7 +25,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Innmind\\Rest\\ServerBundle\\": "src/",
+            "Innmind\\Rest\\ServerBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Tests\\Innmind\\Rest\\ServerBundle\\": "tests/",
             "Fixtures\\Innmind\\Rest\\ServerBundle\\": "fixtures/"
         }
