@@ -10,26 +10,21 @@ use Innmind\Rest\ServerBundle\{
 };
 use Innmind\Rest\Server\Format\Format as FormatFormat;
 use Innmind\Http\{
-    Message\ServerRequest,
-    Message\Method,
-    ProtocolVersion,
-    Message\ResponseInterface,
-    Message\Environment,
-    Message\Cookies,
-    Message\Query,
-    Message\Query\ParameterInterface as QueryParameterInterface,
-    Message\Form,
-    Message\Form\ParameterInterface as FormParameterInterface,
-    Message\Files,
-    File\FileInterface,
-    Headers,
-    Header\HeaderInterface,
-    Header\ParameterInterface,
+    Message\ServerRequest\ServerRequest,
+    Message\Method\Method,
+    ProtocolVersion\ProtocolVersion,
+    Message\Environment\Environment,
+    Message\Cookies\Cookies,
+    Message\Query\Query,
+    Message\Form\Form,
+    Message\Files\Files,
+    Headers\Headers,
+    Header,
     Header\Accept,
     Header\AcceptValue,
     Header\ContentType,
     Header\ContentTypeValue,
-    Header\HeaderValueInterface
+    Header\Value
 };
 use Innmind\Url\Url;
 use Innmind\Filesystem\Stream\StringStream;
@@ -109,27 +104,20 @@ class FormatTest extends TestCase
                 new Method('GET'),
                 new ProtocolVersion(1, 1),
                 new Headers(
-                    (new Map('string', HeaderInterface::class))
+                    (new Map('string', Header::class))
                         ->put(
                             'Accept',
                             new Accept(
-                                (new Set(HeaderValueInterface::class))
-                                    ->add(
-                                        new AcceptValue(
-                                            'application',
-                                            'json',
-                                            new Map('string', ParameterInterface::class)
-                                        )
-                                    )
+                                new AcceptValue('application', 'json')
                             )
                         )
                 ),
                 new StringStream(''),
-                new Environment(new Map('string', 'scalar')),
-                new Cookies(new Map('string', 'scalar')),
-                new Query(new Map('string', QueryParameterInterface::class)),
-                new Form(new Map('scalar', FormParameterInterface::class)),
-                new Files(new Map('string', FileInterface::class))
+                new Environment,
+                new Cookies,
+                new Query,
+                new Form,
+                new Files
             )
         );
 
@@ -146,27 +134,20 @@ class FormatTest extends TestCase
                 new Method('GET'),
                 new ProtocolVersion(1, 1),
                 new Headers(
-                    (new Map('string', HeaderInterface::class))
+                    (new Map('string', Header::class))
                         ->put(
                             'Accept',
                             new Accept(
-                                (new Set(HeaderValueInterface::class))
-                                    ->add(
-                                        new AcceptValue(
-                                            '*',
-                                            '*',
-                                            new Map('string', ParameterInterface::class)
-                                        )
-                                    )
+                                new AcceptValue('*', '*')
                             )
                         )
                 ),
                 new StringStream(''),
-                new Environment(new Map('string', 'scalar')),
-                new Cookies(new Map('string', 'scalar')),
-                new Query(new Map('string', QueryParameterInterface::class)),
-                new Form(new Map('scalar', FormParameterInterface::class)),
-                new Files(new Map('string', FileInterface::class))
+                new Environment,
+                new Cookies,
+                new Query,
+                new Form,
+                new Files
             )
         );
 
@@ -183,24 +164,20 @@ class FormatTest extends TestCase
                 new Method('GET'),
                 new ProtocolVersion(1, 1),
                 new Headers(
-                    (new Map('string', HeaderInterface::class))
+                    (new Map('string', Header::class))
                         ->put(
                             'Content-Type',
                             new ContentType(
-                                new ContentTypeValue(
-                                    'application',
-                                    'json',
-                                    new Map('string', ParameterInterface::class)
-                                )
+                                new ContentTypeValue('application', 'json')
                             )
                         )
                 ),
                 new StringStream(''),
-                new Environment(new Map('string', 'scalar')),
-                new Cookies(new Map('string', 'scalar')),
-                new Query(new Map('string', QueryParameterInterface::class)),
-                new Form(new Map('scalar', FormParameterInterface::class)),
-                new Files(new Map('string', FileInterface::class))
+                new Environment,
+                new Cookies,
+                new Query,
+                new Form,
+                new Files
             )
         );
 

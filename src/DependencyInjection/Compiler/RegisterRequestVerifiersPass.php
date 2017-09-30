@@ -23,6 +23,7 @@ final class RegisterRequestVerifiersPass implements CompilerPassInterface
         $ids = $container->findTaggedServiceIds(
             'innmind_rest_server.http.request.verifier'
         );
+        $definition = $container->getDefinition('innmind_rest_server.http.request.verifier');
         $verifiers = [];
 
         foreach ($ids as $id => $tags) {
@@ -43,8 +44,10 @@ final class RegisterRequestVerifiersPass implements CompilerPassInterface
             }
         }
 
-        $container
-            ->getDefinition('innmind_rest_server.http.request.verifier')
-            ->addArgument($verifiers);
+        krsort($verifiers);
+
+        foreach ($verifiers as $verifier) {
+            $definition->addArgument($verifier);
+        }
     }
 }

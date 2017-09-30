@@ -5,7 +5,7 @@ namespace Tests\Innmind\Rest\ServerBundle\Routing;
 
 use Innmind\Rest\ServerBundle\Routing\RouteFactory;
 use Innmind\Rest\Server\Action;
-use Innmind\Http\Message\MethodInterface;
+use Innmind\Http\Message\Method;
 use Symfony\Component\Routing\Route;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +15,7 @@ class RouteFactoryTest extends TestCase
     {
         $factory = new RouteFactory;
 
-        $name = $factory->makeName('top_dir.sub_dir.res', new Action('list'));
+        $name = $factory->makeName('top_dir.sub_dir.res', Action::list());
 
         $this->assertSame(
             'innmind_rest_server.top_dir.sub_dir.res.list',
@@ -27,11 +27,11 @@ class RouteFactoryTest extends TestCase
     {
         $factory = new RouteFactory;
 
-        $route = $factory->makeRoute('image', new Action('list'));
+        $route = $factory->makeRoute('image', Action::list());
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertSame('/image/', $route->getPath());
-        $this->assertSame([MethodInterface::GET], $route->getMethods());
+        $this->assertSame([Method::GET], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'image',
@@ -46,11 +46,11 @@ class RouteFactoryTest extends TestCase
     {
         $factory = new RouteFactory;
 
-        $route = $factory->makeRoute('image', new Action('get'));
+        $route = $factory->makeRoute('image', Action::get());
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertSame('/image/{identity}', $route->getPath());
-        $this->assertSame([MethodInterface::GET], $route->getMethods());
+        $this->assertSame([Method::GET], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'image',
@@ -65,11 +65,11 @@ class RouteFactoryTest extends TestCase
     {
         $factory = new RouteFactory;
 
-        $route = $factory->makeRoute('image', new Action('create'));
+        $route = $factory->makeRoute('image', Action::create());
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertSame('/image/', $route->getPath());
-        $this->assertSame([MethodInterface::POST], $route->getMethods());
+        $this->assertSame([Method::POST], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'image',
@@ -84,11 +84,11 @@ class RouteFactoryTest extends TestCase
     {
         $factory = new RouteFactory;
 
-        $route = $factory->makeRoute('image', new Action('update'));
+        $route = $factory->makeRoute('image', Action::update());
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertSame('/image/{identity}', $route->getPath());
-        $this->assertSame([MethodInterface::PUT], $route->getMethods());
+        $this->assertSame([Method::PUT], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'image',
@@ -103,11 +103,11 @@ class RouteFactoryTest extends TestCase
     {
         $factory = new RouteFactory;
 
-        $route = $factory->makeRoute('image', new Action('remove'));
+        $route = $factory->makeRoute('image', Action::remove());
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertSame('/image/{identity}', $route->getPath());
-        $this->assertSame([MethodInterface::DELETE], $route->getMethods());
+        $this->assertSame([Method::DELETE], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'image',
@@ -122,11 +122,11 @@ class RouteFactoryTest extends TestCase
     {
         $factory = new RouteFactory;
 
-        $route = $factory->makeRoute('image', new Action('link'));
+        $route = $factory->makeRoute('image', Action::link());
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertSame('/image/{identity}', $route->getPath());
-        $this->assertSame([MethodInterface::LINK], $route->getMethods());
+        $this->assertSame([Method::LINK], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'image',
@@ -141,11 +141,11 @@ class RouteFactoryTest extends TestCase
     {
         $factory = new RouteFactory;
 
-        $route = $factory->makeRoute('image', new Action('unlink'));
+        $route = $factory->makeRoute('image', Action::unlink());
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertSame('/image/{identity}', $route->getPath());
-        $this->assertSame([MethodInterface::UNLINK], $route->getMethods());
+        $this->assertSame([Method::UNLINK], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'image',
@@ -160,11 +160,11 @@ class RouteFactoryTest extends TestCase
     {
         $factory = new RouteFactory;
 
-        $route = $factory->makeRoute('image', new Action('options'));
+        $route = $factory->makeRoute('image', Action::options());
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertSame('/image/', $route->getPath());
-        $this->assertSame([MethodInterface::OPTIONS], $route->getMethods());
+        $this->assertSame([Method::OPTIONS], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'image',

@@ -12,7 +12,7 @@ use Innmind\Rest\Server\{
     Definition\Loader\YamlLoader,
     Action
 };
-use Innmind\Http\Message\MethodInterface;
+use Innmind\Http\Message\Method;
 use Innmind\Immutable\Set;
 use Symfony\Component\Routing\RouteCollection;
 use PHPUnit\Framework\TestCase;
@@ -57,95 +57,95 @@ class RouteLoaderTest extends TestCase
         );
         $route = $routes->get('innmind_rest_server.top_dir.sub_dir.res.list');
         $this->assertSame('/top_dir/sub_dir/res/', $route->getPath());
-        $this->assertSame([MethodInterface::GET], $route->getMethods());
+        $this->assertSame([Method::GET], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
-                '_innmind_action' => Action::LIST,
+                '_innmind_action' => (string) Action::list(),
                 '_controller' => 'innmind_rest_server.controller.resource.list:defaultAction',
             ],
             $route->getDefaults()
         );
         $route = $routes->get('innmind_rest_server.top_dir.sub_dir.res.get');
         $this->assertSame('/top_dir/sub_dir/res/{identity}', $route->getPath());
-        $this->assertSame([MethodInterface::GET], $route->getMethods());
+        $this->assertSame([Method::GET], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
-                '_innmind_action' => Action::GET,
+                '_innmind_action' => (string) Action::get(),
                 '_controller' => 'innmind_rest_server.controller.resource.get:defaultAction',
             ],
             $route->getDefaults()
         );
         $route = $routes->get('innmind_rest_server.top_dir.sub_dir.res.create');
         $this->assertSame('/top_dir/sub_dir/res/', $route->getPath());
-        $this->assertSame([MethodInterface::POST], $route->getMethods());
+        $this->assertSame([Method::POST], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
-                '_innmind_action' => Action::CREATE,
+                '_innmind_action' => (string) Action::create(),
                 '_controller' => 'innmind_rest_server.controller.resource.create:defaultAction',
             ],
             $route->getDefaults()
         );
         $route = $routes->get('innmind_rest_server.top_dir.sub_dir.res.update');
         $this->assertSame('/top_dir/sub_dir/res/{identity}', $route->getPath());
-        $this->assertSame([MethodInterface::PUT], $route->getMethods());
+        $this->assertSame([Method::PUT], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
-                '_innmind_action' => Action::UPDATE,
+                '_innmind_action' => (string) Action::update(),
                 '_controller' => 'innmind_rest_server.controller.resource.update:defaultAction',
             ],
             $route->getDefaults()
         );
         $route = $routes->get('innmind_rest_server.top_dir.sub_dir.res.remove');
         $this->assertSame('/top_dir/sub_dir/res/{identity}', $route->getPath());
-        $this->assertSame([MethodInterface::DELETE], $route->getMethods());
+        $this->assertSame([Method::DELETE], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
-                '_innmind_action' => Action::REMOVE,
+                '_innmind_action' => (string) Action::remove(),
                 '_controller' => 'innmind_rest_server.controller.resource.remove:defaultAction',
             ],
             $route->getDefaults()
         );
         $route = $routes->get('innmind_rest_server.top_dir.sub_dir.res.link');
         $this->assertSame('/top_dir/sub_dir/res/{identity}', $route->getPath());
-        $this->assertSame([MethodInterface::LINK], $route->getMethods());
+        $this->assertSame([Method::LINK], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
-                '_innmind_action' => Action::LINK,
+                '_innmind_action' => (string) Action::link(),
                 '_controller' => 'innmind_rest_server.controller.resource.link:defaultAction',
             ],
             $route->getDefaults()
         );
         $route = $routes->get('innmind_rest_server.top_dir.sub_dir.res.unlink');
         $this->assertSame('/top_dir/sub_dir/res/{identity}', $route->getPath());
-        $this->assertSame([MethodInterface::UNLINK], $route->getMethods());
+        $this->assertSame([Method::UNLINK], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
-                '_innmind_action' => Action::UNLINK,
+                '_innmind_action' => (string) Action::unlink(),
                 '_controller' => 'innmind_rest_server.controller.resource.unlink:defaultAction',
             ],
             $route->getDefaults()
         );
         $route = $routes->get('innmind_rest_server.top_dir.sub_dir.res.options');
         $this->assertSame('/top_dir/sub_dir/res/', $route->getPath());
-        $this->assertSame([MethodInterface::OPTIONS], $route->getMethods());
+        $this->assertSame([Method::OPTIONS], $route->getMethods());
         $this->assertSame(
             [
                 '_innmind_resource' => 'top_dir.sub_dir.res',
-                '_innmind_action' => Action::OPTIONS,
+                '_innmind_action' => (string) Action::options(),
                 '_controller' => 'innmind_rest_server.controller.resource.options:defaultAction',
             ],
             $route->getDefaults()
         );
         $route = $routes->get('innmind_rest_server_capabilities');
         $this->assertSame('/*', $route->getPath());
-        $this->assertSame([MethodInterface::OPTIONS], $route->getMethods());
+        $this->assertSame([Method::OPTIONS], $route->getMethods());
         $this->assertSame(
             ['_controller' => 'innmind_rest_server.controller.capabilities:capabilitiesAction'],
             $route->getDefaults()

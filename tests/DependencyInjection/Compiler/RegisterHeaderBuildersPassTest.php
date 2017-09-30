@@ -7,6 +7,7 @@ use Innmind\Rest\ServerBundle\DependencyInjection\{
     InnmindRestServerExtension,
     Compiler\RegisterHeaderBuildersPass
 };
+use Innmind\Rest\Server\Action;
 use Symfony\Component\DependencyInjection\{
     ContainerBuilder,
     Reference,
@@ -20,7 +21,7 @@ class RegisterHeaderBuildersPassTest extends TestCase
     {
         $this->assertInstanceOf(
             CompilerPassInterface::class,
-            new RegisterHeaderBuildersPass('list')
+            new RegisterHeaderBuildersPass(Action::list())
         );
     }
 
@@ -31,29 +32,29 @@ class RegisterHeaderBuildersPassTest extends TestCase
             [],
             $container
         );
-        $pass = new RegisterHeaderBuildersPass('list');
+        $pass = new RegisterHeaderBuildersPass(Action::list());
 
         $this->assertSame(null, $pass->process($container));
-        $argument = $container
+        $arguments = $container
             ->getDefinition(
                 'innmind_rest_server.response.header_builder.list_delegation'
             )
-            ->getArgument(0);
-        $this->assertSame(3, count($argument));
-        $this->assertInstanceOf(Reference::class, $argument[0]);
-        $this->assertInstanceOf(Reference::class, $argument[1]);
-        $this->assertInstanceOf(Reference::class, $argument[2]);
+            ->getArgumentS();
+        $this->assertSame(3, count($arguments));
+        $this->assertInstanceOf(Reference::class, $arguments[0]);
+        $this->assertInstanceOf(Reference::class, $arguments[1]);
+        $this->assertInstanceOf(Reference::class, $arguments[2]);
         $this->assertSame(
             'innmind_rest_server.response.header_builder.list_content_type',
-            (string) $argument[0]
+            (string) $arguments[0]
         );
         $this->assertSame(
             'innmind_rest_server.response.header_builder.list_links',
-            (string) $argument[1]
+            (string) $arguments[1]
         );
         $this->assertSame(
             'innmind_rest_server.response.header_builder.list_range',
-            (string) $argument[2]
+            (string) $arguments[2]
         );
     }
 }

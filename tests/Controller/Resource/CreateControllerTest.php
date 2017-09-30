@@ -5,37 +5,29 @@ namespace Tests\Innmind\Rest\ServerBundle\Controller\Resource;
 
 use Innmind\Rest\ServerBundle\Controller\Resource\CreateController;
 use Innmind\Rest\Server\{
-    Identity,
-    Response\HeaderBuilder\CreateBuilderInterface
+    Identity\Identity,
+    Response\HeaderBuilder\CreateBuilder
 };
 use Innmind\Http\{
-    Message\ServerRequest,
-    Message\ResponseInterface,
-    Message\Method,
-    ProtocolVersion,
-    Headers,
-    Header\HeaderInterface,
+    Message\ServerRequest\ServerRequest,
+    Message\Response,
+    Message\Method\Method,
+    ProtocolVersion\ProtocolVersion,
+    Headers\Headers,
+    Header,
     Header\Accept,
     Header\AcceptValue,
-    Header\HeaderValueInterface,
-    Header\ParameterInterface,
     Header\ContentType,
     Header\ContentTypeValue,
-    Message\Environment,
-    Message\Cookies,
-    Message\Query,
-    Message\Query\ParameterInterface as QueryParameterInterface,
-    Message\Form,
-    Message\Form\ParameterInterface as FormParameterInterface,
-    Message\Files,
-    File\FileInterface
+    Message\Environment\Environment,
+    Message\Cookies\Cookies,
+    Message\Query\Query,
+    Message\Form\Form,
+    Message\Files\Files
 };
 use Innmind\Url\Url;
 use Innmind\Filesystem\Stream\StringStream;
-use Innmind\Immutable\{
-    Map,
-    Set
-};
+use Innmind\Immutable\Map;
 use Symfony\Component\{
     HttpFoundation\Request,
     Serializer\SerializerInterface
@@ -79,21 +71,14 @@ class CreateControllerTest extends ControllerTestCase
                         new Method('POST'),
                         $protocol = new ProtocolVersion(1, 1),
                         new Headers(
-                            (new Map('string', HeaderInterface::class))
+                            (new Map('string', Header::class))
                                 ->put(
                                     'Accept',
                                     new Accept(
-                                        (new Set(HeaderValueInterface::class))
-                                            ->add(
-                                                new AcceptValue(
-                                                    'application',
-                                                    'json',
-                                                    new Map(
-                                                        'string',
-                                                        ParameterInterface::class
-                                                    )
-                                                )
-                                            )
+                                        new AcceptValue(
+                                            'application',
+                                            'json'
+                                        )
                                     )
                                 )
                                 ->put(
@@ -101,27 +86,23 @@ class CreateControllerTest extends ControllerTestCase
                                     new ContentType(
                                         new ContentTypeValue(
                                             'application',
-                                            'json',
-                                            new Map(
-                                                'string',
-                                                ParameterInterface::class
-                                            )
+                                            'json'
                                         )
                                     )
                                 )
                         ),
                         new StringStream('{"resource":{"url":"example.com"}}'),
-                        new Environment(new Map('string', 'scalar')),
-                        new Cookies(new Map('string', 'scalar')),
-                        new Query(new Map('string', QueryParameterInterface::class)),
-                        new Form(new Map('scalar', FormParameterInterface::class)),
-                        new Files(new Map('string', FileInterface::class))
+                        new Environment,
+                        new Cookies,
+                        new Query,
+                        new Form,
+                        new Files
                     )
                 ]
             )
         );
 
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame(201, $response->statusCode()->value());
         $this->assertSame('Created', (string) $response->reasonPhrase());
         $this->assertSame($protocol, $response->protocolVersion());
@@ -149,7 +130,7 @@ class CreateControllerTest extends ControllerTestCase
             new Map('int', 'int'),
             $this->createMock(SerializerInterface::class),
             $this->container->get('innmind_rest_server.format'),
-            $this->createMock(CreateBuilderInterface::class)
+            $this->createMock(CreateBuilder::class)
         );
     }
 }

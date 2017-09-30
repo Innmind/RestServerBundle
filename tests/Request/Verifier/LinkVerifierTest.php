@@ -5,37 +5,32 @@ namespace Tests\Innmind\Rest\ServerBundle\Request\Verifier;
 
 use Innmind\Rest\ServerBundle\Request\Verifier\LinkVerifier;
 use Innmind\Rest\Server\{
-    Request\Verifier\VerifierInterface,
+    Request\Verifier\Verifier,
     Definition\HttpResource,
     Definition\Identity,
     Definition\Property,
     Definition\Gateway
 };
 use Innmind\Http\{
-    Message\ServerRequest,
-    Message\Method,
-    ProtocolVersionInterface,
-    Headers,
-    Header\HeaderInterface,
-    Header\HeaderValueInterface,
+    Message\ServerRequest\ServerRequest,
+    Message\Method\Method,
+    ProtocolVersion,
+    Headers\Headers,
+    Header,
     Header\Link,
     Header\LinkValue,
-    Header\ParameterInterface,
-    Message\EnvironmentInterface,
-    Message\CookiesInterface,
-    Message\QueryInterface,
-    Message\FormInterface,
-    Message\FilesInterface
+    Message\Environment,
+    Message\Cookies,
+    Message\Query,
+    Message\Form,
+    Message\Files
 };
 use Innmind\Url\{
     UrlInterface,
     Url
 };
-use Innmind\Filesystem\StreamInterface;
-use Innmind\Immutable\{
-    Map,
-    Set
-};
+use Innmind\Stream\Readable;
+use Innmind\Immutable\Map;
 use Symfony\Component\Routing\RouterInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -44,7 +39,7 @@ class LinkVerifierTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            VerifierInterface::class,
+            Verifier::class,
             new LinkVerifier(
                 $this->createMock(RouterInterface::class)
             )
@@ -67,40 +62,36 @@ class LinkVerifierTest extends TestCase
         $request = new ServerRequest(
             $this->createMock(UrlInterface::class),
             new Method('LINK'),
-            $this->createMock(ProtocolVersionInterface::class),
+            $this->createMock(ProtocolVersion::class),
             new Headers(
-                (new Map('string', HeaderInterface::class))
+                (new Map('string', Header::class))
                     ->put(
                         'Link',
                         new Link(
-                            (new Set(HeaderValueInterface::class))
-                                ->add(
-                                    new LinkValue(
-                                        Url::fromString('/foo'),
-                                        'bar',
-                                        new Map('string', ParameterInterface::class)
-                                    )
-                                )
+                            new LinkValue(
+                                Url::fromString('/foo'),
+                                'bar'
+                            )
                         )
                     )
             ),
-            $this->createMock(StreamInterface::class),
-            $this->createMock(EnvironmentInterface::class),
-            $this->createMock(CookiesInterface::class),
-            $this->createMock(QueryInterface::class),
-            $this->createMock(FormInterface::class),
-            $this->createMock(FilesInterface::class)
+            $this->createMock(Readable::class),
+            $this->createMock(Environment::class),
+            $this->createMock(Cookies::class),
+            $this->createMock(Query::class),
+            $this->createMock(Form::class),
+            $this->createMock(Files::class)
         );
-        $router = $this->createMock(RouterINterface::class);
+        $router = $this->createMock(RouterInterface::class);
         $router
             ->method('match')
             ->willReturn([
                 '_innmind_resource' => 'foo',
                 'identity' => 'foo',
             ]);
-        $verifier = new LinkVerifier($router);
+        $verify = new LinkVerifier($router);
 
-        $this->assertNull($verifier->verify($request, $definition));
+        $this->assertNull($verify($request, $definition));
     }
 
     public function testDoesntVerify()
@@ -118,44 +109,40 @@ class LinkVerifierTest extends TestCase
         $request = new ServerRequest(
             $this->createMock(UrlInterface::class),
             new Method('POST'),
-            $this->createMock(ProtocolVersionInterface::class),
+            $this->createMock(ProtocolVersion::class),
             new Headers(
-                (new Map('string', HeaderInterface::class))
+                (new Map('string', Header::class))
                     ->put(
                         'Link',
                         new Link(
-                            (new Set(HeaderValueInterface::class))
-                                ->add(
-                                    new LinkValue(
-                                        Url::fromString('/foo'),
-                                        'bar',
-                                        new Map('string', ParameterInterface::class)
-                                    )
-                                )
+                            new LinkValue(
+                                Url::fromString('/foo'),
+                                'bar'
+                            )
                         )
                     )
             ),
-            $this->createMock(StreamInterface::class),
-            $this->createMock(EnvironmentInterface::class),
-            $this->createMock(CookiesInterface::class),
-            $this->createMock(QueryInterface::class),
-            $this->createMock(FormInterface::class),
-            $this->createMock(FilesInterface::class)
+            $this->createMock(Readable::class),
+            $this->createMock(Environment::class),
+            $this->createMock(Cookies::class),
+            $this->createMock(Query::class),
+            $this->createMock(Form::class),
+            $this->createMock(Files::class)
         );
-        $router = $this->createMock(RouterINterface::class);
+        $router = $this->createMock(RouterInterface::class);
         $router
             ->method('match')
             ->willReturn([
                 '_innmind_resource' => 'foo',
                 'identity' => 'foo',
             ]);
-        $verifier = new LinkVerifier($router);
+        $verify = new LinkVerifier($router);
 
-        $this->assertNull($verifier->verify($request, $definition));
+        $this->assertNull($verify($request, $definition));
     }
 
     /**
-     * @expectedException Innmind\Http\Exception\Http\BadRequestException
+     * @expectedException Innmind\Http\Exception\Http\BadRequest
      */
     public function testThrowIfTargetResourceIsNotARestResource()
     {
@@ -173,41 +160,37 @@ class LinkVerifierTest extends TestCase
         $request = new ServerRequest(
             $this->createMock(UrlInterface::class),
             new Method('LINK'),
-            $this->createMock(ProtocolVersionInterface::class),
+            $this->createMock(ProtocolVersion::class),
             new Headers(
-                (new Map('string', HeaderInterface::class))
+                (new Map('string', Header::class))
                     ->put(
                         'Link',
                         new Link(
-                            (new Set(HeaderValueInterface::class))
-                                ->add(
-                                    new LinkValue(
-                                        Url::fromString('/foo'),
-                                        'bar',
-                                        new Map('string', ParameterInterface::class)
-                                    )
-                                )
+                            new LinkValue(
+                                Url::fromString('/foo'),
+                                'bar'
+                            )
                         )
                     )
             ),
-            $this->createMock(StreamInterface::class),
-            $this->createMock(EnvironmentInterface::class),
-            $this->createMock(CookiesInterface::class),
-            $this->createMock(QueryInterface::class),
-            $this->createMock(FormInterface::class),
-            $this->createMock(FilesInterface::class)
+            $this->createMock(Readable::class),
+            $this->createMock(Environment::class),
+            $this->createMock(Cookies::class),
+            $this->createMock(Query::class),
+            $this->createMock(Form::class),
+            $this->createMock(Files::class)
         );
-        $router = $this->createMock(RouterINterface::class);
+        $router = $this->createMock(RouterInterface::class);
         $router
             ->method('match')
             ->willReturn([]);
-        $verifier = new LinkVerifier($router);
+        $verify = new LinkVerifier($router);
 
-        $verifier->verify($request, $definition);
+        $verify($request, $definition);
     }
 
     /**
-     * @expectedException Innmind\Http\Exception\Http\BadRequestException
+     * @expectedException Innmind\Http\Exception\Http\BadRequest
      */
     public function testThrowIfTargetResourceIsNotAllowed()
     {
@@ -225,39 +208,35 @@ class LinkVerifierTest extends TestCase
         $request = new ServerRequest(
             $this->createMock(UrlInterface::class),
             new Method('LINK'),
-            $this->createMock(ProtocolVersionInterface::class),
+            $this->createMock(ProtocolVersion::class),
             new Headers(
-                (new Map('string', HeaderInterface::class))
+                (new Map('string', Header::class))
                     ->put(
                         'Link',
                         new Link(
-                            (new Set(HeaderValueInterface::class))
-                                ->add(
-                                    new LinkValue(
-                                        Url::fromString('/foo'),
-                                        'bar',
-                                        new Map('string', ParameterInterface::class)
-                                    )
-                                )
+                            new LinkValue(
+                                Url::fromString('/foo'),
+                                'bar'
+                            )
                         )
                     )
             ),
-            $this->createMock(StreamInterface::class),
-            $this->createMock(EnvironmentInterface::class),
-            $this->createMock(CookiesInterface::class),
-            $this->createMock(QueryInterface::class),
-            $this->createMock(FormInterface::class),
-            $this->createMock(FilesInterface::class)
+            $this->createMock(Readable::class),
+            $this->createMock(Environment::class),
+            $this->createMock(Cookies::class),
+            $this->createMock(Query::class),
+            $this->createMock(Form::class),
+            $this->createMock(Files::class)
         );
-        $router = $this->createMock(RouterINterface::class);
+        $router = $this->createMock(RouterInterface::class);
         $router
             ->method('match')
             ->willReturn([
                 '_innmind_resource' => 'foo',
                 'identity' => 'foo',
             ]);
-        $verifier = new LinkVerifier($router);
+        $verify = new LinkVerifier($router);
 
-        $verifier->verify($request, $definition);
+        $verify($request, $definition);
     }
 }

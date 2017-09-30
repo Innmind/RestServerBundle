@@ -30,7 +30,9 @@ class InnmindRestServerBundleTest extends TestCase
         $passes = $container
             ->getCompilerPassConfig()
             ->getBeforeOptimizationPasses();
-        $this->assertSame(12, count($passes));
+        $this->assertSame(14, count($passes));
+        array_shift($passes);
+        array_shift($passes);
         $this->assertInstanceOf(
             RegisterDefinitionFilesPass::class,
             $passes[0]

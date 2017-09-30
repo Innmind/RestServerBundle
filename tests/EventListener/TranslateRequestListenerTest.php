@@ -9,8 +9,7 @@ use Innmind\Rest\ServerBundle\{
 };
 use Innmind\Http\{
     Factory\Header\Factories,
-    Factory\HeaderFactoryInterface,
-    Message\ServerRequestInterface
+    Message\ServerRequest
 };
 use Innmind\Immutable\Map;
 use Symfony\Component\{
@@ -70,7 +69,7 @@ class TranslateRequestListenerTest extends TestCase
 
         $this->assertSame(null, $listener->translate($event));
         $this->assertInstanceOf(
-            ServerRequestInterface::class,
+            ServerRequest::class,
             $request->attributes->get('_innmind_request')
         );
     }

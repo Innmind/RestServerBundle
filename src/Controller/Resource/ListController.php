@@ -8,21 +8,20 @@ use Innmind\Rest\ServerBundle\{
     Exception\InvalidArgumentException
 };
 use Innmind\Rest\Server\{
-    RangeExtractor\ExtractorInterface,
-    SpecificationBuilder\BuilderInterface,
-    Response\HeaderBuilder\ListBuilderInterface,
-    GatewayInterface,
+    RangeExtractor\Extractor,
+    SpecificationBuilder\Builder,
+    Response\HeaderBuilder\ListBuilder,
+    Gateway,
     Request\Range,
-    Exception\RangeNotFoundException,
-    Exception\NoFilterFoundException
+    Exception\RangeNotFound,
+    Exception\NoFilterFound
 };
 use Innmind\Http\{
-    Message\ResponseInterface,
     Message\Response,
-    Message\StatusCode,
-    Message\ReasonPhrase,
-    Headers,
-    Exception\Http\RangeNotSatisfiableException
+    Message\StatusCode\StatusCode,
+    Message\ReasonPhrase\ReasonPhrase,
+    Headers\Headers,
+    Exception\Http\RangeNotSatisfiable
 };
 use Innmind\Filesystem\Stream\StringStream;
 use Innmind\Immutable\MapInterface;
@@ -35,51 +34,48 @@ final class ListController
 {
     private $format;
     private $serializer;
-    private $rangeExtractor;
-    private $specificationBuilder;
+    private $extractRange;
+    private $buildSpecification;
     private $gateways;
-    private $headerBuilder;
+    private $buildHeader;
 
     public function __construct(
         Format $format,
         SerializerInterface $serializer,
-        ExtractorInterface $rangeExtractor,
-        BuilderInterface $specificationBuilder,
+        Extractor $rangeExtractor,
+        Builder $specificationBuilder,
         MapInterface $gateways,
-        ListBuilderInterface $headerBuilder
+        ListBuilder $headerBuilder
     ) {
         if (
             (string) $gateways->keyType() !== 'string' ||
-            (string) $gateways->valueType() !== GatewayInterface::class
+            (string) $gateways->valueType() !== Gateway::class
         ) {
             throw new InvalidArgumentException;
         }
 
         $this->format = $format;
         $this->serializer = $serializer;
-        $this->rangeExtractor = $rangeExtractor;
-        $this->specificationBuilder = $specificationBuilder;
+        $this->extractRange = $rangeExtractor;
+        $this->buildSpecification = $specificationBuilder;
         $this->gateways = $gateways;
-        $this->headerBuilder = $headerBuilder;
+        $this->buildHeader = $headerBuilder;
     }
 
-    public function defaultAction(Request $request): ResponseInterface
+    public function defaultAction(Request $request): Response
     {
         $definition = $request->attributes->get('_innmind_resource_definition');
         $request = $request->attributes->get('_innmind_request');
 
         try {
-            $range = $this->rangeExtractor->extract($request);
-        } catch (RangeNotFoundException $e) {
+            $range = ($this->extractRange)($request);
+        } catch (RangeNotFound $e) {
             $range = null;
         }
 
         try {
-            $specification = $this->specificationBuilder->buildFrom(
-                $request,
-                $definition
-            );
-        } catch (NoFilterFoundException $e) {
+            $specification = ($this->buildSpecification)($request, $definition);
+        } catch (NoFilterFound $e) {
             $specification = null;
         }
 
@@ -97,17 +93,17 @@ final class ListController
             $identities->size() === 0 &&
             $range instanceof Range
         ) {
-            throw new RangeNotSatisfiableException;
+            throw new RangeNotSatisfiable;
         }
 
-        return new Response(
+        return new Response\Response(
             $code = new StatusCode(StatusCode::codes()->get(
                 $range instanceof Range ? 'PARTIAL_CONTENT' : 'OK'
             )),
             new ReasonPhrase(ReasonPhrase::defaults()->get($code->value())),
             $request->protocolVersion(),
             new Headers(
-                $this->headerBuilder->build(
+                ($this->buildHeader)(
                     $identities,
                     $request,
                     $definition,

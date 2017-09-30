@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\EventListener;
 
-use Innmind\Rest\Server\Request\Verifier\VerifierInterface;
+use Innmind\Rest\Server\Request\Verifier\Verifier;
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
     HttpKernel\KernelEvents,
@@ -12,11 +12,11 @@ use Symfony\Component\{
 
 final class RequestVerifierListener implements EventSubscriberInterface
 {
-    private $verifier;
+    private $verify;
 
-    public function __construct(VerifierInterface $verifier)
+    public function __construct(Verifier $verifier)
     {
-        $this->verifier = $verifier;
+        $this->verify = $verifier;
     }
 
     /**
@@ -37,7 +37,7 @@ final class RequestVerifierListener implements EventSubscriberInterface
             return;
         }
 
-        $this->verifier->verify(
+        ($this->verify)(
             $request->attributes->get('_innmind_request'),
             $request->attributes->get('_innmind_resource_definition')
         );

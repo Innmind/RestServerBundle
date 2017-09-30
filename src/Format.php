@@ -8,7 +8,7 @@ use Innmind\Rest\Server\{
     Format\Format as FormatFormat,
     Format\MediaType
 };
-use Innmind\Http\Message\ServerRequestInterface;
+use Innmind\Http\Message\ServerRequest;
 use Negotiation\Negotiator;
 
 final class Format
@@ -26,7 +26,7 @@ final class Format
         $this->negotiator = new Negotiator;
     }
 
-    public function acceptable(ServerRequestInterface $request): FormatFormat
+    public function acceptable(ServerRequest $request): FormatFormat
     {
         return $this->accept->matching(
             (string) $request
@@ -37,7 +37,7 @@ final class Format
         );
     }
 
-    public function contentType(ServerRequestInterface $request): FormatFormat
+    public function contentType(ServerRequest $request): FormatFormat
     {
         return $this->contentType->matching(
             (string) $request

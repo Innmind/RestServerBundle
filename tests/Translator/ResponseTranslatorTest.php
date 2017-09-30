@@ -5,17 +5,20 @@ namespace Tests\Innmind\Rest\ServerBundle\Translator;
 
 use Innmind\Rest\ServerBundle\Translator\ResponseTranslator;
 use Innmind\Http\{
-    Message\Response,
-    Message\StatusCode,
-    Message\ReasonPhrase,
-    ProtocolVersion,
-    Headers,
-    Header\HeaderInterface,
+    Message\Response\Response,
+    Message\StatusCode\StatusCode,
+    Message\ReasonPhrase\ReasonPhrase,
+    ProtocolVersion\ProtocolVersion,
+    Headers\Headers,
+    Header,
     Header\ContentType,
     Header\ContentTypeValue,
-    Header\ParameterInterface
+    Header\Date,
+    Header\DateValue,
+    TimeContinuum\Format\Http
 };
 use Innmind\Filesystem\Stream\StringStream;
+use Innmind\TimeContinuum\PointInTime\Earth\Now;
 use Innmind\Immutable\Map;
 use Symfony\Component\HttpFoundation\Response as SfResponse;
 use PHPUnit\Framework\TestCase;
@@ -31,16 +34,19 @@ class ResponseTranslatorTest extends TestCase
             new ReasonPhrase('OK'),
             new ProtocolVersion(1, 1),
             new Headers(
-                (new Map('string', HeaderInterface::class))
+                (new Map('string', Header::class))
                     ->put(
                         'content-type',
                         new ContentType(
                             new ContentTypeValue(
                                 'application',
-                                'json',
-                                new Map('string', ParameterInterface::class)
+                                'json'
                             )
                         )
+                    )
+                    ->put(
+                        'date',
+                        new Date(new DateValue($now = new Now))
                     )
             ),
             new StringStream('{"answer":42}')
@@ -55,6 +61,7 @@ class ResponseTranslatorTest extends TestCase
         $this->assertSame(
             [
                 'content-type' => ['application/json'],
+                'date' => [$now->format(new Http)],
                 'cache-control' => ['no-cache, private'],
             ],
             $sfResponse->headers->all()

@@ -5,13 +5,13 @@ namespace Tests\Innmind\Rest\ServerBundle\EventListener;
 
 use Innmind\Rest\ServerBundle\EventListener\RequestVerifierListener;
 use Innmind\Rest\Server\{
-    Request\Verifier\VerifierInterface,
+    Request\Verifier\Verifier,
     Definition\HttpResource,
     Definition\Identity,
     Definition\Property,
     Definition\Gateway
 };
-use Innmind\Http\Message\ServerRequestInterface;
+use Innmind\Http\Message\ServerRequest;
 use Innmind\Immutable\Map;
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
@@ -27,7 +27,7 @@ class RequestVerifierListenerTest extends TestCase
     public function testInterface()
     {
         $listener = new RequestVerifierListener(
-            $this->createMock(VerifierInterface::class)
+            $this->createMock(Verifier::class)
         );
 
         $this->assertInstanceOf(EventSubscriberInterface::class, $listener);
@@ -48,10 +48,10 @@ class RequestVerifierListenerTest extends TestCase
     public function testVerify()
     {
         $listener = new RequestVerifierListener(
-            $verifier = $this->createMock(VerifierInterface::class)
+            $verifier = $this->createMock(Verifier::class)
         );
         $verifier
-            ->method('verify')
+            ->method('__invoke')
             ->will($this->throwException(new \Exception('verified')));
         $event = new GetResponseEvent(
             $this->createMock(HttpKernelInterface::class),
@@ -60,7 +60,7 @@ class RequestVerifierListenerTest extends TestCase
         );
         $request->attributes->set(
             '_innmind_request',
-            $this->createMock(ServerRequestInterface::class)
+            $this->createMock(ServerRequest::class)
         );
         $request->attributes->set(
             '_innmind_resource_definition',
@@ -82,10 +82,10 @@ class RequestVerifierListenerTest extends TestCase
     public function testDoesntVerify()
     {
         $listener = new RequestVerifierListener(
-            $verifier = $this->createMock(VerifierInterface::class)
+            $verifier = $this->createMock(Verifier::class)
         );
         $verifier
-            ->method('verify')
+            ->method('__invoke')
             ->will($this->throwException(new \Exception('verified')));
         $event = new GetResponseEvent(
             $this->createMock(HttpKernelInterface::class),

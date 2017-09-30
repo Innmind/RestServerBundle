@@ -8,23 +8,17 @@ use Innmind\Rest\ServerBundle\{
     Translator\LinkTranslator
 };
 use Innmind\Rest\Server\{
-    Response\HeaderBuilder\UnlinkBuilderInterface,
-    GatewayInterface,
+    Response\HeaderBuilder\UnlinkBuilder,
+    Gateway,
     Reference,
-    Identity,
-    Link\ParameterInterface,
-    Link\Parameter
+    Identity\Identity
 };
 use Innmind\Http\{
-    Message\ResponseInterface,
     Message\Response,
-    Message\StatusCode,
-    Message\ReasonPhrase,
-    Headers,
-    Header\Link,
-    Header\LinkValue,
-    Header\ParameterInterface as LinkParameterInterface,
-    Exception\Http\BadRequestException
+    Message\StatusCode\StatusCode,
+    Message\ReasonPhrase\ReasonPhrase,
+    Headers\Headers,
+    Exception\Http\BadRequest
 };
 use Innmind\Filesystem\Stream\StringStream;
 use Innmind\Immutable\{
@@ -36,33 +30,33 @@ use Symfony\Component\HttpFoundation\Request;
 final class UnlinkController
 {
     private $gateways;
-    private $headerBuilder;
+    private $buildHeader;
     private $translator;
 
     public function __construct(
         MapInterface $gateways,
-        UnlinkBuilderInterface $headerBuilder,
+        UnlinkBuilder $headerBuilder,
         LinkTranslator $translator
     ) {
         if (
             (string) $gateways->keyType() !== 'string' ||
-            (string) $gateways->valueType() !== GatewayInterface::class
+            (string) $gateways->valueType() !== Gateway::class
         ) {
             throw new InvalidArgumentException;
         }
 
         $this->gateways = $gateways;
-        $this->headerBuilder = $headerBuilder;
+        $this->buildHeader = $headerBuilder;
         $this->translator = $translator;
     }
 
-    public function defaultAction(Request $request, $identity): ResponseInterface
+    public function defaultAction(Request $request, $identity): Response
     {
         $from = $request->attributes->get('_innmind_resource_definition');
         $request = $request->attributes->get('_innmind_request');
 
         if (!$request->headers()->has('Link')) {
-            throw new BadRequestException;
+            throw new BadRequest;
         }
 
         $tos = $this->translator->translate($request->headers()->get('Link'));
@@ -76,12 +70,12 @@ final class UnlinkController
             $tos
         );
 
-        return new Response(
+        return new Response\Response(
             $code = new StatusCode(StatusCode::codes()->get('NO_CONTENT')),
             new ReasonPhrase(ReasonPhrase::defaults()->get($code->value())),
             $request->protocolVersion(),
             new Headers(
-                $this->headerBuilder->build(
+                ($this->buildHeader)(
                     $request,
                     $from,
                     $tos

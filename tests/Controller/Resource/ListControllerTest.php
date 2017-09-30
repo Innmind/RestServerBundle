@@ -5,34 +5,30 @@ namespace Tests\Innmind\Rest\ServerBundle\Controller\Resource;
 
 use Innmind\Rest\ServerBundle\Controller\Resource\ListController;
 use Innmind\Rest\Server\{
-    IdentityInterface,
-    Identity,
-    RangeExtractor\ExtractorInterface,
-    SpecificationBuilder\BuilderInterface,
-    Response\HeaderBuilder\ListBuilderInterface
+    Identity as IdentityInterface,
+    Identity\Identity,
+    RangeExtractor\Extractor,
+    SpecificationBuilder\Builder,
+    Response\HeaderBuilder\ListBuilder
 };
 use Innmind\Http\{
-    Message\ServerRequest,
-    Message\Method,
-    ProtocolVersion,
-    Message\ResponseInterface,
-    Message\Environment,
-    Message\Cookies,
-    Message\Query,
-    Message\Query\ParameterInterface as QueryParameterInterface,
-    Message\Query\Parameter as QueryParameter,
-    Message\Form,
-    Message\Form\ParameterInterface as FormParameterInterface,
-    Message\Files,
-    File\FileInterface,
-    Headers,
-    Header\HeaderInterface,
-    Header\HeaderValueInterface,
+    Message\ServerRequest\ServerRequest,
+    Message\Method\Method,
+    ProtocolVersion\ProtocolVersion,
+    Message\Response,
+    Message\Environment\Environment,
+    Message\Cookies\Cookies,
+    Message\Query\Query,
+    Message\Query\Parameter as QueryParameterInterface,
+    Message\Query\Parameter\Parameter as QueryParameter,
+    Message\Form\Form,
+    Message\Files\Files,
+    Headers\Headers,
+    Header,
     Header\Accept,
     Header\AcceptValue,
     Header\Range,
-    Header\RangeValue,
-    Header\ParameterInterface
+    Header\RangeValue
 };
 use Innmind\Url\Url;
 use Innmind\Filesystem\Stream\StringStream;
@@ -89,21 +85,14 @@ class ListControllerTest extends ControllerTestCase
                         new Method('GET'),
                         $protocol = new ProtocolVersion(1, 1),
                         new Headers(
-                            (new Map('string', HeaderInterface::class))
+                            (new Map('string', Header::class))
                                 ->put(
                                     'Accept',
                                     new Accept(
-                                        (new Set(HeaderValueInterface::class))
-                                            ->add(
-                                                new AcceptValue(
-                                                    'application',
-                                                    'json',
-                                                    new Map(
-                                                        'string',
-                                                        ParameterInterface::class
-                                                    )
-                                                )
-                                            )
+                                        new AcceptValue(
+                                            'application',
+                                            'json'
+                                        )
                                     )
                                 )
                                 ->put(
@@ -114,8 +103,8 @@ class ListControllerTest extends ControllerTestCase
                                 )
                         ),
                         new StringStream(''),
-                        new Environment(new Map('string', 'scalar')),
-                        new Cookies(new Map('string', 'scalar')),
+                        new Environment,
+                        new Cookies,
                         new Query(
                             (new Map('string', QueryParameterInterface::class))
                                 ->put(
@@ -123,14 +112,14 @@ class ListControllerTest extends ControllerTestCase
                                     new QueryParameter('url', 'foo')
                                 )
                         ),
-                        new Form(new Map('scalar', FormParameterInterface::class)),
-                        new Files(new Map('string', FileInterface::class))
+                        new Form,
+                        new Files
                     )
                 ]
             )
         );
 
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame(206, $response->statusCode()->value());
         $this->assertSame('Partial Content', (string) $response->reasonPhrase());
         $this->assertSame($protocol, $response->protocolVersion());
@@ -172,27 +161,20 @@ class ListControllerTest extends ControllerTestCase
                         new Method('GET'),
                         $protocol = new ProtocolVersion(1, 1),
                         new Headers(
-                            (new Map('string', HeaderInterface::class))
+                            (new Map('string', Header::class))
                                 ->put(
                                     'Accept',
                                     new Accept(
-                                        (new Set(HeaderValueInterface::class))
-                                            ->add(
-                                                new AcceptValue(
-                                                    'application',
-                                                    'json',
-                                                    new Map(
-                                                        'string',
-                                                        ParameterInterface::class
-                                                    )
-                                                )
-                                            )
+                                        new AcceptValue(
+                                            'application',
+                                            'json'
+                                        )
                                     )
                                 )
                         ),
                         new StringStream(''),
-                        new Environment(new Map('string', 'scalar')),
-                        new Cookies(new Map('string', 'scalar')),
+                        new Environment,
+                        new Cookies,
                         new Query(
                             (new Map('string', QueryParameterInterface::class))
                                 ->put(
@@ -200,14 +182,14 @@ class ListControllerTest extends ControllerTestCase
                                     new QueryParameter('url', 'foo')
                                 )
                         ),
-                        new Form(new Map('scalar', FormParameterInterface::class)),
-                        new Files(new Map('string', FileInterface::class))
+                        new Form,
+                        new Files
                     )
                 ]
             )
         );
 
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame(200, $response->statusCode()->value());
         $this->assertSame('OK', (string) $response->reasonPhrase());
         $this->assertSame($protocol, $response->protocolVersion());
@@ -228,7 +210,7 @@ class ListControllerTest extends ControllerTestCase
     }
 
     /**
-     * @expectedException Innmind\Http\Exception\Http\RangeNotSatisfiableException
+     * @expectedException Innmind\Http\Exception\Http\RangeNotSatisfiable
      */
     public function testThrowWhenNoIdentityForExpectedRange()
     {
@@ -248,21 +230,14 @@ class ListControllerTest extends ControllerTestCase
                         new Method('GET'),
                         $protocol = new ProtocolVersion(1, 1),
                         new Headers(
-                            (new Map('string', HeaderInterface::class))
+                            (new Map('string', Header::class))
                                 ->put(
                                     'Accept',
                                     new Accept(
-                                        (new Set(HeaderValueInterface::class))
-                                            ->add(
-                                                new AcceptValue(
-                                                    'application',
-                                                    'json',
-                                                    new Map(
-                                                        'string',
-                                                        ParameterInterface::class
-                                                    )
-                                                )
-                                            )
+                                        new AcceptValue(
+                                            'application',
+                                            'json'
+                                        )
                                     )
                                 )
                                 ->put(
@@ -273,8 +248,8 @@ class ListControllerTest extends ControllerTestCase
                                 )
                         ),
                         new StringStream(''),
-                        new Environment(new Map('string', 'scalar')),
-                        new Cookies(new Map('string', 'scalar')),
+                        new Environment,
+                        new Cookies,
                         new Query(
                             (new Map('string', QueryParameterInterface::class))
                                 ->put(
@@ -282,8 +257,8 @@ class ListControllerTest extends ControllerTestCase
                                     new QueryParameter('url', 'foo')
                                 )
                         ),
-                        new Form(new Map('scalar', FormParameterInterface::class)),
-                        new Files(new Map('string', FileInterface::class))
+                        new Form,
+                        new Files
                     )
                 ]
             )
@@ -298,10 +273,10 @@ class ListControllerTest extends ControllerTestCase
         new ListController(
             $this->container->get('innmind_rest_server.format'),
             $this->createMock(SerializerInterface::class),
-            $this->createMock(ExtractorInterface::class),
-            $this->createMock(BuilderInterface::class),
+            $this->createMock(Extractor::class),
+            $this->createMock(Builder::class),
             new Map('int', 'int'),
-            $this->createMock(ListBuilderInterface::class)
+            $this->createMock(ListBuilder::class)
         );
     }
 }

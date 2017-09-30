@@ -2,18 +2,6 @@ services:
     innmind_rest_server.response.header_builder.list_delegation:
         class: Innmind\Rest\Server\Response\HeaderBuilder\ListDelegationBuilder
         public: false
-        arguments:
-            - []
-        factory:
-            - '@innmind_rest_server.response.header_builder.list_delegation.factory'
-            - make
-
-    innmind_rest_server.response.header_builder.list_delegation.factory:
-        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
-        public: false
-        arguments:
-            - Innmind\Rest\Server\Response\HeaderBuilder\ListDelegationBuilder
-            - Innmind\Rest\Server\Response\HeaderBuilder\ListBuilderInterface
 
     innmind_rest_server.response.header_builder.list_content_type:
         class: Innmind\Rest\Server\Response\HeaderBuilder\ListContentTypeBuilder
@@ -38,18 +26,6 @@ services:
     innmind_rest_server.response.header_builder.get_delegation:
         class: Innmind\Rest\Server\Response\HeaderBuilder\GetDelegationBuilder
         public: false
-        arguments:
-            - []
-        factory:
-            - '@innmind_rest_server.response.header_builder.get_delegation.factory'
-            - make
-
-    innmind_rest_server.response.header_builder.get_delegation.factory:
-        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
-        public: false
-        arguments:
-            - Innmind\Rest\Server\Response\HeaderBuilder\GetDelegationBuilder
-            - Innmind\Rest\Server\Response\HeaderBuilder\GetBuilderInterface
 
     innmind_rest_server.response.header_builder.get_content_type:
         class: Innmind\Rest\Server\Response\HeaderBuilder\GetContentTypeBuilder
@@ -62,18 +38,6 @@ services:
     innmind_rest_server.response.header_builder.create_delegation:
         class: Innmind\Rest\Server\Response\HeaderBuilder\CreateDelegationBuilder
         public: false
-        arguments:
-            - []
-        factory:
-            - '@innmind_rest_server.response.header_builder.create_delegation.factory'
-            - make
-
-    innmind_rest_server.response.header_builder.create_delegation.factory:
-        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
-        public: false
-        arguments:
-            - Innmind\Rest\Server\Response\HeaderBuilder\CreateDelegationBuilder
-            - Innmind\Rest\Server\Response\HeaderBuilder\CreateBuilderInterface
 
     innmind_rest_server.response.header_builder.create_content_type:
         class: Innmind\Rest\Server\Response\HeaderBuilder\CreateContentTypeBuilder
@@ -92,63 +56,15 @@ services:
     innmind_rest_server.response.header_builder.update_delegation:
         class: Innmind\Rest\Server\Response\HeaderBuilder\UpdateDelegationBuilder
         public: false
-        arguments:
-            - []
-        factory:
-            - '@innmind_rest_server.response.header_builder.update_delegation.factory'
-            - make
-
-    innmind_rest_server.response.header_builder.update_delegation.factory:
-        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
-        public: false
-        arguments:
-            - Innmind\Rest\Server\Response\HeaderBuilder\UpdateDelegationBuilder
-            - Innmind\Rest\Server\Response\HeaderBuilder\UpdateBuilderInterface
 
     innmind_rest_server.response.header_builder.remove_delegation:
         class: Innmind\Rest\Server\Response\HeaderBuilder\RemoveDelegationBuilder
         public: false
-        arguments:
-            - []
-        factory:
-            - '@innmind_rest_server.response.header_builder.remove_delegation.factory'
-            - make
-
-    innmind_rest_server.response.header_builder.remove_delegation.factory:
-        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
-        public: false
-        arguments:
-            - Innmind\Rest\Server\Response\HeaderBuilder\RemoveDelegationBuilder
-            - Innmind\Rest\Server\Response\HeaderBuilder\RemoveBuilderInterface
 
     innmind_rest_server.response.header_builder.link_delegation:
         class: Innmind\Rest\Server\Response\HeaderBuilder\LinkDelegationBuilder
         public: false
-        arguments:
-            - []
-        factory:
-            - '@innmind_rest_server.response.header_builder.link_delegation.factory'
-            - make
-
-    innmind_rest_server.response.header_builder.link_delegation.factory:
-        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
-        public: false
-        arguments:
-            - Innmind\Rest\Server\Response\HeaderBuilder\LinkDelegationBuilder
-            - Innmind\Rest\Server\Response\HeaderBuilder\LinkBuilderInterface
 
     innmind_rest_server.response.header_builder.unlink_delegation:
         class: Innmind\Rest\Server\Response\HeaderBuilder\UnlinkDelegationBuilder
         public: false
-        arguments:
-            - []
-        factory:
-            - '@innmind_rest_server.response.header_builder.unlink_delegation.factory'
-            - make
-
-    innmind_rest_server.response.header_builder.unlink_delegation.factory:
-        class: Innmind\Rest\ServerBundle\Factory\DelegationBuilderFactory
-        public: false
-        arguments:
-            - Innmind\Rest\Server\Response\HeaderBuilder\UnlinkDelegationBuilder
-            - Innmind\Rest\Server\Response\HeaderBuilder\UnlinkBuilderInterface

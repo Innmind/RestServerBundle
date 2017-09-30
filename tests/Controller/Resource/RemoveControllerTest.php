@@ -4,22 +4,18 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Rest\ServerBundle\Controller\Resource;
 
 use Innmind\Rest\ServerBundle\Controller\Resource\RemoveController;
-use Innmind\Rest\Server\Response\HeaderBuilder\RemoveBuilderInterface;
+use Innmind\Rest\Server\Response\HeaderBuilder\RemoveBuilder;
 use Innmind\Http\{
-    Message\ServerRequest,
-    Message\ResponseInterface,
-    Message\Method,
-    ProtocolVersion,
-    Headers,
-    Header\HeaderInterface,
-    Message\Environment,
-    Message\Cookies,
-    Message\Query,
-    Message\Query\ParameterInterface as QueryParameterInterface,
-    Message\Form,
-    Message\Form\ParameterInterface as FormParameterInterface,
-    Message\Files,
-    File\FileInterface
+    Message\ServerRequest\ServerRequest,
+    Message\Response,
+    Message\Method\Method,
+    ProtocolVersion\ProtocolVersion,
+    Headers\Headers,
+    Message\Environment\Environment,
+    Message\Cookies\Cookies,
+    Message\Query\Query,
+    Message\Form\Form,
+    Message\Files\Files
 };
 use Innmind\Url\Url;
 use Innmind\Filesystem\Stream\StringStream;
@@ -58,13 +54,13 @@ class RemoveControllerTest extends ControllerTestCase
                         Url::fromString('/foo'),
                         new Method('DELETE'),
                         $protocol = new ProtocolVersion(1, 1),
-                        new Headers(new Map('string', HeaderInterface::class)),
+                        new Headers,
                         new StringStream(''),
-                        new Environment(new Map('string', 'scalar')),
-                        new Cookies(new Map('string', 'scalar')),
-                        new Query(new Map('string', QueryParameterInterface::class)),
-                        new Form(new Map('scalar', FormParameterInterface::class)),
-                        new Files(new Map('string', FileInterface::class))
+                        new Environment,
+                        new Cookies,
+                        new Query,
+                        new Form,
+                        new Files
                     )
                 ]
             ),
@@ -72,7 +68,7 @@ class RemoveControllerTest extends ControllerTestCase
         );
 
         $this->assertTrue($called);
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame(204, $response->statusCode()->value());
         $this->assertSame('No Content', (string) $response->reasonPhrase());
         $this->assertCount(0, $response->headers());
@@ -86,7 +82,7 @@ class RemoveControllerTest extends ControllerTestCase
     {
         new RemoveController(
             new Map('int', 'int'),
-            $this->createMock(RemoveBuilderInterface::class)
+            $this->createMock(RemoveBuilder::class)
         );
     }
 }

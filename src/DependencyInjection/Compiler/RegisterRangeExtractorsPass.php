@@ -19,14 +19,10 @@ final class RegisterRangeExtractorsPass implements CompilerPassInterface
         $ids = $container->findTaggedServiceIds(
             'innmind_rest_server.range_extractor'
         );
-        $extractors = [];
+        $definition = $container->getDefinition('innmind_rest_server.range_extractor.delegation');
 
         foreach ($ids as $id => $tags) {
-            $extractors[] = new Reference($id);
+            $definition->addArgument(new Reference($id));
         }
-
-        $container
-            ->getDefinition('innmind_rest_server.range_extractor.delegation')
-            ->replaceArgument(0, $extractors);
     }
 }

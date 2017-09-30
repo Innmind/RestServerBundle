@@ -8,15 +8,15 @@ use Innmind\Rest\Server\{
     Definition\Locator,
     Definition\Loader\YamlLoader,
     Definition\Types,
-    Link\ParameterInterface,
+    Link\Parameter,
     Reference
 };
 use Innmind\Http\Header\{
     Link,
     LinkValue,
-    ParameterInterface as LinkParameterInterface,
-    Parameter as LinkParameter,
-    HeaderValueInterface
+    Parameter as LinkParameterInterface,
+    Parameter\Parameter as LinkParameter,
+    Value
 };
 use Innmind\Url\Url;
 use Innmind\Immutable\{
@@ -50,15 +50,12 @@ class LinkTranslatorTest extends TestCase
 
         $references = $translator->translate(
             new Link(
-                (new Set(HeaderValueInterface::class))
-                    ->add(
-                        new LinkValue(
-                            Url::fromString('/top_dir/sub_dir/res/bar'),
-                            'relationship',
-                            (new Map('string', LinkParameterInterface::class))
-                                ->put('foo', new LinkParameter('foo', 'baz'))
-                        )
-                    )
+                new LinkValue(
+                    Url::fromString('/top_dir/sub_dir/res/bar'),
+                    'relationship',
+                    (new Map('string', LinkParameterInterface::class))
+                        ->put('foo', new LinkParameter('foo', 'baz'))
+                )
             )
         );
 
@@ -77,7 +74,7 @@ class LinkTranslatorTest extends TestCase
         $parameters = $references->values()->first();
         $this->assertSame('string', (string) $parameters->keyType());
         $this->assertSame(
-            ParameterInterface::class,
+            Parameter::class,
             (string) $parameters->valueType()
         );
         $this->assertCount(2, $parameters);
@@ -110,15 +107,12 @@ class LinkTranslatorTest extends TestCase
 
         $translator->translate(
             new Link(
-                (new Set(HeaderValueInterface::class))
-                    ->add(
-                        new LinkValue(
-                            Url::fromString('/top_dir/sub_dir/res/bar'),
-                            'relationship',
-                            (new Map('string', LinkParameterInterface::class))
-                                ->put('foo', new LinkParameter('foo', 'baz'))
-                        )
-                    )
+                new LinkValue(
+                    Url::fromString('/top_dir/sub_dir/res/bar'),
+                    'relationship',
+                    (new Map('string', LinkParameterInterface::class))
+                        ->put('foo', new LinkParameter('foo', 'baz'))
+                )
             )
         );
     }

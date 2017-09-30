@@ -5,8 +5,8 @@ namespace Tests\Innmind\Rest\ServerBundle\Translator;
 
 use Innmind\Rest\ServerBundle\Translator\RequestTranslator;
 use Innmind\Http\{
-    Message\ServerRequestInterface,
-    File\OkStatus,
+    Message\ServerRequest,
+    File\Status\Ok,
     Factory\Header\HeaderFactory
 };
 use Innmind\Immutable\Map;
@@ -62,7 +62,7 @@ class RequestTranslatorTest extends TestCase
             )
         );
 
-        $this->assertInstanceOf(ServerRequestInterface::class, $request);
+        $this->assertInstanceOf(ServerRequest::class, $request);
         $this->assertSame('http://innmind/foo', (string) $request->url());
         $this->assertSame('PUT', (string) $request->method());
         $this->assertSame('1.1', (string) $request->protocolVersion());
@@ -104,8 +104,8 @@ class RequestTranslatorTest extends TestCase
         $file = $request->files()->get('file');
         $this->assertSame('uploaded-file', (string) $file->name());
         $this->assertSame('some data', (string) $file->content());
-        $this->assertInstanceOf(OkStatus::class, $file->status());
-        $this->assertSame('text/plain', (string) $file->clientMediaType());
+        $this->assertInstanceOf(Ok::class, $file->status());
+        $this->assertSame('text/plain', (string) $file->mediaType());
         @unlink('/tmp/uploaded-file');
     }
 }

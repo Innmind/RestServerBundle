@@ -7,7 +7,7 @@ use Innmind\Http\Factory\{
     Header\TryFactory,
     Header\DelegationFactory,
     Header\HeaderFactory,
-    HeaderFactoryInterface
+    HeaderFactory as HeaderFactoryInterface
 };
 use Innmind\Immutable\Map;
 

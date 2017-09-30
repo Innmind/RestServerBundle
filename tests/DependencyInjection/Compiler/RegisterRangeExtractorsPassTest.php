@@ -27,19 +27,19 @@ class RegisterRangeExtractorsPassTest extends TestCase
 
         $this->assertInstanceOf(CompilerPassInterface::class, $pass);
         $this->assertSame(null, $pass->process($container));
-        $argument = $container
+        $arguments = $container
             ->getDefinition('innmind_rest_server.range_extractor.delegation')
-            ->getArgument(0);
-        $this->assertSame(2, count($argument));
-        $this->assertInstanceOf(Reference::class, $argument[0]);
-        $this->assertInstanceOf(Reference::class, $argument[1]);
+            ->getArguments();
+        $this->assertSame(2, count($arguments));
+        $this->assertInstanceOf(Reference::class, $arguments[0]);
+        $this->assertInstanceOf(Reference::class, $arguments[1]);
         $this->assertSame(
             'innmind_rest_server.range_extractor.header',
-            (string) $argument[0]
+            (string) $arguments[0]
         );
         $this->assertSame(
             'innmind_rest_server.range_extractor.query',
-            (string) $argument[1]
+            (string) $arguments[1]
         );
     }
 }
