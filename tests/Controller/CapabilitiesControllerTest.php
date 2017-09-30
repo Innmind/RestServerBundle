@@ -38,7 +38,8 @@ use PHPUnit\Framework\TestCase;
 class CapabilitiesControllerTest extends TestCase
 {
     /**
-     * @expectedException Innmind\Rest\ServerBundle\Exception\InvalidArgumentException
+     * @expectedException TypeError
+     * @expectedExceptionMessage Argument 1 must be of type MapInterface<string, Innmind\Rest\Server\Definition\Directory>
      */
     public function testThrowWhenInvalidDirectoryMap()
     {

@@ -3,10 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Controller;
 
-use Innmind\Rest\ServerBundle\{
-    Routing\RouteFactory,
-    Exception\InvalidArgumentException
-};
+use Innmind\Rest\ServerBundle\Routing\RouteFactory;
 use Innmind\Rest\Server\{
     Definition\Directory,
     Action
@@ -48,7 +45,10 @@ final class CapabilitiesController
             (string) $directories->keyType() !== 'string' ||
             (string) $directories->valueType() !== Directory::class
         ) {
-            throw new InvalidArgumentException;
+            throw new \TypeError(sprintf(
+                'Argument 1 must be of type MapInterface<string, %s>',
+                Directory::class
+            ));
         }
 
         $this->directories = $directories;

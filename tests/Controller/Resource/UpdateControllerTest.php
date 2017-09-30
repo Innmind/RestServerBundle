@@ -102,7 +102,8 @@ class UpdateControllerTest extends ControllerTestCase
     }
 
     /**
-     * @expectedException Innmind\rest\ServerBundle\Exception\InvalidArgumentException
+     * @expectedException TypeError
+     * @expectedExceptionMessage Argument 1 must be of type MapInterface<string, Innmind\Rest\Server\Gateway>
      */
     public function testThrowWhenInvalidGatewayMap()
     {

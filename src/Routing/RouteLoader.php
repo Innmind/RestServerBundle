@@ -3,10 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Routing;
 
-use Innmind\Rest\ServerBundle\Exception\{
-    InvalidArgumentException,
-    RouteLoaderLoadedMultipleTimes
-};
+use Innmind\Rest\ServerBundle\Exception\RouteLoaderLoadedMultipleTimes;
 use Innmind\Rest\Server\{
     Definition\Directory,
     Definition\HttpResource,
@@ -34,7 +31,10 @@ final class RouteLoader extends Loader
             (string) $directories->keyType() !== 'string' ||
             (string) $directories->valueType() !== Directory::class
         ) {
-            throw new InvalidArgumentException;
+            throw new \TypeError(sprintf(
+                'Argument 1 must be of type MapInterface<string, %s>',
+                Directory::class
+            ));
         }
 
         $this->directories = $directories;

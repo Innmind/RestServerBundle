@@ -3,10 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Controller\Resource;
 
-use Innmind\Rest\ServerBundle\{
-    Format,
-    Exception\InvalidArgumentException
-};
+use Innmind\Rest\ServerBundle\Format;
 use Innmind\Rest\Server\{
     Response\HeaderBuilder\GetBuilder,
     Gateway,
@@ -42,7 +39,10 @@ final class GetController
             (string) $gateways->keyType() !== 'string' ||
             (string) $gateways->valueType() !== Gateway::class
         ) {
-            throw new InvalidArgumentException;
+            throw new \TypeError(sprintf(
+                'Argument 3 must be of type MapInterface<string, %s>',
+                Gateway::class
+            ));
         }
 
         $this->format = $format;

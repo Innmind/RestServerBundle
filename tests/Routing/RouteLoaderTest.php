@@ -13,7 +13,10 @@ use Innmind\Rest\Server\{
     Action
 };
 use Innmind\Http\Message\Method;
-use Innmind\Immutable\Set;
+use Innmind\Immutable\{
+    Set,
+    Map
+};
 use Symfony\Component\Routing\RouteCollection;
 use PHPUnit\Framework\TestCase;
 
@@ -24,11 +27,23 @@ class RouteLoaderTest extends TestCase
     public function setUp()
     {
         $this->loader = new RouteLoader(
-            $directories = (new YamlLoader(new Types))->load(
+            (new YamlLoader(new Types))->load(
                 (new Set('string'))->add(
                     'fixtures/FixtureBundle/Resources/config/rest.yml'
                 )
             ),
+            new RouteFactory
+        );
+    }
+
+    /**
+     * @expectedException TypeError
+     * @expectedExceptionMessage Argument 1 must be of type MapInterface<string, Innmind\Rest\Server\Definition\Directory>
+     */
+    public function testThrowWhenInvalidDirectoryMap()
+    {
+        new RouteLoader(
+            new Map('string', 'string'),
             new RouteFactory
         );
     }
