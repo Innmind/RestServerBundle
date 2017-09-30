@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace Innmind\Rest\ServerBundle\DependencyInjection\Compiler;
 
 use Innmind\Rest\ServerBundle\Exception\{
-    MissingPriorityException,
-    PriorityAlreadyUsedByAVerifierException
+    MissingPriority,
+    PriorityAlreadyUsedByAVerifier
 };
 use Symfony\Component\DependencyInjection\{
     ContainerBuilder,
@@ -29,13 +29,13 @@ final class RegisterRequestVerifiersPass implements CompilerPassInterface
         foreach ($ids as $id => $tags) {
             foreach ($tags as $tag => $attributes) {
                 if (!isset($attributes['priority'])) {
-                    throw new MissingPriorityException;
+                    throw new MissingPriority;
                 }
 
                 $priority = (int) $attributes['priority'];
 
                 if (isset($verifiers[$priority])) {
-                    throw new PriorityAlreadyUsedByAVerifierException(
+                    throw new PriorityAlreadyUsedByAVerifier(
                         (string) $priority
                     );
                 }

@@ -67,7 +67,7 @@ class RegisterRequestVerifiersPassTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Rest\ServerBundle\Exception\MissingPriorityException
+     * @expectedException Innmind\Rest\ServerBundle\Exception\MissingPriority
      */
     public function testThrowWhenNoPriorityDefinedForVerifier()
     {
@@ -86,7 +86,7 @@ class RegisterRequestVerifiersPassTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Rest\ServerBundle\Exception\PriorityAlreadyUsedByAVerifierException
+     * @expectedException Innmind\Rest\ServerBundle\Exception\PriorityAlreadyUsedByAVerifier
      * @expectedExceptionMessage 50
      */
     public function testThrowWhenPriorityUsedTwice()

@@ -5,7 +5,7 @@ namespace Innmind\Rest\ServerBundle\Routing;
 
 use Innmind\Rest\ServerBundle\Exception\{
     InvalidArgumentException,
-    RouteLoaderLoadedMultipleTimesException
+    RouteLoaderLoadedMultipleTimes
 };
 use Innmind\Rest\Server\{
     Definition\Directory,
@@ -47,7 +47,7 @@ final class RouteLoader extends Loader
     public function load($resource, $type = null)
     {
         if ($this->imported === true) {
-            throw new RouteLoaderLoadedMultipleTimesException;
+            throw new RouteLoaderLoadedMultipleTimes;
         }
 
         $routes = new RouteCollection;

@@ -49,7 +49,7 @@ class RegisterGatewaysPassTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Rest\ServerBundle\Exception\MissingAliasException
+     * @expectedException Innmind\Rest\ServerBundle\Exception\MissingAlias
      */
     public function testThrowWhenNoAliasDefinedForAGateway()
     {

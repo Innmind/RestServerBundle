@@ -159,7 +159,7 @@ class RouteLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Rest\ServerBundle\Exception\RouteLoaderLoadedMultipleTimesException
+     * @expectedException Innmind\Rest\ServerBundle\Exception\RouteLoaderLoadedMultipleTimes
      */
     public function testThrowWhenLoadedMultipleTimes()
     {
