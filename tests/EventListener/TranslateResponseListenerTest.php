@@ -8,15 +8,14 @@ use Innmind\Rest\ServerBundle\{
     Translator\ResponseTranslator
 };
 use Innmind\Http\{
-    Message\Response,
-    Message\StatusCode,
-    Message\ReasonPhrase,
-    ProtocolVersion,
-    Headers,
-    Header\HeaderInterface,
+    Message\Response\Response,
+    Message\StatusCode\StatusCode,
+    Message\ReasonPhrase\ReasonPhrase,
+    ProtocolVersion\ProtocolVersion,
+    Headers\Headers,
+    Header,
     Header\ContentType,
-    Header\ContentTypeValue,
-    Header\ParameterInterface
+    Header\ContentTypeValue
 };
 use Innmind\Filesystem\Stream\StringStream;
 use Innmind\Immutable\Map;
@@ -58,14 +57,13 @@ class TranslateResponseListenerTest extends TestCase
                 new ReasonPhrase('OK'),
                 new ProtocolVersion(1, 1),
                 new Headers(
-                    (new Map('string', HeaderInterface::class))
+                    (new Map('string', Header::class))
                         ->put(
                             'content-type',
                             new ContentType(
                                 new ContentTypeValue(
                                     'application',
-                                    'json',
-                                    new Map('string', ParameterInterface::class)
+                                    'json'
                                 )
                             )
                         )

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\DependencyInjection\Compiler;
 
-use Innmind\Rest\ServerBundle\Exception\MissingAliasException;
+use Innmind\Rest\ServerBundle\Exception\MissingAlias;
 use Symfony\Component\DependencyInjection\{
     ContainerBuilder,
     Compiler\CompilerPassInterface,
@@ -25,7 +25,7 @@ final class RegisterHttpHeaderFactoriesPass implements CompilerPassInterface
         foreach ($ids as $id => $tags) {
             foreach ($tags as $tag => $attributes) {
                 if (!isset($attributes['alias'])) {
-                    throw new MissingAliasException;
+                    throw new MissingAlias;
                 }
 
                 $factories[$attributes['alias']] = new Reference($id);

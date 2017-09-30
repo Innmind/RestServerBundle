@@ -3,32 +3,27 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Controller;
 
-use Innmind\Rest\ServerBundle\{
-    Routing\RouteFactory,
-    Exception\InvalidArgumentException
-};
+use Innmind\Rest\ServerBundle\Routing\RouteFactory;
 use Innmind\Rest\Server\{
     Definition\Directory,
     Action
 };
 use Innmind\Http\{
-    Message\ResponseInterface,
     Message\Response,
-    Message\StatusCode,
-    Message\ReasonPhrase,
-    Header\HeaderInterface,
+    Message\StatusCode\StatusCode,
+    Message\ReasonPhrase\ReasonPhrase,
+    Header,
     Header\LinkValue,
     Header\Link,
-    Header\ParameterInterface,
-    Header\HeaderValueInterface,
-    Headers
+    Header\Value,
+    Headers\Headers
 };
 use Innmind\Url\Url;
 use Innmind\Filesystem\Stream\StringStream;
 use Innmind\Immutable\{
-    Map,
     Set,
-    MapInterface
+    MapInterface,
+    Map
 };
 use Symfony\Component\{
     Routing\Generator\UrlGeneratorInterface,
@@ -50,7 +45,10 @@ final class CapabilitiesController
             (string) $directories->keyType() !== 'string' ||
             (string) $directories->valueType() !== Directory::class
         ) {
-            throw new InvalidArgumentException;
+            throw new \TypeError(sprintf(
+                'Argument 1 must be of type MapInterface<string, %s>',
+                Directory::class
+            ));
         }
 
         $this->directories = $directories;
@@ -58,56 +56,52 @@ final class CapabilitiesController
         $this->generator = $generator;
     }
 
-    public function capabilitiesAction(Request $request): ResponseInterface
+    public function capabilitiesAction(Request $request): Response
     {
         $request = $request->attributes->get('_innmind_request');
 
         $links = $this
             ->directories
             ->reduce(
-                [],
-                function(array $carry, string $name, Directory $directory) {
-                    return array_merge(
-                        $carry,
-                        $directory
-                            ->flatten()
-                            ->reduce(
-                                [],
-                                function(array $carry, string $name) {
-                                    $carry[$name] = $this->generator->generate(
-                                        $this
-                                            ->routeFactory
-                                            ->makeName(
-                                                $name,
-                                                new Action(Action::OPTIONS)
-                                            )
-                                    );
+                new Map('string', 'string'),
+                function(Map $carry, string $name, Directory $directory): Map {
+                    return $directory
+                        ->flatten()
+                        ->reduce(
+                            $carry,
+                            function(Map $carry, string $name): Map {
+                                $route = $this->routeFactory->makeName(
+                                    $name,
+                                    Action::options()
+                                );
 
-                                    return $carry;
-                                }
-                            )
-                    );
+                                return $carry->put(
+                                    $name,
+                                    $this->generator->generate($route)
+                                );
+                            }
+                        );
+                }
+            )
+            ->reduce(
+                new Set(Value::class),
+                static function(Set $carry, string $name, string $link): Set {
+                    return $carry->add(new LinkValue(
+                        Url::fromString($link),
+                        $name
+                    ));
                 }
             );
-        $set = new Set(HeaderValueInterface::class);
 
-        foreach ($links as $name => $link) {
-            $set = $set->add(new LinkValue(
-                Url::fromString($link),
-                $name,
-                new Map('string', ParameterInterface::class)
-            ));
-        }
-
-        return new Response(
+        return new Response\Response(
             $code = new StatusCode(StatusCode::codes()->get('OK')),
             new ReasonPhrase(ReasonPhrase::defaults()->get($code->value())),
             $request->protocolVersion(),
             new Headers(
-                (new Map('string', HeaderInterface::class))
+                (new Map('string', Header::class))
                     ->put(
                         'Link',
-                        new Link($set)
+                        new Link(...$links)
                     )
             ),
             new StringStream('')

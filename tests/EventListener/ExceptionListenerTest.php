@@ -6,13 +6,13 @@ namespace Tests\Innmind\Rest\ServerBundle\EventListener;
 use Innmind\Rest\ServerBundle\EventListener\ExceptionListener;
 use Innmind\Rest\Server\Exception\{
     HttpResourceDenormalizationException,
-    ActionNotImplementedException,
+    ActionNotImplemented,
     DenormalizationException,
-    FilterNotApplicableException
+    FilterNotApplicable
 };
 use Innmind\Http\Exception\{
-    Http\BadRequestException,
-    ExceptionInterface as BaseHttpExceptionInterface
+    Http\BadRequest,
+    Exception as BaseHttpExceptionInterface
 };
 use Innmind\Immutable\Map;
 use Symfony\Component\{
@@ -47,7 +47,7 @@ class ExceptionListenerTest extends TestCase
 
     public function testTransformException()
     {
-        $exception = new BadRequestException;
+        $exception = new BadRequest;
         $event = new GetResponseForExceptionEvent(
             $this->createMock(HttpKernelInterface::class),
             new Request,
@@ -88,7 +88,7 @@ class ExceptionListenerTest extends TestCase
 
     public function testTransformActionNotImplemented()
     {
-        $exception = new ActionNotImplementedException;
+        $exception = new ActionNotImplemented;
         $event = new GetResponseForExceptionEvent(
             $this->createMock(HttpKernelInterface::class),
             new Request,
@@ -134,7 +134,7 @@ class ExceptionListenerTest extends TestCase
 
     public function testTransformFilterNotApplicableException()
     {
-        $exception = new FilterNotApplicableException;
+        $exception = new FilterNotApplicable;
         $event = new GetResponseForExceptionEvent(
             $this->createMock(HttpKernelInterface::class),
             new Request,

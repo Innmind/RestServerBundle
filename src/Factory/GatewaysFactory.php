@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Factory;
 
-use Innmind\Rest\Server\GatewayInterface;
+use Innmind\Rest\Server\Gateway;
 use Innmind\Immutable\{
     Map,
     MapInterface
@@ -12,13 +12,13 @@ use Innmind\Immutable\{
 final class GatewaysFactory
 {
     /**
-     * @param GatewayInterface[]
+     * @param Gateway[]
      *
-     * @return MapInterface<string, GatewayInterface>
+     * @return MapInterface<string, Gateway>
      */
     public function make(array $gateways): MapInterface
     {
-        $map = new Map('string', GatewayInterface::class);
+        $map = new Map('string', Gateway::class);
 
         foreach ($gateways as $name => $gateway) {
             $map = $map->put($name, $gateway);

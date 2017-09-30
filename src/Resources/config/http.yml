@@ -137,13 +137,6 @@ services:
     innmind_rest_server.http.request.verifier:
         class: Innmind\Rest\Server\Request\Verifier\DelegationVerifier
         public: false
-        factory:
-            - '@innmind_rest_server.http.request.verifier_factory'
-            - make
-
-    innmind_rest_server.http.request.verifier_factory:
-        class: Innmind\Rest\ServerBundle\Factory\DelegationVerifierFactory
-        public: false
 
     innmind_rest_server.http.request.verifier.accept:
         class: Innmind\Rest\Server\Request\Verifier\AcceptVerifier

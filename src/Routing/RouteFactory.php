@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Innmind\Rest\ServerBundle\Routing;
 
 use Innmind\Rest\Server\Action;
-use Innmind\Http\Message\MethodInterface;
+use Innmind\Http\Message\Method;
 use Innmind\Immutable\Str;
 use Symfony\Component\Routing\Route;
 
@@ -39,33 +39,33 @@ final class RouteFactory
         $name = $path;
         $path = (new Str($path))->replace('.', '/')->append('/');
 
-        switch ((string) $action) {
-            case Action::GET:
+        switch ($action) {
+            case Action::get():
                 $path = $path->append('{identity}');
-            case Action::LIST:
-                $method = MethodInterface::GET;
+            case Action::list():
+                $method = Method::GET;
                 break;
-            case Action::CREATE:
-                $method = MethodInterface::POST;
+            case Action::create():
+                $method = Method::POST;
                 break;
-            case Action::UPDATE:
-                $method = MethodInterface::PUT;
-                $path = $path->append('{identity}');
-                break;
-            case Action::REMOVE:
-                $method = MethodInterface::DELETE;
+            case Action::update():
+                $method = Method::PUT;
                 $path = $path->append('{identity}');
                 break;
-            case Action::LINK:
-                $method = MethodInterface::LINK;
+            case Action::remove():
+                $method = Method::DELETE;
                 $path = $path->append('{identity}');
                 break;
-            case Action::UNLINK:
-                $method = MethodInterface::UNLINK;
+            case Action::link():
+                $method = Method::LINK;
                 $path = $path->append('{identity}');
                 break;
-            case Action::OPTIONS:
-                $method = MethodInterface::OPTIONS;
+            case Action::unlink():
+                $method = Method::UNLINK;
+                $path = $path->append('{identity}');
+                break;
+            case Action::options():
+                $method = Method::OPTIONS;
                 break;
         }
 

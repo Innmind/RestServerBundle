@@ -12,11 +12,11 @@ use Symfony\Component\{
 
 final class DefinitionLoaderListener implements EventSubscriberInterface
 {
-    private $locator;
+    private $locate;
 
     public function __construct(Locator $locator)
     {
-        $this->locator = $locator;
+        $this->locate = $locator;
     }
 
     /**
@@ -47,7 +47,7 @@ final class DefinitionLoaderListener implements EventSubscriberInterface
         $name = $request->attributes->get('_innmind_resource');
         $request->attributes->set(
             '_innmind_resource_definition',
-            $this->locator->locate($name)
+            ($this->locate)($name)
         );
     }
 }

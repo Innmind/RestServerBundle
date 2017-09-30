@@ -32,12 +32,12 @@ final class InnmindRestServerBundle extends Bundle
             ->addCompilerPass(new RegisterHttpHeaderFactoriesPass)
             ->addCompilerPass(new RegisterRequestVerifiersPass)
             ->addCompilerPass(new RegisterRangeExtractorsPass)
-            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::LIST))
-            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::GET))
-            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::CREATE))
-            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::UPDATE))
-            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::REMOVE))
-            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::LINK))
-            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::UNLINK));
+            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::list()))
+            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::get()))
+            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::create()))
+            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::update()))
+            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::remove()))
+            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::link()))
+            ->addCompilerPass(new RegisterHeaderBuildersPass(Action::unlink()));
     }
 }

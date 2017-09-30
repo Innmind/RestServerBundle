@@ -4,12 +4,12 @@ declare(strict_types = 1);
 namespace Innmind\Rest\ServerBundle\Translator;
 
 use Innmind\Http\{
-    Message\ResponseInterface,
-    HeadersInterface,
-    Header\HeaderValueInterface
+    Message\Response,
+    Headers,
+    Header\Value
 };
 use Innmind\Immutable\Map;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response as SfResponse;
 
 final class ResponseTranslator
 {
@@ -18,18 +18,18 @@ final class ResponseTranslator
     public function __construct()
     {
         $this->transformed = new Map(
-            ResponseInterface::class,
-            Response::class
+            Response::class,
+            SfResponse::class
         );
     }
 
-    public function translate(ResponseInterface $response): Response
+    public function translate(Response $response): SfResponse
     {
         if ($this->transformed->contains($response)) {
             return $this->transformed->get($response);
         }
 
-        $sfResponse = (new Response(
+        $sfResponse = (new SfResponse(
             (string) $response->body(),
             $response->statusCode()->value(),
             $this->translateHeaders($response->headers())
@@ -43,7 +43,7 @@ final class ResponseTranslator
         return $sfResponse;
     }
 
-    private function translateHeaders(HeadersInterface $headers): array
+    private function translateHeaders(Headers $headers): array
     {
         $raw = [];
 
@@ -52,7 +52,7 @@ final class ResponseTranslator
                 ->values()
                 ->reduce(
                     [],
-                    function(array $carry, HeaderValueInterface $value) {
+                    function(array $carry, Value $value) {
                         $carry[] = (string) $value;
 
                         return $carry;

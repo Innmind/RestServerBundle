@@ -3,6 +3,6 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Exception;
 
-interface ExceptionInterface
+final class MissingPriority extends DomainException
 {
 }

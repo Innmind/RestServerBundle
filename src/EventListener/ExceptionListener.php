@@ -4,16 +4,16 @@ declare(strict_types = 1);
 namespace Innmind\Rest\ServerBundle\EventListener;
 
 use Innmind\Rest\Server\Exception\{
-    ExceptionInterface as ServerExceptionInterface,
-    ActionNotImplementedException,
+    Exception as ServerExceptionInterface,
+    ActionNotImplemented,
     HttpResourceDenormalizationException,
-    FilterNotApplicableException
+    FilterNotApplicable
 };
 use Innmind\Http\Exception\{
-    ExceptionInterface as BaseHttpExceptionInterface,
-    Http\ExceptionInterface,
-    Http\MethodNotAllowedException,
-    Http\BadRequestException
+    Exception as BaseHttpExceptionInterface,
+    Http\Exception,
+    Http\MethodNotAllowed,
+    Http\BadRequest
 };
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
@@ -52,12 +52,12 @@ final class ExceptionListener implements EventSubscriberInterface
 
         if (
             $exception instanceof BaseHttpExceptionInterface &&
-            !$exception instanceof ExceptionInterface
+            !$exception instanceof Exception
         ) {
-            $exception = new BadRequestException;
+            $exception = new BadRequest;
         }
 
-        if (!$exception instanceof ExceptionInterface) {
+        if (!$exception instanceof Exception) {
             return;
         }
 
@@ -73,11 +73,11 @@ final class ExceptionListener implements EventSubscriberInterface
     private function map(ServerExceptionInterface $exception): \Throwable
     {
         switch (true) {
-            case $exception instanceof ActionNotImplementedException:
-                return new MethodNotAllowedException;
+            case $exception instanceof ActionNotImplemented:
+                return new MethodNotAllowed;
             case $exception instanceof HttpResourceDenormalizationException:
-            case $exception instanceof FilterNotApplicableException:
-                return new BadRequestException;
+            case $exception instanceof FilterNotApplicable:
+                return new BadRequest;
         }
 
         return $exception;

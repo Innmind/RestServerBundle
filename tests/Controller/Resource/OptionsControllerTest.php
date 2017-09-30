@@ -4,31 +4,23 @@ declare(strict_types = 1);
 namespace Tests\Innmind\Rest\ServerBundle\Controller\Resource;
 
 use Innmind\Http\{
-    Message\ServerRequest,
-    Message\Method,
-    ProtocolVersion,
-    Message\ResponseInterface,
-    Message\Environment,
-    Message\Cookies,
-    Message\Query,
-    Message\Query\ParameterInterface as QueryParameterInterface,
-    Message\Form,
-    Message\Form\ParameterInterface as FormParameterInterface,
-    Message\Files,
-    File\FileInterface,
-    Headers,
-    Header\HeaderInterface,
-    Header\HeaderValueInterface,
+    Message\ServerRequest\ServerRequest,
+    Message\Method\Method,
+    ProtocolVersion\ProtocolVersion,
+    Message\Response,
+    Message\Environment\Environment,
+    Message\Cookies\Cookies,
+    Message\Query\Query,
+    Message\Form\Form,
+    Message\Files\Files,
+    Headers\Headers,
+    Header,
     Header\Accept,
-    Header\AcceptValue,
-    Header\ParameterInterface
+    Header\AcceptValue
 };
 use Innmind\Url\Url;
 use Innmind\Filesystem\Stream\StringStream;
-use Innmind\Immutable\{
-    Map,
-    Set
-};
+use Innmind\Immutable\Map;
 use Symfony\Component\HttpFoundation\Request;
 
 class OptionsControllerTest extends ControllerTestCase
@@ -61,36 +53,29 @@ class OptionsControllerTest extends ControllerTestCase
                         new Method('GET'),
                         $protocol = new ProtocolVersion(1, 1),
                         new Headers(
-                            (new Map('string', HeaderInterface::class))
+                            (new Map('string', Header::class))
                                 ->put(
                                     'Accept',
                                     new Accept(
-                                        (new Set(HeaderValueInterface::class))
-                                            ->add(
-                                                new AcceptValue(
-                                                    'application',
-                                                    'json',
-                                                    new Map(
-                                                        'string',
-                                                        ParameterInterface::class
-                                                    )
-                                                )
-                                            )
+                                        new AcceptValue(
+                                            'application',
+                                            'json'
+                                        )
                                     )
                                 )
                         ),
                         new StringStream(''),
-                        new Environment(new Map('string', 'scalar')),
-                        new Cookies(new Map('string', 'scalar')),
-                        new Query(new Map('string', QueryParameterInterface::class)),
-                        new Form(new Map('scalar', FormParameterInterface::class)),
-                        new Files(new Map('string', FileInterface::class))
+                        new Environment,
+                        new Cookies,
+                        new Query,
+                        new Form,
+                        new Files
                     )
                 ]
             )
         );
 
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame(200, $response->statusCode()->value());
         $this->assertSame('OK', (string) $response->reasonPhrase());
         $this->assertSame($protocol, $response->protocolVersion());

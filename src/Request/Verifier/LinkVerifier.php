@@ -4,18 +4,18 @@ declare(strict_types = 1);
 namespace Innmind\Rest\ServerBundle\Request\Verifier;
 
 use Innmind\Rest\Server\{
-    Request\Verifier\VerifierInterface,
+    Request\Verifier\Verifier,
     Definition\HttpResource
 };
 use Innmind\Http\{
-    Message\ServerRequestInterface,
-    Message\MethodInterface,
-    Exception\Http\BadRequestException,
+    Message\ServerRequest,
+    Message\Method,
+    Exception\Http\BadRequest,
     Header\LinkValue
 };
 use Symfony\Component\Routing\RouterInterface;
 
-final class LinkVerifier implements VerifierInterface
+final class LinkVerifier implements Verifier
 {
     private $router;
 
@@ -27,15 +27,15 @@ final class LinkVerifier implements VerifierInterface
     /**
      * {@inheritdoc}
      *
-     * @throws BadRequestException
+     * @throws BadRequest
      */
-    public function verify(
-        ServerRequestInterface $request,
+    public function __invoke(
+        ServerRequest $request,
         HttpResource $definition
-    ) {
+    ): void {
         if (
-            (string) $request->method() !== MethodInterface::LINK &&
-            (string) $request->method() !== MethodInterface::UNLINK
+            (string) $request->method() !== Method::LINK &&
+            (string) $request->method() !== Method::UNLINK
         ) {
             return;
         }
@@ -51,7 +51,7 @@ final class LinkVerifier implements VerifierInterface
                     !isset($infos['_innmind_resource']) ||
                     !isset($infos['identity'])
                 ) {
-                    throw new BadRequestException;
+                    throw new BadRequest;
                 }
 
                 $path = $infos['_innmind_resource'];
@@ -60,7 +60,7 @@ final class LinkVerifier implements VerifierInterface
                     !$definition->allowedLinks()->contains($link->relationship()) ||
                     $definition->allowedLinks()->get($link->relationship()) !== $path
                 ) {
-                    throw new BadRequestException;
+                    throw new BadRequest;
                 }
             });
     }

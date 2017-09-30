@@ -3,22 +3,18 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Controller\Resource;
 
-use Innmind\Rest\ServerBundle\{
-    Format,
-    Exception\InvalidArgumentException
-};
+use Innmind\Rest\ServerBundle\Format;
 use Innmind\Rest\Server\{
-    Response\HeaderBuilder\CreateBuilderInterface,
-    HttpResource,
+    Response\HeaderBuilder\CreateBuilder,
+    HttpResource\HttpResource,
     Definition\Access,
-    GatewayInterface
+    Gateway
 };
 use Innmind\Http\{
-    Message\ResponseInterface,
     Message\Response,
-    Message\StatusCode,
-    Message\ReasonPhrase,
-    Headers
+    Message\StatusCode\StatusCode,
+    Message\ReasonPhrase\ReasonPhrase,
+    Headers\Headers
 };
 use Innmind\Filesystem\Stream\StringStream;
 use Innmind\Immutable\{
@@ -35,28 +31,31 @@ final class CreateController
     private $gateways;
     private $serializer;
     private $format;
-    private $headerBuilder;
+    private $buildHeader;
 
     public function __construct(
         MapInterface $gateways,
         SerializerInterface $serializer,
         Format $format,
-        CreateBuilderInterface $headerBuilder
+        CreateBuilder $headerBuilder
     ) {
         if (
             (string) $gateways->keyType() !== 'string' ||
-            (string) $gateways->valueType() !== GatewayInterface::class
+            (string) $gateways->valueType() !== Gateway::class
         ) {
-            throw new InvalidArgumentException;
+            throw new \TypeError(sprintf(
+                'Argument 1 must be of type MapInterface<string, %s>',
+                Gateway::class
+            ));
         }
 
         $this->gateways = $gateways;
         $this->serializer = $serializer;
         $this->format = $format;
-        $this->headerBuilder = $headerBuilder;
+        $this->buildHeader = $headerBuilder;
     }
 
-    public function defaultAction(Request $request): ResponseInterface
+    public function defaultAction(Request $request): Response
     {
         $definition = $request->attributes->get('_innmind_resource_definition');
         $request = $request->attributes->get('_innmind_request');
@@ -73,24 +72,17 @@ final class CreateController
                 'request_'.$this->format->contentType($request)->name(),
                 [
                     'definition' => $definition,
-                    'mask' => new Access(
-                        (new Set('string'))->add(Access::CREATE)
-                    ),
+                    'mask' => new Access(Access::CREATE),
                 ]
             )
         );
 
-        return new Response(
+        return new Response\Response(
             $code = new StatusCode(StatusCode::codes()->get('CREATED')),
             new ReasonPhrase(ReasonPhrase::defaults()->get($code->value())),
             $request->protocolVersion(),
             new Headers(
-                $this->headerBuilder->build(
-                    $identity,
-                    $request,
-                    $definition,
-                    $resource
-                )
+                ($this->buildHeader)($identity, $request, $definition, $resource)
             ),
             new StringStream(
                 $this->serializer->serialize(

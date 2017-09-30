@@ -5,15 +5,13 @@ namespace Innmind\Rest\ServerBundle\Controller\Resource;
 
 use Innmind\Rest\ServerBundle\Format;
 use Innmind\Http\{
-    Message\ResponseInterface,
     Message\Response,
-    Message\StatusCode,
-    Message\ReasonPhrase,
-    Headers,
-    Header\HeaderInterface,
+    Message\StatusCode\StatusCode,
+    Message\ReasonPhrase\ReasonPhrase,
+    Headers\Headers,
+    Header,
     Header\ContentType,
-    Header\ContentTypeValue,
-    Header\ParameterInterface
+    Header\ContentTypeValue
 };
 use Innmind\Filesystem\Stream\StringStream;
 use Innmind\Immutable\Map;
@@ -35,26 +33,25 @@ final class OptionsController
         $this->serializer = $serializer;
     }
 
-    public function defaultAction(Request $request): ResponseInterface
+    public function defaultAction(Request $request): Response
     {
         $definition = $request->attributes->get('_innmind_resource_definition');
         $request = $request->attributes->get('_innmind_request');
         $format = $this->format->acceptable($request);
         $mediaType = $format->preferredMediaType();
 
-        return new Response(
+        return new Response\Response(
             $code = new StatusCode(StatusCode::codes()->get('OK')),
             new ReasonPhrase(ReasonPhrase::defaults()->get($code->value())),
             $request->protocolVersion(),
             new Headers(
-                (new Map('string', HeaderInterface::class))
+                (new Map('string', Header::class))
                     ->put(
                         'Content-Type',
                         new ContentType(
                             new ContentTypeValue(
                                 $mediaType->topLevel(),
-                                $mediaType->subType(),
-                                new Map('string', ParameterInterface::class)
+                                $mediaType->subType()
                             )
                         )
                     )

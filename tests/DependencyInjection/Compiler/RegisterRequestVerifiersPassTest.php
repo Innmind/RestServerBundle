@@ -28,50 +28,46 @@ class RegisterRequestVerifiersPassTest extends TestCase
 
         $this->assertInstanceOf(CompilerPassInterface::class, $pass);
         $this->assertSame(null, $pass->process($container));
-        $argument = $container
+        $arguments = $container
             ->getDefinition('innmind_rest_server.http.request.verifier')
-            ->getArgument(0);
-        $this->assertSame(4, count($argument));
-        $this->assertSame(
-            [100, 75, 50, 25],
-            array_keys($argument)
+            ->getArguments();
+        $this->assertSame(4, count($arguments));
+        $this->assertInstanceOf(
+            Reference::class,
+            $arguments[0]
         );
         $this->assertInstanceOf(
             Reference::class,
-            $argument[100]
+            $arguments[1]
         );
         $this->assertInstanceOf(
             Reference::class,
-            $argument[75]
+            $arguments[2]
         );
         $this->assertInstanceOf(
             Reference::class,
-            $argument[50]
-        );
-        $this->assertInstanceOf(
-            Reference::class,
-            $argument[25]
+            $arguments[3]
         );
         $this->assertSame(
             'innmind_rest_server.http.request.verifier.accept',
-            (string) $argument[100]
+            (string) $arguments[0]
         );
         $this->assertSame(
             'innmind_rest_server.http.request.verifier.content_type',
-            (string) $argument[75]
+            (string) $arguments[1]
         );
         $this->assertSame(
             'innmind_rest_server.http.request.verifier.range',
-            (string) $argument[50]
+            (string) $arguments[2]
         );
         $this->assertSame(
             'innmind_rest_server.http.request.verifier.link',
-            (string) $argument[25]
+            (string) $arguments[3]
         );
     }
 
     /**
-     * @expectedException Innmind\Rest\ServerBundle\Exception\MissingPriorityException
+     * @expectedException Innmind\Rest\ServerBundle\Exception\MissingPriority
      */
     public function testThrowWhenNoPriorityDefinedForVerifier()
     {
@@ -90,7 +86,7 @@ class RegisterRequestVerifiersPassTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\Rest\ServerBundle\Exception\PriorityAlreadyUsedByAVerifierException
+     * @expectedException Innmind\Rest\ServerBundle\Exception\PriorityAlreadyUsedByAVerifier
      * @expectedExceptionMessage 50
      */
     public function testThrowWhenPriorityUsedTwice()

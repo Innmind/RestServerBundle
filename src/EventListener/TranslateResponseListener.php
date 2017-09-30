@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Innmind\Rest\ServerBundle\EventListener;
 
 use Innmind\Rest\ServerBundle\Translator\ResponseTranslator;
-use Innmind\Http\Message\ResponseInterface;
+use Innmind\Http\Message\Response;
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
     HttpKernel\KernelEvents,
@@ -34,7 +34,7 @@ final class TranslateResponseListener implements EventSubscriberInterface
     {
         $data = $event->getControllerResult();
 
-        if (!$data instanceof ResponseInterface) {
+        if (!$data instanceof Response) {
             return;
         }
 

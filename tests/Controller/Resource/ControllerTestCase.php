@@ -8,14 +8,14 @@ use Innmind\Rest\ServerBundle\{
     DependencyInjection\InnmindRestServerExtension
 };
 use Innmind\Rest\Server\{
-    ResourceListAccessorInterface,
-    ResourceAccessorInterface,
-    ResourceCreatorInterface,
-    ResourceUpdaterInterface,
-    ResourceRemoverInterface,
-    ResourceLinkerInterface,
-    ResourceUnlinkerInterface,
-    Gateway
+    ResourceListAccessor,
+    ResourceAccessor,
+    ResourceCreator,
+    ResourceUpdater,
+    ResourceRemover,
+    ResourceLinker,
+    ResourceUnlinker,
+    Gateway\Gateway
 };
 use Symfony\Component\{
     DependencyInjection\ContainerBuilder,
@@ -46,6 +46,11 @@ abstract class ControllerTestCase extends TestCase
         $this->container->setParameter('kernel.bundles', [
             'FixtureFixtureBundle' => FixtureFixtureBundle::class,
         ]);
+        $this->container->setParameter('kernel.bundles_metadata', [
+            'FixtureFixtureBundle' => [
+                'path' => __DIR__.'/../../../fixtures/FixtureBundle',
+            ],
+        ]);
         $this->container->setParameter('kernel.name', 'idk');
         $this->container->setParameter('kernel.environment', 'test');
         $this->container->setParameter('kernel.debug', true);
@@ -75,43 +80,43 @@ abstract class ControllerTestCase extends TestCase
         $this->container->setDefinition(
             'gateway.command.list',
             new Definition(get_class($this->createMock(
-                ResourceListAccessorInterface::class
+                ResourceListAccessor::class
             )))
         );
         $this->container->setDefinition(
             'gateway.command.get',
             new Definition(get_class($this->createMock(
-                ResourceAccessorInterface::class
+                ResourceAccessor::class
             )))
         );
         $this->container->setDefinition(
             'gateway.command.create',
             new Definition(get_class($this->createMock(
-                ResourceCreatorInterface::class
+                ResourceCreator::class
             )))
         );
         $this->container->setDefinition(
             'gateway.command.update',
             new Definition(get_class($this->createMock(
-                ResourceUpdaterInterface::class
+                ResourceUpdater::class
             )))
         );
         $this->container->setDefinition(
             'gateway.command.remove',
             new Definition(get_class($this->createMock(
-                ResourceRemoverInterface::class
+                ResourceRemover::class
             )))
         );
         $this->container->setDefinition(
             'gateway.command.link',
             new Definition(get_class($this->createMock(
-                ResourceLinkerInterface::class
+                ResourceLinker::class
             )))
         );
         $this->container->setDefinition(
             'gateway.command.unlink',
             new Definition(get_class($this->createMock(
-                ResourceUnlinkerInterface::class
+                ResourceUnlinker::class
             )))
         );
         $this->container->setDefinition(

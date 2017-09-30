@@ -66,7 +66,7 @@ services:
             - { name: routing.loader }
 
     innmind_rest_server.specification_builder.default:
-        class: Innmind\Rest\Server\SpecificationBuilder\Builder
+        class: Innmind\Rest\Server\SpecificationBuilder\Builder\Builder
         public: false
 
     innmind_rest_server.definition.locator:

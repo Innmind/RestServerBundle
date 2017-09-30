@@ -5,8 +5,8 @@ namespace Innmind\Rest\ServerBundle\DependencyInjection\Compiler;
 
 use Innmind\Filesystem\{
     Adapter\FilesystemAdapter,
-    DirectoryInterface,
-    Exception\FileNotFoundException
+    Directory,
+    Exception\FileNotFound
 };
 use Innmind\Immutable\{
     Set,
@@ -61,7 +61,7 @@ final class RegisterDefinitionFilesPass implements CompilerPassInterface
             $folder = $config->get('rest');
 
             foreach ($folder as $file) {
-                if ($file instanceof DirectoryInterface) {
+                if ($file instanceof Directory) {
                     continue;
                 }
 
@@ -69,7 +69,7 @@ final class RegisterDefinitionFilesPass implements CompilerPassInterface
                     $path.'/rest/'.$file->name()
                 );
             }
-        } catch (FileNotFoundException $e) {
+        } catch (FileNotFound $e) {
             //pass
         }
 

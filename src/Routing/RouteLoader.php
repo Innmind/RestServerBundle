@@ -3,16 +3,13 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Routing;
 
-use Innmind\Rest\ServerBundle\Exception\{
-    InvalidArgumentException,
-    RouteLoaderLoadedMultipleTimesException
-};
+use Innmind\Rest\ServerBundle\Exception\RouteLoaderLoadedMultipleTimes;
 use Innmind\Rest\Server\{
     Definition\Directory,
     Definition\HttpResource,
     Action
 };
-use Innmind\Http\Message\MethodInterface;
+use Innmind\Http\Message\Method;
 use Innmind\Immutable\MapInterface;
 use Symfony\Component\{
     Config\Loader\Loader,
@@ -34,7 +31,10 @@ final class RouteLoader extends Loader
             (string) $directories->keyType() !== 'string' ||
             (string) $directories->valueType() !== Directory::class
         ) {
-            throw new InvalidArgumentException;
+            throw new \TypeError(sprintf(
+                'Argument 1 must be of type MapInterface<string, %s>',
+                Directory::class
+            ));
         }
 
         $this->directories = $directories;
@@ -47,7 +47,7 @@ final class RouteLoader extends Loader
     public function load($resource, $type = null)
     {
         if ($this->imported === true) {
-            throw new RouteLoaderLoadedMultipleTimesException;
+            throw new RouteLoaderLoadedMultipleTimes;
         }
 
         $routes = new RouteCollection;
@@ -67,7 +67,7 @@ final class RouteLoader extends Loader
                 [],
                 '',
                 [],
-                [MethodInterface::OPTIONS]
+                [Method::OPTIONS]
             )
         );
 
@@ -107,17 +107,17 @@ final class RouteLoader extends Loader
         return Action::all()
             ->reduce(
                 new RouteCollection,
-                function(RouteCollection $carry, string $action) use ($name, $definition) {
+                function(RouteCollection $carry, Action $action) use ($name, $definition) {
                     if (
                         $definition->options()->contains('actions') &&
-                        !in_array($action, $definition->options()->get('actions'))
+                        !in_array((string) $action, $definition->options()->get('actions'))
                     ) {
                         return $carry;
                     }
 
                     $carry->add(
-                        $this->routeFactory->makeName($name, new Action($action)),
-                        $this->routeFactory->makeRoute($name, new Action($action))
+                        $this->routeFactory->makeName($name, $action),
+                        $this->routeFactory->makeRoute($name, $action)
                     );
 
                     return $carry;

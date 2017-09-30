@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Rest\ServerBundle\Factory;
 
-use Innmind\Rest\Server\Definition\LoaderInterface;
+use Innmind\Rest\Server\Definition\Loader;
 use Innmind\Immutable\{
     Set,
     MapInterface
@@ -13,7 +13,7 @@ final class DirectoriesFactory
 {
     private $loader;
 
-    public function __construct(LoaderInterface $loader)
+    public function __construct(Loader $loader)
     {
         $this->loader = $loader;
     }
